@@ -12,7 +12,7 @@ public class GunPick : MonoBehaviour
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
 
-        currentWeapon = new Revolver();
+        currentWeapon = new AK47();
 
         spriteRenderer.sprite = currentWeapon.getSprite();
 

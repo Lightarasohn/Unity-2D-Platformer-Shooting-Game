@@ -1,11 +1,15 @@
 using System.Diagnostics.Tracing;
+using System.Runtime.CompilerServices;
+using Unity.Collections.LowLevel.Unsafe;
 using UnityEditor.UI;
 using UnityEngine;
 using UnityEngine.Rendering;
 
-public class Weapons
+
+
+public class Weapons : Behaviour
 {
-    private string name;
+    private string gunName;
     private int ammo;
     private int staticAmmo;
     private int mags;
@@ -21,13 +25,112 @@ public class Weapons
         }
         
     }
+
+    public GameObject instantiateBulletSpawnPoints()
+    {
+        Transform transform = GameObject.FindGameObjectWithTag("PlayerGunPoint").transform;
+        GameObject spawnpoints;
+        string gun = GameObject.FindGameObjectWithTag("PlayerGunPoint").transform.GetComponent<GunPick>().currentWeapon.getName();
+        switch (gun)
+        {
+            case "SCAR":
+                spawnpoints = Resources.Load<GameObject>("WeaponsBulletSpawnPoints/SCARBULLETSPAWNPOINTS");
+                Instantiate(spawnpoints, transform);
+                break;
+            case "AK-47":
+                spawnpoints = Resources.Load<GameObject>("WeaponsBulletSpawnPoints/AK47BULLETSPAWNPOINTS");
+                Instantiate(spawnpoints, transform);
+                break;
+            case "Revolver":
+                spawnpoints = Resources.Load<GameObject>("WeaponsBulletSpawnPoints/REVOLVERBULLETSPAWNPOINTS");
+                Instantiate(spawnpoints, transform);
+                break;
+            case "Deagle":
+                spawnpoints = Resources.Load<GameObject>("WeaponsBulletSpawnPoints/DEAGLEBULLETSPAWNPOINTS");
+                Instantiate(spawnpoints, transform);
+                break;
+            default:
+                spawnpoints = null;
+                break;
+        }
+        return spawnpoints;
+    }
+
+    public void eraseOldBulletSpawnPoints()
+    {
+        var oldSpawnPoints = GameObject.FindGameObjectWithTag("BulletSpawnPointTag");
+        GameObject.Destroy(oldSpawnPoints);
+    }
+
+    public void fire(GameObject spawnpoints)
+    {
+        Transform transform = GameObject.FindGameObjectWithTag("PlayerGunPoint").transform;
+        Weapons currentWeapon = transform.GetComponent<GunPick>().currentWeapon;
+        GameObject bullet = Resources.Load<GameObject>("Prefabs/Bullet");
+        PlayerMovement pm = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
+        Transform front = spawnpoints.transform.GetChild(0);
+        Transform back = spawnpoints.transform.GetChild(1);
+        if (currentWeapon is Rifles)
+        {
+            if (Input.GetMouseButton(0))
+            {
+                if (pm.isFacingRight)
+                {
+                    var insPosition = new Vector3((transform.parent.position.x) + (transform.parent.localScale.x * transform.localPosition.x) + (transform.parent.localScale.x * front.localPosition.x * Mathf.Cos(transform.rotation.eulerAngles.z * Mathf.Deg2Rad)), transform.parent.position.y + transform.parent.localScale.y * transform.localPosition.y + Mathf.Sin(transform.rotation.eulerAngles.z * Mathf.Deg2Rad) * front.localPosition.x * transform.parent.localScale.y, 0);
+                    Instantiate(bullet, insPosition, transform.rotation);
+                }
+                else
+                {
+                    if (transform.rotation.eulerAngles.z <= 0)
+                    {
+                        var insPosition = new Vector3(transform.parent.position.x + transform.parent.localScale.x * transform.localPosition.x + transform.parent.localScale.x * back.localPosition.x * Mathf.Cos((transform.rotation.eulerAngles.z + 180) * Mathf.Deg2Rad) * -1, transform.parent.position.y + transform.parent.localScale.y * transform.localPosition.y + -1 * Mathf.Sin((transform.rotation.eulerAngles.z + 180) * Mathf.Deg2Rad) * back.localPosition.x * transform.parent.localScale.y, 0);
+                        Instantiate(bullet, insPosition, transform.rotation);
+                    }
+                    else
+                    {
+                        var insPosition = new Vector3(transform.parent.position.x + transform.parent.localScale.x * transform.localPosition.x + transform.parent.localScale.x * back.localPosition.x * Mathf.Cos((180 - transform.rotation.eulerAngles.z) * Mathf.Deg2Rad) * -1, transform.parent.position.y + transform.parent.localScale.y * transform.localPosition.y + -1 * Mathf.Sin((180 - transform.rotation.eulerAngles.z) * Mathf.Deg2Rad) * back.localPosition.x * transform.parent.localScale.y, 0);
+                        Instantiate(bullet, insPosition, transform.rotation);
+                    }
+                }
+            }
+        }
+        else if (currentWeapon is Pistols)
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                if (pm.isFacingRight)
+                {
+                    var insPosition = new Vector3((transform.parent.position.x) + (transform.parent.localScale.x * transform.localPosition.x) + (transform.parent.localScale.x * front.localPosition.x * Mathf.Cos(transform.rotation.eulerAngles.z * Mathf.Deg2Rad)), transform.parent.position.y + transform.parent.localScale.y * transform.localPosition.y + Mathf.Sin(transform.rotation.eulerAngles.z * Mathf.Deg2Rad) * front.localPosition.x * transform.parent.localScale.y, 0);
+                    Instantiate(bullet, insPosition, transform.rotation);
+                }
+                else
+                {
+                    if (transform.rotation.eulerAngles.z <= 0)
+                    {
+                        var insPosition = new Vector3(transform.parent.position.x + transform.parent.localScale.x * transform.localPosition.x + transform.parent.localScale.x * back.localPosition.x * Mathf.Cos((transform.rotation.eulerAngles.z + 180) * Mathf.Deg2Rad) * -1, transform.parent.position.y + transform.parent.localScale.y * transform.localPosition.y + -1 * Mathf.Sin((transform.rotation.eulerAngles.z + 180) * Mathf.Deg2Rad) * back.localPosition.x * transform.parent.localScale.y, 0);
+                        Instantiate(bullet, insPosition, transform.rotation);
+                    }
+                    else
+                    {
+                        var insPosition = new Vector3(transform.parent.position.x + transform.parent.localScale.x * transform.localPosition.x + transform.parent.localScale.x * back.localPosition.x * Mathf.Cos((180 - transform.rotation.eulerAngles.z) * Mathf.Deg2Rad) * -1, transform.parent.position.y + transform.parent.localScale.y * transform.localPosition.y + -1 * Mathf.Sin((180 - transform.rotation.eulerAngles.z) * Mathf.Deg2Rad) * back.localPosition.x * transform.parent.localScale.y, 0);
+                        Instantiate(bullet, insPosition, transform.rotation);
+                    }
+                }
+            }
+        }
+
+
+
+    }
+
+
     public string getName()
     {
-        return this.name;
+        return this.gunName;
     }
     public void setName(string isim)
     {
-        this.name = isim;
+        this.gunName = isim;
     }
     public int getAmmo()
     {
@@ -69,6 +172,7 @@ public class Weapons
     {
         this.fireRate = fr;
     }
+
 }
 
 public class Pistols : Weapons
@@ -83,7 +187,7 @@ public class Rifles : Weapons
 {
     public Rifles()
     {
-        setFireRate(0.18f);
+        setFireRate(0.1f);
     }
 }
 
