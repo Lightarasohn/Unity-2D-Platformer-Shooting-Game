@@ -1,4 +1,5 @@
 using System.Diagnostics.Tracing;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using Unity.Collections.LowLevel.Unsafe;
 using UnityEditor.UI;
@@ -15,6 +16,37 @@ public class Weapons : Behaviour
     private int mags;
     private Sprite sprite;
     private float fireRate;
+
+    
+
+    public void spawnGunPrefab(string gunName, Vector2 gunPosition, Quaternion gunRotation)
+    {
+        GameObject gun;
+        gun = Resources.Load<GameObject>("Prefabs/GunSpawnPrefab");
+        switch (gunName.ToUpper())
+        {
+            case "AK47":
+                
+                gun.transform.GetComponent<GunSpawnPrefabScript>().droppedWeapon = new AK47();
+                Instantiate(gun, gunPosition, gunRotation);
+                break;
+            case "REVOLVER":
+                
+                gun.transform.GetComponent<GunSpawnPrefabScript>().droppedWeapon = new Revolver();
+                Instantiate(gun, gunPosition, gunRotation);
+                break;
+            case "DEAGLE":
+                
+                gun.transform.GetComponent<GunSpawnPrefabScript>().droppedWeapon = new Deagle();
+                Instantiate(gun, gunPosition, gunRotation);
+                break;
+            case "SCAR":
+                
+                gun.transform.GetComponent<GunSpawnPrefabScript>().droppedWeapon = new Scar();
+                Instantiate(gun, gunPosition, gunRotation);
+                break;
+        }
+    }
 
     public void reload()
     {
@@ -199,7 +231,7 @@ public class Deagle : Pistols
 {
     public Deagle()
     {
-        setName("Deagle");
+        setName("DEAGLE");
         setAmmo(7);
         setStaticAmmo();
         setMags(9999);
@@ -211,7 +243,7 @@ public class Revolver : Pistols
 {
     public Revolver()
     {
-        setName("Revolver");
+        setName("REVOLVER");
         setAmmo(6);
         setStaticAmmo();
         setMags(9999);
@@ -223,7 +255,7 @@ public class AK47 : Rifles
 {
     public AK47()
     {
-        setName("AK-47");
+        setName("AK47");
         setAmmo(30);
         setStaticAmmo();
         setMags(1);
