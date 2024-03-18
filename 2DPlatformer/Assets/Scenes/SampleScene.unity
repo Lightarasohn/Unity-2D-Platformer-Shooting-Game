@@ -1363,6 +1363,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentWeapon: {fileID: 0}
+  gunPicked: 0
+  gunPickedName: 
 --- !u!114 &2067639626
 MonoBehaviour:
   m_ObjectHideFlags: 0

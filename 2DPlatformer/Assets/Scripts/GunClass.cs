@@ -69,15 +69,15 @@ public class Weapons : Behaviour
                 spawnpoints = Resources.Load<GameObject>("WeaponsBulletSpawnPoints/SCARBULLETSPAWNPOINTS");
                 Instantiate(spawnpoints, transform);
                 break;
-            case "AK-47":
+            case "AK47":
                 spawnpoints = Resources.Load<GameObject>("WeaponsBulletSpawnPoints/AK47BULLETSPAWNPOINTS");
                 Instantiate(spawnpoints, transform);
                 break;
-            case "Revolver":
+            case "REVOLVER":
                 spawnpoints = Resources.Load<GameObject>("WeaponsBulletSpawnPoints/REVOLVERBULLETSPAWNPOINTS");
                 Instantiate(spawnpoints, transform);
                 break;
-            case "Deagle":
+            case "DEAGLE":
                 spawnpoints = Resources.Load<GameObject>("WeaponsBulletSpawnPoints/DEAGLEBULLETSPAWNPOINTS");
                 Instantiate(spawnpoints, transform);
                 break;
