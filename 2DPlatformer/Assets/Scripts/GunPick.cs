@@ -14,7 +14,7 @@ public class GunPick : MonoBehaviour
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
 
-        currentWeapon = new Deagle();
+        currentWeapon = new Scar();
 
         spriteRenderer.sprite = currentWeapon.getSprite();
 
