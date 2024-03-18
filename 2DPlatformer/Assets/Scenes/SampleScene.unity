@@ -193,7 +193,6 @@ MonoBehaviour:
   jumpingPower: 15
   moveSpeed: 500
   isFacingRight: 1
-  animator: {fileID: 0}
   rb: {fileID: 140366590}
   GroundCheck: {fileID: 30186125}
   GroundLayer:
@@ -236,7 +235,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.875, y: 4.25}
+    oldSize: {x: 2, y: 4.25}
     newSize: {x: 5.12, y: 5.12}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -313,7 +312,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 6
-  m_Sprite: {fileID: -1106442890, guid: 327b3c00d3b540c44943f908d1d9fab9, type: 3}
+  m_Sprite: {fileID: -1220733551, guid: 327b3c00d3b540c44943f908d1d9fab9, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
