@@ -10,7 +10,6 @@ public class GunSpawnPrefabScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        transform.GetComponent<SpriteRenderer>().sprite = droppedWeapon.getSprite();
     }
 
     // Update is called once per frame
@@ -23,8 +22,8 @@ public class GunSpawnPrefabScript : MonoBehaviour
         if (Input.GetButtonDown("E"))
         {
             GameObject.Destroy(gameObject);
-            GameObject.FindGameObjectWithTag("PlayerGunPoint").transform.GetComponent<GunPick>().gunPicked = true;
-            GameObject.FindGameObjectWithTag("PlayerGunPoint").transform.GetComponent<GunPick>().gunPickedName = droppedWeapon.getName();
+            GameObject.FindGameObjectWithTag("PlayerGunPoint").transform.GetComponent<GunPick>().isGunPicked = true;
+            GameObject.FindGameObjectWithTag("PlayerGunPoint").transform.GetComponent<GunPick>().pickedGun= droppedWeapon;
         }
     }
 }

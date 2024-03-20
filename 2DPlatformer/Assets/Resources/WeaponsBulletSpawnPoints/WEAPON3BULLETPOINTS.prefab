@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &1668624019978501199
+--- !u!1 &4357641233051967726
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,30 +8,30 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 5467250204351158125}
+  - component: {fileID: 7733208530004891116}
   m_Layer: 0
-  m_Name: AK47FRONTSPAWNPOINT
+  m_Name: FRONTBULLETPOINT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &5467250204351158125
+--- !u!4 &7733208530004891116
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1668624019978501199}
+  m_GameObject: {fileID: 4357641233051967726}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.07, y: -0.02, z: 0}
+  m_LocalPosition: {x: 1.74, y: 0.14, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 467106864934089159}
+  m_Father: {fileID: 6202850455127748689}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &4113286769845525421
+--- !u!1 &6738157150397209375
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -39,32 +39,32 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 467106864934089159}
+  - component: {fileID: 6202850455127748689}
   m_Layer: 0
-  m_Name: AK47BULLETSPAWNPOINTS
+  m_Name: WEAPON3BULLETPOINTS
   m_TagString: BulletSpawnPointTag
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &467106864934089159
+--- !u!4 &6202850455127748689
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4113286769845525421}
+  m_GameObject: {fileID: 6738157150397209375}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 5467250204351158125}
-  - {fileID: 7697353192282750202}
+  - {fileID: 7733208530004891116}
+  - {fileID: 5090833411661181454}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &5680126877241602589
+--- !u!1 &8927324631817423606
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -72,26 +72,26 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 7697353192282750202}
+  - component: {fileID: 5090833411661181454}
   m_Layer: 0
-  m_Name: AK47BACKSPAWNPOINT
+  m_Name: BACKBULLETPOINT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &7697353192282750202
+--- !u!4 &5090833411661181454
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5680126877241602589}
+  m_GameObject: {fileID: 8927324631817423606}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.04, y: -0.04, z: 0}
+  m_LocalPosition: {x: -1.8, y: 0.17, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 467106864934089159}
+  m_Father: {fileID: 6202850455127748689}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

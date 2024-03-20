@@ -1532,7 +1532,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 7
-  m_Sprite: {fileID: 21300000, guid: 773e09fdd1ada3a4aaa28b865070f8ae, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 3176168c8a2d1c94cba9628210a8ae57, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -1556,8 +1556,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentWeapon: {fileID: 0}
-  gunPicked: 0
-  gunPickedName: 
+  isGunPicked: 0
+  pickedGun: {fileID: 0}
 --- !u!114 &2067639626
 MonoBehaviour:
   m_ObjectHideFlags: 0
