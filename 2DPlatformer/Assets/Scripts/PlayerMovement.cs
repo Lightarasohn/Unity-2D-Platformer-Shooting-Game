@@ -16,6 +16,7 @@ public class PlayerMovement : MonoBehaviour
     public float jumpingPower = 4f;
     public float moveSpeed = 16f;
     public bool isFacingRight = true;
+    public Animator animator;
 
 
 
@@ -28,6 +29,8 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
+        animator.SetFloat("Speed", Mathf.Abs(horizontalMove));
+
         if (isDashing) return;
 
         horizontalMove = Input.GetAxisRaw("Horizontal");
@@ -35,6 +38,7 @@ public class PlayerMovement : MonoBehaviour
         {
             jumpCount++;
             rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
+            animator.SetBool("isJumping", true);
         }
         else if(canDoubleJump())
         {
@@ -45,17 +49,22 @@ public class PlayerMovement : MonoBehaviour
         {
             rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
         }
+
+        // Zýplama animasyonunu sýfýrla
+        if (animator.GetBool("isJumping") && Mathf.Approximately(rb.velocity.y, 0) && isGrounded())
+        {
+            animator.SetBool("isJumping", false);
+        }
+
         if (canDash())
         {
             dash = true;
         }
-
     }
 
     private void FixedUpdate()
     {
         if (isDashing) return;
-
         
         flip();
 
@@ -67,14 +76,12 @@ public class PlayerMovement : MonoBehaviour
         }
         else
             rb.velocity = new Vector2(horizontalMove * moveSpeed * Time.fixedDeltaTime, rb.velocity.y);
-
     }
 
     private bool isGrounded()
     {
         return Physics2D.OverlapCircle(GroundCheck.position, 0.2f, GroundLayer);
     }
-
 
     private bool canDoubleJump() 
     {
@@ -105,13 +112,8 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-
-    
-
-
     private IEnumerator DASH()
     {
-       
         isDashing = true;
         float originalGravity = rb.gravityScale;
         rb.gravityScale = 0f;
@@ -120,7 +122,6 @@ public class PlayerMovement : MonoBehaviour
         yield return new WaitForSeconds(dashTime);
         tr.emitting = false;
         rb.gravityScale = originalGravity;
-        isDashing = false;
-         
+        isDashing = false;  
     }
 }

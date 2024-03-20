@@ -168,6 +168,7 @@ GameObject:
   - component: {fileID: 140366589}
   - component: {fileID: 140366588}
   - component: {fileID: 140366593}
+  - component: {fileID: 140366594}
   m_Layer: 0
   m_Name: Karakter
   m_TagString: Player
@@ -193,6 +194,7 @@ MonoBehaviour:
   jumpingPower: 15
   moveSpeed: 500
   isFacingRight: 1
+  animator: {fileID: 140366594}
   rb: {fileID: 140366590}
   GroundCheck: {fileID: 30186125}
   GroundLayer:
@@ -463,6 +465,27 @@ TrailRenderer:
   m_Autodestruct: 0
   m_Emitting: 0
   m_ApplyActiveColorSpace: 1
+--- !u!95 &140366594
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 140366587}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: c7b18091504ecc742a3119555b279129, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
