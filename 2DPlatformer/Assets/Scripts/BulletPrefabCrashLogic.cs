@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEditor.Tilemaps;
 using UnityEngine;
 
@@ -18,6 +19,11 @@ public class BulletCrashLogic : MonoBehaviour
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
+    {
+        Destroy(gameObject);
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
     {
         Destroy(gameObject);
     }
