@@ -165,8 +165,8 @@ GameObject:
   - component: {fileID: 68943548}
   - component: {fileID: 68943550}
   - component: {fileID: 68943549}
+  - component: {fileID: 68943551}
   - component: {fileID: 68943552}
-  - component: {fileID: 68943553}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -183,7 +183,7 @@ Transform:
   m_GameObject: {fileID: 68943547}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -8.23, y: -2.79, z: 0}
+  m_LocalPosition: {x: -8.61, y: -2.72, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -264,7 +264,7 @@ Rigidbody2D:
   m_SleepingMode: 0
   m_CollisionDetection: 1
   m_Constraints: 4
---- !u!114 &68943552
+--- !u!114 &68943551
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -273,16 +273,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 68943547}
   m_Enabled: 0
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 46300e310e8afd44f96c8043b8c32726, type: 3}
+  m_Script: {fileID: 11500000, guid: f425d6a3d8289984c8a24d5c248879e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pointA: {fileID: 799236745}
-  pointB: {fileID: 233611533}
-  castPionter: {fileID: 540801350}
-  speed: 5
+  player: {fileID: 140366592}
+  castPoint: {fileID: 540801350}
   agroRange: 10
-  player: {fileID: 140366587}
---- !u!114 &68943553
+  moveSpeed: 4
+  pointA: {fileID: 799236746}
+  pointB: {fileID: 233611534}
+--- !u!114 &68943552
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -291,11 +291,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 68943547}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bd1d64e1eb543b04cb9ab65aead1736e, type: 3}
+  m_Script: {fileID: 11500000, guid: b4c95c71b9fe21f4fa10b3eefb4b331c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   bullet: {fileID: 7259374370334305698, guid: 6874799162c5e43ad8b8d2f5d917f42f, type: 3}
   bulletPosition: {fileID: 973172184}
+  castPoint: {fileID: 0}
+  enemyScript: {fileID: 68943551}
 --- !u!1 &87604294
 GameObject:
   m_ObjectHideFlags: 0
@@ -830,7 +832,7 @@ Transform:
   m_GameObject: {fileID: 140366587}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 21.5, y: 0.97, z: 0}
+  m_LocalPosition: {x: 18.98, y: 0.95, z: 0}
   m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1976,7 +1978,7 @@ Transform:
   m_GameObject: {fileID: 799236745}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.85, y: -2.79, z: -4.246125}
+  m_LocalPosition: {x: 0.85, y: -2.79, z: -4.246125}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
