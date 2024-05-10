@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 1730224897451752391}
   m_Layer: 0
   m_Name: Weapon1Bullet
-  m_TagString: Untagged
+  m_TagString: Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -124,7 +124,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.7741935, y: 0.38709676}
+    oldSize: {x: 1.6, y: 0.8}
     newSize: {x: 0.24, y: 0.12}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
