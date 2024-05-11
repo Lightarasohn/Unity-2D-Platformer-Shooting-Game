@@ -58,12 +58,19 @@ public class Weapons : Behaviour
         GameObject.Destroy(oldSpawnPoints);
     }
 
-    public void fire(GameObject spawnpoints)
+    public void fire(GameObject spawnpoints, Transform transform)
     {
-        Transform transform = GameObject.FindGameObjectWithTag("PlayerGunPoint").transform;
         Weapons currentWeapon = transform.GetComponent<GunPick>().currentWeapon;
         GameObject bullet = Resources.Load<GameObject>("Prefabs/" + this.getWeaponBullet());
-        PlayerMovement pm = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
+        PlayerMovement pm;
+        if (transform.tag == "PlayerGunPoint")
+        {
+            pm = transform.parent.parent.GetComponent<PlayerMovement>();
+        }
+        else //else if olacak ve dusmana gore doldurulacak
+        {
+            pm = null;
+        }
         Transform front = spawnpoints.transform.GetChild(0);
         Transform back = spawnpoints.transform.GetChild(1);
         if (currentWeapon is Rifles)
@@ -94,33 +101,61 @@ public class Weapons : Behaviour
         {
             if (Input.GetMouseButtonDown(0))
             {
+                float tempAngle;
+                Quaternion rotation;
+
+                if (transform.tag == "PlayerGunPoint")
+                {
+                    GunAngle gunAngleScript = transform.GetComponent<GunAngle>();
+                    tempAngle = gunAngleScript.angle;
+                }
+                else //else if olacak ve dusmana gore doldurulacak
+                {
+                    tempAngle = 0;
+                }
+
                 if (pm.isFacingRight)
                 {
                     var insPosition = new Vector3((transform.parent.position.x) + (transform.parent.localScale.x * transform.localPosition.x) + (transform.parent.localScale.x * front.localPosition.x * Mathf.Cos(transform.rotation.eulerAngles.z * Mathf.Deg2Rad)), transform.parent.position.y + transform.parent.localScale.y * transform.localPosition.y + Mathf.Sin(transform.rotation.eulerAngles.z * Mathf.Deg2Rad) * front.localPosition.x * transform.parent.localScale.y, 0);
                     
-                    Instantiate(bullet, insPosition, transform.rotation);
 
-                    
+                    rotation = Quaternion.AngleAxis(tempAngle, Vector3.forward);
+                    Instantiate(bullet, insPosition, rotation);
+                    rotation = Quaternion.AngleAxis(tempAngle + 5, Vector3.forward);
+                    Instantiate(bullet, insPosition, rotation);
+                    rotation = Quaternion.AngleAxis(tempAngle - 5, Vector3.forward);
+                    Instantiate(bullet, insPosition, rotation);
+
+
                 }
                 else
                 {
                     if (transform.rotation.eulerAngles.z <= 0)
                     {
                         var insPosition = new Vector3(transform.parent.position.x + transform.parent.localScale.x * transform.localPosition.x + transform.parent.localScale.x * front.localPosition.x * Mathf.Cos((transform.rotation.eulerAngles.z + 180) * Mathf.Deg2Rad) * -1, transform.parent.position.y + transform.parent.localScale.y * transform.localPosition.y + -1 * Mathf.Sin((transform.rotation.eulerAngles.z + 180) * Mathf.Deg2Rad) * back.localPosition.x * transform.parent.localScale.y, 0);
-                        
 
-                        Instantiate(bullet, insPosition, transform.rotation);
+                        rotation = Quaternion.AngleAxis(tempAngle, Vector3.forward);
+                        Instantiate(bullet, insPosition, rotation);
+                        rotation = Quaternion.AngleAxis(tempAngle + 5, Vector3.forward);
+                        Instantiate(bullet, insPosition, rotation);
+                        rotation = Quaternion.AngleAxis(tempAngle - 5, Vector3.forward);
+                        Instantiate(bullet, insPosition, rotation);
 
-                        
+
                     }
                     else
                     {
                         var insPosition = new Vector3(transform.parent.position.x + transform.parent.localScale.x * transform.localPosition.x + transform.parent.localScale.x * front.localPosition.x * Mathf.Cos((180 - transform.rotation.eulerAngles.z) * Mathf.Deg2Rad) * -1, transform.parent.position.y + transform.parent.localScale.y * transform.localPosition.y + -1 * Mathf.Sin((180 - transform.rotation.eulerAngles.z) * Mathf.Deg2Rad) * back.localPosition.x * transform.parent.localScale.y, 0);
-                        
 
-                        Instantiate(bullet, insPosition, transform.rotation);
 
-                        
+                        rotation = Quaternion.AngleAxis(tempAngle, Vector3.forward);
+                        Instantiate(bullet, insPosition, rotation);
+                        rotation = Quaternion.AngleAxis(tempAngle + 5, Vector3.forward);
+                        Instantiate(bullet, insPosition, rotation);
+                        rotation = Quaternion.AngleAxis(tempAngle - 5, Vector3.forward);
+                        Instantiate(bullet, insPosition, rotation);
+
+
                     }
                 }
             }

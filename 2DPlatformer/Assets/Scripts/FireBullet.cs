@@ -17,7 +17,6 @@ public class FireBullet : MonoBehaviour
     {
         
         currentWeapon = transform.GetComponent<GunPick>().currentWeapon;
-        spawnpoints = currentWeapon.instantiateBulletSpawnPoints(transform);
         fireRate = transform.GetComponent<GunPick>().currentWeapon.getFireRate();
         gun = transform.GetComponent<GunPick>().currentWeapon.getName();
         oldGun = "";
@@ -31,7 +30,20 @@ public class FireBullet : MonoBehaviour
         {
             spawnpoints = currentWeapon.instantiateBulletSpawnPoints(transform);
         }
-        
+        semiTime += Time.deltaTime;
+        if (currentWeapon is Shotguns || currentWeapon is SemiAutoRifles)
+        {
+            if (semiTime >= fireRate)
+            {
+                currentWeapon.fire(spawnpoints,transform);
+                if (Input.GetMouseButtonDown(0))
+                {
+                    semiTime = 0;
+                }
+            }
+        }
+
+
         oldGun = gun;
 
         
@@ -47,21 +59,8 @@ public class FireBullet : MonoBehaviour
         {
             if (time >= fireRate)
             {
-                currentWeapon.fire(spawnpoints);
+                currentWeapon.fire(spawnpoints,transform);
                 time = 0;
-            }
-        }
-
-        semiTime += Time.deltaTime;
-        if (currentWeapon is Shotguns || currentWeapon is SemiAutoRifles)
-        {
-            if (semiTime >= fireRate)
-            {
-                currentWeapon.fire(spawnpoints);
-                if (Input.GetMouseButtonDown(0))
-                {
-                    semiTime = 0;
-                }
             }
         }
         

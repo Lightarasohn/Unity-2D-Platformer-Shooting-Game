@@ -29,6 +29,8 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
+        Debug.Log(jumpCount);
+        Debug.Log(isGrounded());
         animator.SetFloat("Speed", Mathf.Abs(horizontalMove));
 
         if (isDashing) return;

@@ -35,7 +35,6 @@ public class GunAngle : MonoBehaviour
         Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.forward);
         transform.parent.rotation = rotation;
 
-
         if (!pm.isFacingRight)
         {
             if (!sr.flipX)
