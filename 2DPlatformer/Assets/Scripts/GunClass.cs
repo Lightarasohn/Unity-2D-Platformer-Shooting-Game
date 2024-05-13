@@ -60,24 +60,140 @@ public class Weapons : Behaviour
 
     public void fire(GameObject spawnpoints, Transform transform)
     {
-        Weapons currentWeapon = transform.GetComponent<GunPick>().currentWeapon;
+        Weapons currentWeapon;
         GameObject bullet = Resources.Load<GameObject>("Prefabs/" + this.getWeaponBullet());
         PlayerMovement pm;
+        EnemyClass enemy;
         if (transform.tag == "PlayerGunPoint")
         {
+            currentWeapon = transform.GetComponent<GunPick>().currentWeapon;
             pm = transform.parent.parent.GetComponent<PlayerMovement>();
+            enemy = null;
         }
         else //else if olacak ve dusmana gore doldurulacak
         {
+            currentWeapon = transform.parent.transform.parent.transform.GetComponent<RangedEnemyScript>().enemyWeapon;
+            enemy = transform.parent.transform.parent.transform.GetComponent<RangedEnemyScript>().enemy;
             pm = null;
         }
         Transform front = spawnpoints.transform.GetChild(0);
         Transform back = spawnpoints.transform.GetChild(1);
-        if (currentWeapon is Rifles)
+        if (pm != null)
         {
-            if (Input.GetMouseButton(0))
+            if (currentWeapon is Rifles)
             {
-                if (pm.isFacingRight)
+                if (Input.GetMouseButton(0))
+                {
+                    if (pm.isFacingRight)
+                    {
+                        var insPosition = new Vector3((transform.parent.position.x) + (transform.parent.localScale.x * transform.localPosition.x) + (transform.parent.localScale.x * front.localPosition.x * Mathf.Cos(transform.rotation.eulerAngles.z * Mathf.Deg2Rad)), transform.parent.position.y + transform.parent.localScale.y * transform.localPosition.y + Mathf.Sin(transform.rotation.eulerAngles.z * Mathf.Deg2Rad) * front.localPosition.x * transform.parent.localScale.y, 0);
+                        Instantiate(bullet, insPosition, transform.rotation);
+                    }
+                    else
+                    {
+                        if (transform.rotation.eulerAngles.z <= 0)
+                        {
+                            var insPosition = new Vector3(transform.parent.position.x + transform.parent.localScale.x * transform.localPosition.x + transform.parent.localScale.x * front.localPosition.x * Mathf.Cos((transform.rotation.eulerAngles.z + 180) * Mathf.Deg2Rad), transform.parent.position.y + transform.parent.localScale.y * transform.localPosition.y + -1 * Mathf.Sin((transform.rotation.eulerAngles.z + 180) * Mathf.Deg2Rad) * back.localPosition.x * transform.parent.localScale.y, 0);
+                            Instantiate(bullet, insPosition, transform.rotation);
+                        }
+                        else
+                        {
+                            var insPosition = new Vector3(transform.parent.position.x + transform.parent.localScale.x * transform.localPosition.x + transform.parent.localScale.x * front.localPosition.x * Mathf.Cos((180 - transform.rotation.eulerAngles.z) * Mathf.Deg2Rad) * -1, transform.parent.position.y + transform.parent.localScale.y * transform.localPosition.y + -1 * Mathf.Sin((180 - transform.rotation.eulerAngles.z) * Mathf.Deg2Rad) * back.localPosition.x * transform.parent.localScale.y, 0);
+                            Instantiate(bullet, insPosition, transform.rotation);
+                        }
+                    }
+                }
+            }
+            else if (currentWeapon is Shotguns)
+            {
+                if (Input.GetMouseButtonDown(0))
+                {
+                    float tempAngle;
+                    Quaternion rotation;
+
+                    
+                    GunAngle gunAngleScript = transform.GetComponent<GunAngle>();
+                    tempAngle = gunAngleScript.angle;
+                    
+
+                    if (pm.isFacingRight)
+                    {
+                        Debug.Log("Shotgun SAG");
+                        var insPosition = new Vector3((transform.parent.position.x) + (transform.parent.localScale.x * transform.localPosition.x) + (transform.parent.localScale.x * front.localPosition.x * Mathf.Cos(transform.rotation.eulerAngles.z * Mathf.Deg2Rad)), transform.parent.position.y + transform.parent.localScale.y * transform.localPosition.y + Mathf.Sin(transform.rotation.eulerAngles.z * Mathf.Deg2Rad) * front.localPosition.x * transform.parent.localScale.y, 0);
+
+
+                        rotation = Quaternion.AngleAxis(tempAngle, Vector3.forward);
+                        Instantiate(bullet, insPosition, rotation);
+                        rotation = Quaternion.AngleAxis(tempAngle + 5, Vector3.forward);
+                        Instantiate(bullet, insPosition, rotation);
+                        rotation = Quaternion.AngleAxis(tempAngle - 5, Vector3.forward);
+                        Instantiate(bullet, insPosition, rotation);
+
+
+                    }
+                    else
+                    {
+                        Debug.Log("Shotgun SOL");
+                        if (transform.rotation.eulerAngles.z <= 0)
+                        {
+                            var insPosition = new Vector3(transform.parent.position.x + transform.parent.localScale.x * transform.localPosition.x + transform.parent.localScale.x * front.localPosition.x * Mathf.Cos((transform.rotation.eulerAngles.z + 180) * Mathf.Deg2Rad) * -1, transform.parent.position.y + transform.parent.localScale.y * transform.localPosition.y + -1 * Mathf.Sin((transform.rotation.eulerAngles.z + 180) * Mathf.Deg2Rad) * back.localPosition.x * transform.parent.localScale.y, 0);
+
+                            rotation = Quaternion.AngleAxis(tempAngle, Vector3.forward);
+                            Instantiate(bullet, insPosition, rotation);
+                            rotation = Quaternion.AngleAxis(tempAngle + 5, Vector3.forward);
+                            Instantiate(bullet, insPosition, rotation);
+                            rotation = Quaternion.AngleAxis(tempAngle - 5, Vector3.forward);
+                            Instantiate(bullet, insPosition, rotation);
+
+
+                        }
+                        else
+                        {
+                            var insPosition = new Vector3(transform.parent.position.x + transform.parent.localScale.x * transform.localPosition.x + transform.parent.localScale.x * front.localPosition.x * Mathf.Cos((180 - transform.rotation.eulerAngles.z) * Mathf.Deg2Rad) * -1, transform.parent.position.y + transform.parent.localScale.y * transform.localPosition.y + -1 * Mathf.Sin((180 - transform.rotation.eulerAngles.z) * Mathf.Deg2Rad) * back.localPosition.x * transform.parent.localScale.y, 0);
+
+
+                            rotation = Quaternion.AngleAxis(tempAngle, Vector3.forward);
+                            Instantiate(bullet, insPosition, rotation);
+                            rotation = Quaternion.AngleAxis(tempAngle + 5, Vector3.forward);
+                            Instantiate(bullet, insPosition, rotation);
+                            rotation = Quaternion.AngleAxis(tempAngle - 5, Vector3.forward);
+                            Instantiate(bullet, insPosition, rotation);
+
+
+                        }
+                    }
+                }
+            }
+            else if (currentWeapon is SemiAutoRifles)
+            {
+                if (Input.GetMouseButtonDown(0))
+                {
+                    if (pm.isFacingRight)
+                    {
+                        var insPosition = new Vector3((transform.parent.position.x) + (transform.parent.localScale.x * transform.localPosition.x) + (transform.parent.localScale.x * front.localPosition.x * Mathf.Cos(transform.rotation.eulerAngles.z * Mathf.Deg2Rad)), transform.parent.position.y + transform.parent.localScale.y * transform.localPosition.y + Mathf.Sin(transform.rotation.eulerAngles.z * Mathf.Deg2Rad) * front.localPosition.x * transform.parent.localScale.y, 0);
+                        Instantiate(bullet, insPosition, transform.rotation);
+                    }
+                    else
+                    {
+                        if (transform.rotation.eulerAngles.z <= 0)
+                        {
+                            var insPosition = new Vector3(transform.parent.position.x + transform.parent.localScale.x * transform.localPosition.x + transform.parent.localScale.x * front.localPosition.x * Mathf.Cos((transform.rotation.eulerAngles.z + 180) * Mathf.Deg2Rad), transform.parent.position.y + transform.parent.localScale.y * transform.localPosition.y + -1 * Mathf.Sin((transform.rotation.eulerAngles.z + 180) * Mathf.Deg2Rad) * back.localPosition.x * transform.parent.localScale.y, 0);
+                            Instantiate(bullet, insPosition, transform.rotation);
+                        }
+                        else
+                        {
+                            var insPosition = new Vector3(transform.parent.position.x + transform.parent.localScale.x * transform.localPosition.x + transform.parent.localScale.x * front.localPosition.x * Mathf.Cos((180 - transform.rotation.eulerAngles.z) * Mathf.Deg2Rad) * -1, transform.parent.position.y + transform.parent.localScale.y * transform.localPosition.y + -1 * Mathf.Sin((180 - transform.rotation.eulerAngles.z) * Mathf.Deg2Rad) * back.localPosition.x * transform.parent.localScale.y, 0);
+                            Instantiate(bullet, insPosition, transform.rotation);
+                        }
+                    }
+                }
+            }
+        }
+        else
+        {
+            if (currentWeapon is Rifles)
+            {
+                if (enemy.isFacingRight(transform.parent.transform.parent.transform))
                 {
                     var insPosition = new Vector3((transform.parent.position.x) + (transform.parent.localScale.x * transform.localPosition.x) + (transform.parent.localScale.x * front.localPosition.x * Mathf.Cos(transform.rotation.eulerAngles.z * Mathf.Deg2Rad)), transform.parent.position.y + transform.parent.localScale.y * transform.localPosition.y + Mathf.Sin(transform.rotation.eulerAngles.z * Mathf.Deg2Rad) * front.localPosition.x * transform.parent.localScale.y, 0);
                     Instantiate(bullet, insPosition, transform.rotation);
@@ -96,28 +212,17 @@ public class Weapons : Behaviour
                     }
                 }
             }
-        }
-        else if (currentWeapon is Shotguns)
-        {
-            if (Input.GetMouseButtonDown(0))
+            else if (currentWeapon is Shotguns)
             {
                 float tempAngle;
                 Quaternion rotation;
+                tempAngle = transform.parent.transform.parent.transform.GetComponent<RangedEnemyCombatScript>().angle;
 
-                if (transform.tag == "PlayerGunPoint")
+                if (enemy.isFacingRight(transform.parent.transform.parent.transform))
                 {
-                    GunAngle gunAngleScript = transform.GetComponent<GunAngle>();
-                    tempAngle = gunAngleScript.angle;
-                }
-                else //else if olacak ve dusmana gore doldurulacak
-                {
-                    tempAngle = 0;
-                }
-
-                if (pm.isFacingRight)
-                {
+                    Debug.Log("Shotgun SAG");
                     var insPosition = new Vector3((transform.parent.position.x) + (transform.parent.localScale.x * transform.localPosition.x) + (transform.parent.localScale.x * front.localPosition.x * Mathf.Cos(transform.rotation.eulerAngles.z * Mathf.Deg2Rad)), transform.parent.position.y + transform.parent.localScale.y * transform.localPosition.y + Mathf.Sin(transform.rotation.eulerAngles.z * Mathf.Deg2Rad) * front.localPosition.x * transform.parent.localScale.y, 0);
-                    
+
 
                     rotation = Quaternion.AngleAxis(tempAngle, Vector3.forward);
                     Instantiate(bullet, insPosition, rotation);
@@ -130,6 +235,7 @@ public class Weapons : Behaviour
                 }
                 else
                 {
+                    Debug.Log("Shotgun SOL");
                     if (transform.rotation.eulerAngles.z <= 0)
                     {
                         var insPosition = new Vector3(transform.parent.position.x + transform.parent.localScale.x * transform.localPosition.x + transform.parent.localScale.x * front.localPosition.x * Mathf.Cos((transform.rotation.eulerAngles.z + 180) * Mathf.Deg2Rad) * -1, transform.parent.position.y + transform.parent.localScale.y * transform.localPosition.y + -1 * Mathf.Sin((transform.rotation.eulerAngles.z + 180) * Mathf.Deg2Rad) * back.localPosition.x * transform.parent.localScale.y, 0);
@@ -154,17 +260,12 @@ public class Weapons : Behaviour
                         Instantiate(bullet, insPosition, rotation);
                         rotation = Quaternion.AngleAxis(tempAngle - 5, Vector3.forward);
                         Instantiate(bullet, insPosition, rotation);
-
-
                     }
                 }
             }
-        }
-        else if(currentWeapon is SemiAutoRifles)
-        {
-            if (Input.GetMouseButtonDown(0))
+            else if (currentWeapon is SemiAutoRifles)
             {
-                if (pm.isFacingRight)
+                if (enemy.isFacingRight(transform.parent.transform.parent))
                 {
                     var insPosition = new Vector3((transform.parent.position.x) + (transform.parent.localScale.x * transform.localPosition.x) + (transform.parent.localScale.x * front.localPosition.x * Mathf.Cos(transform.rotation.eulerAngles.z * Mathf.Deg2Rad)), transform.parent.position.y + transform.parent.localScale.y * transform.localPosition.y + Mathf.Sin(transform.rotation.eulerAngles.z * Mathf.Deg2Rad) * front.localPosition.x * transform.parent.localScale.y, 0);
                     Instantiate(bullet, insPosition, transform.rotation);
@@ -184,7 +285,6 @@ public class Weapons : Behaviour
                 }
             }
         }
-
 
     }
 

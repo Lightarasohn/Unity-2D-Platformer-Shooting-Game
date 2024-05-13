@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class RangedEnemyScript : MonoBehaviour
 {
-    private RangedEnemy enemy;
-    private Weapons enemyWeapon;
+    public RangedEnemy enemy;
+    public Weapons enemyWeapon;
     private Transform gunTransform;
+    public GameObject spawnPoints;
     
     void Start()
     {
+        
         enemy = new RangedEnemy();
         enemyWeapon = enemy.GetWeapon();
         gunTransform = transform.GetChild(0).transform.GetChild(0).transform;
@@ -17,7 +19,7 @@ public class RangedEnemyScript : MonoBehaviour
         transform.GetChild(0).transform.GetComponent<SpriteRenderer>().sprite = enemy.getHandSprite();
         transform.GetChild(1).transform.GetComponent<SpriteRenderer>().sprite = enemy.getStaticArmSprite();
         gunTransform.GetComponent<SpriteRenderer>().sprite = enemyWeapon.getSprite();
-        enemyWeapon.instantiateBulletSpawnPoints(gunTransform);
+        spawnPoints = enemyWeapon.instantiateBulletSpawnPoints(gunTransform);
     }
 
     
