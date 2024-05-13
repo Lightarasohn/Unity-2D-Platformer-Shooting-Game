@@ -8,12 +8,14 @@ public class FireBullet : MonoBehaviour
     private string gun;
     private GameObject spawnpoints;
     private float time = 0.5f;
+    private float semiTime = 10f;
     private float fireRate;
     private Weapons currentWeapon;
     private string oldGun;
     // Start is called before the first frame update
     void Start()
     {
+        
         currentWeapon = transform.GetComponent<GunPick>().currentWeapon;
         fireRate = transform.GetComponent<GunPick>().currentWeapon.getFireRate();
         gun = transform.GetComponent<GunPick>().currentWeapon.getName();
@@ -26,14 +28,27 @@ public class FireBullet : MonoBehaviour
         gun = transform.GetComponent<GunPick>().currentWeapon.getName();
         if (gun != oldGun)
         {
-            spawnpoints = currentWeapon.instantiateBulletSpawnPoints();
+            spawnpoints = currentWeapon.instantiateBulletSpawnPoints(transform);
         }
-        if(currentWeapon is Pistols)
+        semiTime += Time.deltaTime;
+        if (currentWeapon is Shotguns || currentWeapon is SemiAutoRifles)
         {
-            currentWeapon.fire(spawnpoints);
+            if (semiTime >= fireRate)
+            {
+                currentWeapon.fire(spawnpoints,transform);
+                if (Input.GetMouseButtonDown(0))
+                {
+                    semiTime = 0;
+                }
+            }
         }
+
+
         oldGun = gun;
+
         
+
+
     }
     private void FixedUpdate()
     {
@@ -42,12 +57,13 @@ public class FireBullet : MonoBehaviour
         time += Time.deltaTime;
         if(currentWeapon is Rifles)
         {
-            if (time >= fireRate && spawnpoints != null)
+            if (time >= fireRate)
             {
-                currentWeapon.fire(spawnpoints);
+                currentWeapon.fire(spawnpoints,transform);
                 time = 0;
             }
-        }  
+        }
+        
     }
 
 }

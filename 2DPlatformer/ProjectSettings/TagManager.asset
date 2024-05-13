@@ -6,6 +6,8 @@ TagManager:
   tags:
   - BulletSpawnPointTag
   - PlayerGunPoint
+  - RangedEnemy
+  - Bullet
   layers:
   - Default
   - TransparentFX

@@ -20,11 +20,17 @@ public class BulletCrashLogic : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Destroy(gameObject);
+        if (collision.tag != "Bullet")
+        {
+            Destroy(gameObject);
+        }
     }
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        Destroy(gameObject);
+        if (collision.tag != "Bullet")
+        {
+            Destroy(gameObject);
+        }
     }
 }

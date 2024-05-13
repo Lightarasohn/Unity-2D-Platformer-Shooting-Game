@@ -16,6 +16,7 @@ public class Weapons : Behaviour
     private int mags;
     private Sprite sprite;
     private float fireRate;
+    private float damage;
     private string bulletPoints;
     private string weaponBullet;
 
@@ -41,9 +42,8 @@ public class Weapons : Behaviour
         
     }
 
-    public GameObject instantiateBulletSpawnPoints()
+    public GameObject instantiateBulletSpawnPoints(Transform transform)
     {
-        Transform transform = GameObject.FindGameObjectWithTag("PlayerGunPoint").transform;
         GameObject spawnpoints;
         spawnpoints = Resources.Load<GameObject>("WeaponsBulletSpawnPoints/" + this.getBulletPoints());
         
@@ -58,12 +58,19 @@ public class Weapons : Behaviour
         GameObject.Destroy(oldSpawnPoints);
     }
 
-    public void fire(GameObject spawnpoints)
+    public void fire(GameObject spawnpoints, Transform transform)
     {
-        Transform transform = GameObject.FindGameObjectWithTag("PlayerGunPoint").transform;
         Weapons currentWeapon = transform.GetComponent<GunPick>().currentWeapon;
         GameObject bullet = Resources.Load<GameObject>("Prefabs/" + this.getWeaponBullet());
-        PlayerMovement pm = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
+        PlayerMovement pm;
+        if (transform.tag == "PlayerGunPoint")
+        {
+            pm = transform.parent.parent.GetComponent<PlayerMovement>();
+        }
+        else //else if olacak ve dusmana gore doldurulacak
+        {
+            pm = null;
+        }
         Transform front = spawnpoints.transform.GetChild(0);
         Transform back = spawnpoints.transform.GetChild(1);
         if (currentWeapon is Rifles)
@@ -90,7 +97,70 @@ public class Weapons : Behaviour
                 }
             }
         }
-        else if (currentWeapon is Pistols)
+        else if (currentWeapon is Shotguns)
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                float tempAngle;
+                Quaternion rotation;
+
+                if (transform.tag == "PlayerGunPoint")
+                {
+                    GunAngle gunAngleScript = transform.GetComponent<GunAngle>();
+                    tempAngle = gunAngleScript.angle;
+                }
+                else //else if olacak ve dusmana gore doldurulacak
+                {
+                    tempAngle = 0;
+                }
+
+                if (pm.isFacingRight)
+                {
+                    var insPosition = new Vector3((transform.parent.position.x) + (transform.parent.localScale.x * transform.localPosition.x) + (transform.parent.localScale.x * front.localPosition.x * Mathf.Cos(transform.rotation.eulerAngles.z * Mathf.Deg2Rad)), transform.parent.position.y + transform.parent.localScale.y * transform.localPosition.y + Mathf.Sin(transform.rotation.eulerAngles.z * Mathf.Deg2Rad) * front.localPosition.x * transform.parent.localScale.y, 0);
+                    
+
+                    rotation = Quaternion.AngleAxis(tempAngle, Vector3.forward);
+                    Instantiate(bullet, insPosition, rotation);
+                    rotation = Quaternion.AngleAxis(tempAngle + 5, Vector3.forward);
+                    Instantiate(bullet, insPosition, rotation);
+                    rotation = Quaternion.AngleAxis(tempAngle - 5, Vector3.forward);
+                    Instantiate(bullet, insPosition, rotation);
+
+
+                }
+                else
+                {
+                    if (transform.rotation.eulerAngles.z <= 0)
+                    {
+                        var insPosition = new Vector3(transform.parent.position.x + transform.parent.localScale.x * transform.localPosition.x + transform.parent.localScale.x * front.localPosition.x * Mathf.Cos((transform.rotation.eulerAngles.z + 180) * Mathf.Deg2Rad) * -1, transform.parent.position.y + transform.parent.localScale.y * transform.localPosition.y + -1 * Mathf.Sin((transform.rotation.eulerAngles.z + 180) * Mathf.Deg2Rad) * back.localPosition.x * transform.parent.localScale.y, 0);
+
+                        rotation = Quaternion.AngleAxis(tempAngle, Vector3.forward);
+                        Instantiate(bullet, insPosition, rotation);
+                        rotation = Quaternion.AngleAxis(tempAngle + 5, Vector3.forward);
+                        Instantiate(bullet, insPosition, rotation);
+                        rotation = Quaternion.AngleAxis(tempAngle - 5, Vector3.forward);
+                        Instantiate(bullet, insPosition, rotation);
+
+
+                    }
+                    else
+                    {
+                        var insPosition = new Vector3(transform.parent.position.x + transform.parent.localScale.x * transform.localPosition.x + transform.parent.localScale.x * front.localPosition.x * Mathf.Cos((180 - transform.rotation.eulerAngles.z) * Mathf.Deg2Rad) * -1, transform.parent.position.y + transform.parent.localScale.y * transform.localPosition.y + -1 * Mathf.Sin((180 - transform.rotation.eulerAngles.z) * Mathf.Deg2Rad) * back.localPosition.x * transform.parent.localScale.y, 0);
+
+
+                        rotation = Quaternion.AngleAxis(tempAngle, Vector3.forward);
+                        Instantiate(bullet, insPosition, rotation);
+                        rotation = Quaternion.AngleAxis(tempAngle + 5, Vector3.forward);
+                        Instantiate(bullet, insPosition, rotation);
+                        rotation = Quaternion.AngleAxis(tempAngle - 5, Vector3.forward);
+                        Instantiate(bullet, insPosition, rotation);
+
+
+                    }
+                }
+            }
+        }
+        else if(currentWeapon is SemiAutoRifles)
         {
             if (Input.GetMouseButtonDown(0))
             {
@@ -103,7 +173,7 @@ public class Weapons : Behaviour
                 {
                     if (transform.rotation.eulerAngles.z <= 0)
                     {
-                        var insPosition = new Vector3(transform.parent.position.x + transform.parent.localScale.x * transform.localPosition.x + transform.parent.localScale.x * front.localPosition.x * Mathf.Cos((transform.rotation.eulerAngles.z + 180) * Mathf.Deg2Rad) * -1, transform.parent.position.y + transform.parent.localScale.y * transform.localPosition.y + -1 * Mathf.Sin((transform.rotation.eulerAngles.z + 180) * Mathf.Deg2Rad) * back.localPosition.x * transform.parent.localScale.y, 0);
+                        var insPosition = new Vector3(transform.parent.position.x + transform.parent.localScale.x * transform.localPosition.x + transform.parent.localScale.x * front.localPosition.x * Mathf.Cos((transform.rotation.eulerAngles.z + 180) * Mathf.Deg2Rad), transform.parent.position.y + transform.parent.localScale.y * transform.localPosition.y + -1 * Mathf.Sin((transform.rotation.eulerAngles.z + 180) * Mathf.Deg2Rad) * back.localPosition.x * transform.parent.localScale.y, 0);
                         Instantiate(bullet, insPosition, transform.rotation);
                     }
                     else
@@ -116,10 +186,16 @@ public class Weapons : Behaviour
         }
 
 
-
     }
 
-
+    protected float getDamage()
+    {
+        return this.damage;
+    }
+    protected void setDamage(float dmg)
+    {
+        this.damage = dmg;
+    }
     public string getName()
     {
         return this.gunName;
@@ -187,11 +263,11 @@ public class Weapons : Behaviour
 
 }
 
-public class Pistols : Weapons
+public class SemiAutoRifles : Weapons
 {
-    public Pistols()
+    public SemiAutoRifles()
     {
-        setFireRate(0.3f);
+        setFireRate(0.5f);
     }
 }
 
@@ -199,7 +275,15 @@ public class Rifles : Weapons
 {
     public Rifles()
     {
-        setFireRate(0.1f);
+        setFireRate(0.2f);
+    }
+}
+
+public class Shotguns : Weapons
+{
+    public Shotguns()
+    {
+        setFireRate(0.7f);
     }
 }
 
@@ -218,10 +302,11 @@ public class Weapon1 : Rifles
         setSprite(Resources.Load<Sprite>("Sprites/Weapon1"));
         setBulletPoints("WEAPON1BULLETPOINTS");
         setWeaponBullet("Weapon1Bullet");
+        setDamage(0);
     }
 }
 
-public class Weapon2 : Rifles
+public class Weapon2 : SemiAutoRifles
 {
     public Weapon2()
     {
@@ -232,10 +317,11 @@ public class Weapon2 : Rifles
         setSprite(Resources.Load<Sprite>("Sprites/Weapon2"));
         setBulletPoints("WEAPON2BULLETPOINTS");
         setWeaponBullet("Weapon2Bullet");
+        setDamage(0);
     }
 }
 
-public class Weapon3 : Rifles
+public class Weapon3 : SemiAutoRifles
 {
     public Weapon3()
     {
@@ -246,6 +332,7 @@ public class Weapon3 : Rifles
         setSprite(Resources.Load<Sprite>("Sprites/Weapon3"));
         setBulletPoints("WEAPON3BULLETPOINTS");
         setWeaponBullet("Weapon3Bullet");
+        setDamage(0);
     }
 }
 
@@ -260,10 +347,11 @@ public class Weapon4 : Rifles
         setSprite(Resources.Load<Sprite>("Sprites/Weapon4"));
         setBulletPoints("WEAPON4BULLETPOINTS");
         setWeaponBullet("Weapon4Bullet");
+        setDamage(0);
     }
 }
 
-public class Weapon5 : Rifles
+public class Weapon5 : Shotguns
 {
     public Weapon5()
     {
@@ -274,5 +362,6 @@ public class Weapon5 : Rifles
         setSprite(Resources.Load<Sprite>("Sprites/Weapon5"));
         setBulletPoints("WEAPON5BULLETPOINTS");
         setWeaponBullet("Weapon5Bullet");
+        setDamage(0);
     }
 }
