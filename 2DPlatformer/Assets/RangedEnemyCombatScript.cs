@@ -13,7 +13,7 @@ public class RangedEnemyCombatScript : MonoBehaviour
     private GameObject spawnPoints;
     private bool canShoot = false;
     private float semiTime;
-    
+    private bool canAngle = false;
     void Start()
     {
         angle = 0;
@@ -34,7 +34,7 @@ public class RangedEnemyCombatScript : MonoBehaviour
         {    
             if (enemy.getAgroDistance() >= enemy.distanceToPlayer(playerTransform))
             {
-                angle = enemy.rotateGun(transform);
+                canAngle = true;
                 canShoot = true;
                 if (enemy.isPlayerBehind(parentEnemy))
                 {
@@ -57,5 +57,8 @@ public class RangedEnemyCombatScript : MonoBehaviour
         isAgroed = enemy.isAgro(parentEnemy);
     }
 
-    
+    private void FixedUpdate()
+    {
+        if (canAngle) { angle = enemy.rotateGun(transform); }
+    }
 }
