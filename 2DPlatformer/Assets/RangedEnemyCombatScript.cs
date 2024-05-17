@@ -1,0 +1,61 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class RangedEnemyCombatScript : MonoBehaviour
+{
+    private Weapons enemyWeapon;
+    private RangedEnemy enemy;
+    private Transform parentEnemy;
+    private Transform playerTransform;
+    private bool isAgroed = false;
+    public float angle;
+    private GameObject spawnPoints;
+    private bool canShoot = false;
+    private float semiTime;
+    
+    void Start()
+    {
+        angle = 0;
+        playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+        parentEnemy = transform.parent.transform.parent.transform;
+        enemy = parentEnemy.GetComponent<RangedEnemyScript>().enemy;
+        enemyWeapon = parentEnemy.GetComponent<RangedEnemyScript>().enemyWeapon;
+        spawnPoints = parentEnemy.GetComponent<RangedEnemyScript>().spawnPoints;
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if(spawnPoints == null) spawnPoints = parentEnemy.GetComponent<RangedEnemyScript>().spawnPoints;
+        if (enemy == null) enemy = parentEnemy.GetComponent<RangedEnemyScript>().enemy;
+        if(enemyWeapon == null) enemyWeapon = parentEnemy.GetComponent<RangedEnemyScript>().enemyWeapon;
+        if (isAgroed || enemy.isAgro(parentEnemy))
+        {    
+            if (enemy.getAgroDistance() >= enemy.distanceToPlayer(playerTransform))
+            {
+                angle = enemy.rotateGun(transform);
+                canShoot = true;
+                if (enemy.isPlayerBehind(parentEnemy))
+                {
+                    enemy.flipEnemy(parentEnemy);
+                }
+            }
+        }
+        semiTime += Time.deltaTime;
+        
+        if (semiTime >= enemyWeapon.getFireRate())
+        {
+            if (canShoot)
+            {
+                enemyWeapon.fire(spawnPoints, transform);
+                semiTime = 0;
+            }
+            
+        }
+        canShoot = false;
+        isAgroed = enemy.isAgro(parentEnemy);
+    }
+
+    
+}
