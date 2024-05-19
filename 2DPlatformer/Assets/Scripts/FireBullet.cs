@@ -25,6 +25,11 @@ public class FireBullet : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (currentWeapon == null)
+        {
+            currentWeapon = transform.GetComponent<GunPick>().currentWeapon;
+        }
+
         gun = transform.GetComponent<GunPick>().currentWeapon.getName();
         if (gun != oldGun)
         {
