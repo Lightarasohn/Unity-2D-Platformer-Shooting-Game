@@ -17,13 +17,13 @@ public class GunSpawnPrefabScript : MonoBehaviour
     {
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnCollisionStay2D(Collision2D collision)
     {
         if (Input.GetButtonDown("E"))
         {
-            GameObject.Destroy(gameObject);
             GameObject.FindGameObjectWithTag("PlayerGunPoint").transform.GetComponent<GunPick>().isGunPicked = true;
             GameObject.FindGameObjectWithTag("PlayerGunPoint").transform.GetComponent<GunPick>().pickedGun= droppedWeapon;
+            GameObject.Destroy(gameObject);
         }
     }
 }

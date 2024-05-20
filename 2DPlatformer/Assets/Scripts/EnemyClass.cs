@@ -138,9 +138,9 @@ public class RangedEnemy : EnemyClass
     {
         base.setAgroDistance(10);
         base.setWeapon(pickRangedEnemyGun());
-        base.setBodySprite(Resources.Load<Sprite>("Sprites/EnemySprites/SeperatedBodies/Idle_0"));
-        base.setStaticArmSprite(Resources.Load<Sprite>("Sprites/EnemySprites/SeperatedArms/StaticArms/MainArms1"));
-        base.setHandSprite(Resources.Load<Sprite>("Sprites/EnemySprites/SeperatedArms/Hands/MainArms2.png"));
+        base.setBodySprite(Resources.Load<Sprite>("Sprites/EnemySprites/SeperatedBodies/cyborgidle_0"));
+        base.setStaticArmSprite(Resources.Load<Sprite>("Sprites/EnemySprites/SeperatedArms/StaticArms/cyborg static arm"));
+        base.setHandSprite(Resources.Load<Sprite>("Sprites/EnemySprites/SeperatedArms/Hands/cyborg hand"));
     
     }
     public float rotateGun(Transform transform) 
@@ -183,7 +183,7 @@ public class RangedEnemy : EnemyClass
     {
         Weapons wp;
         Random rnd = new Random();
-        switch (rnd.Next(1,5)) 
+        switch (rnd.Next(0,5)) 
         {
             case 1:
                 wp = new Weapon1();
