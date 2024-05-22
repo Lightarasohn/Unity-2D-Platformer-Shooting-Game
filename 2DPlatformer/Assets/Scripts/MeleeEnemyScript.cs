@@ -26,55 +26,59 @@ public class MeleeEnemyScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (enemy.isDying())
+        if (GameObject.FindGameObjectWithTag("Player") != null && !GameObject.FindGameObjectWithTag("Player").transform.GetComponent<PlayerHealth>().isPlayerDead() && Time.timeScale == 1)
         {
-            GameObject.Destroy(gameObject);
-        }
-        
-        if (isAgroed || enemy.isAgro(transform))
-        {
-            if (enemy.getAgroDistance() >= enemy.distanceToPlayer(playerTransform))
+            if (enemy.isDying())
             {
-                
-                enemyRb.velocity = new Vector2(enemy.getAgroMovespeed() * (transform.localScale.x * 10 / 7)  , enemyRb.velocity.y);
-                if(enemy.canHit(boxCollider, transform))
+                GameObject.Destroy(gameObject);
+            }
+
+            if (isAgroed || enemy.isAgro(transform))
+            {
+                if (enemy.getAgroDistance() >= enemy.distanceToPlayer(playerTransform))
                 {
-                    hitTimer += Time.deltaTime;
-                    if(hitTimer >= 2)
+
+                    enemyRb.velocity = new Vector2(enemy.getAgroMovespeed() * (transform.localScale.x * 10 / 7), enemyRb.velocity.y);
+                    if (enemy.canHit(boxCollider, transform))
                     {
-                        hitTimer = 0;
-                        GameObject.FindGameObjectWithTag("Player").transform.GetComponent<PlayerHealth>().hurtPlayer(50);
+                        hitTimer += Time.deltaTime;
+                        if (hitTimer >= 2)
+                        {
+                            hitTimer = 0;
+                            GameObject.FindGameObjectWithTag("Player").transform.GetComponent<PlayerHealth>().hurtPlayer(50);
+                        }
+                    }
+
+                    if (enemy.isPlayerBehind(transform))
+                    {
+
+                        enemy.flipEnemy(transform);
                     }
                 }
-                
-                if (enemy.isPlayerBehind(transform))
+                else
                 {
-                    
-                    enemy.flipEnemy(transform);
+
+                    timer = enemy.getVoltaTime();
                 }
             }
             else
             {
-                
-                timer = enemy.getVoltaTime();
+                if (timer >= enemy.getVoltaTime() + 1.5f)
+                {
+                    if (!isStart) enemy.flipEnemy(transform);
+                    else { isStart = false; }
+                    enemy.voltaAt(transform, enemyRb);
+                    timer = 0f;
+
+                }
+                else if (timer >= enemy.getVoltaTime())
+                {
+                    enemyRb.velocity = new Vector2(0, 0);
+                }
+                timer += Time.deltaTime;
             }
+            isAgroed = enemy.isAgro(transform);
         }
-        else
-        {
-            if (timer >= enemy.getVoltaTime() + 1.5f)
-            {
-                if (!isStart) enemy.flipEnemy(transform);
-                else { isStart = false; }
-                enemy.voltaAt(transform, enemyRb);
-                timer = 0f;
-                
-            }else if(timer >= enemy.getVoltaTime())
-            {
-                enemyRb.velocity = new Vector2(0, 0);
-            }
-            timer += Time.deltaTime;
-        }
-        isAgroed = enemy.isAgro(transform);
     }
 
     

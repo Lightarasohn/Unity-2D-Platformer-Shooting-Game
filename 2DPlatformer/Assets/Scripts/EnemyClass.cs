@@ -156,7 +156,7 @@ public class RangedEnemy : EnemyClass
         {
             if (!sr.flipX)
             {
-                Debug.Log("Silah Cevrildi");
+                
                 srParent.flipX = true;
                 srParent.flipY = true;
                 sr.flipX = true;

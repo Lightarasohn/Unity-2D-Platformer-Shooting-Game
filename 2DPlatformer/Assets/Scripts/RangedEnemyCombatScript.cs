@@ -27,7 +27,9 @@ public class RangedEnemyCombatScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(spawnPoints == null) spawnPoints = parentEnemy.GetComponent<RangedEnemyScript>().spawnPoints;
+        if (GameObject.FindGameObjectWithTag("Player") != null && !GameObject.FindGameObjectWithTag("Player").transform.GetComponent<PlayerHealth>().isPlayerDead() && Time.timeScale == 1)
+        {
+            if(spawnPoints == null) spawnPoints = parentEnemy.GetComponent<RangedEnemyScript>().spawnPoints;
         if (enemy == null) enemy = parentEnemy.GetComponent<RangedEnemyScript>().enemy;
         if(enemyWeapon == null) enemyWeapon = parentEnemy.GetComponent<RangedEnemyScript>().enemyWeapon;
         if (isAgroed || enemy.isAgro(parentEnemy))
@@ -54,11 +56,13 @@ public class RangedEnemyCombatScript : MonoBehaviour
             
         }
         canShoot = false;
-        isAgroed = enemy.isAgro(parentEnemy);
+            isAgroed = enemy.isAgro(parentEnemy);
+        }
     }
 
     private void FixedUpdate()
     {
-        if (canAngle) { angle = enemy.rotateGun(transform); }
+        if (GameObject.FindGameObjectWithTag("Player") != null && !GameObject.FindGameObjectWithTag("Player").transform.GetComponent<PlayerHealth>().isPlayerDead() && Time.timeScale == 1)
+            if (canAngle) { angle = enemy.rotateGun(transform); }
     }
 }
