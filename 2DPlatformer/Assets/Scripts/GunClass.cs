@@ -27,7 +27,7 @@ public class Weapons
     public void spawnGunPrefab(Weapons gunType, Vector2 gunPosition, Quaternion gunRotation)
     {
         GameObject gun, instantiedGun;
-        gunPosition.Set(gunPosition.x, gunPosition.y - 1.4f);
+        gunPosition.Set(gunPosition.x, gunPosition.y - 0.7f);
         gun = Resources.Load<GameObject>("Prefabs/GunSpawnPrefab");
         instantiedGun = GameObject.Instantiate(gun, gunPosition, gunRotation);
         instantiedGun.transform.GetComponent<GunSpawnPrefabScript>().droppedWeapon = gunType;

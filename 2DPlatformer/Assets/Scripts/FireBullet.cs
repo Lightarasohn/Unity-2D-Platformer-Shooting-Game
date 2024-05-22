@@ -21,7 +21,9 @@ public class FireBullet : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        currentWeapon = transform.GetComponent<GunPick>().currentWeapon;
+        if (!GameObject.FindGameObjectWithTag("Player").transform.GetComponent<PlayerHealth>().isPlayerDead() && Time.timeScale == 1)
+        {
+            currentWeapon = transform.GetComponent<GunPick>().currentWeapon;
         fireRate = currentWeapon.getFireRate();
         if (spawnpoints == null)
         {
@@ -29,15 +31,16 @@ public class FireBullet : MonoBehaviour
         }
         
         semiTime += Time.deltaTime;
-        if (currentWeapon is Shotguns || currentWeapon is SemiAutoRifles)
-        {
-            if (semiTime >= fireRate)
+            if (currentWeapon is Shotguns || currentWeapon is SemiAutoRifles)
             {
-                
-                if (Input.GetMouseButtonDown(0))
+                if (semiTime >= fireRate)
                 {
-                    currentWeapon.fire(spawnpoints, transform, currentWeapon);
-                    semiTime = 0;
+
+                    if (Input.GetMouseButtonDown(0))
+                    {
+                        currentWeapon.fire(spawnpoints, transform, currentWeapon);
+                        semiTime = 0;
+                    }
                 }
             }
         }
@@ -45,15 +48,17 @@ public class FireBullet : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        
-        
-        time += Time.deltaTime;
-        if(currentWeapon is Rifles)
+
+        if (!GameObject.FindGameObjectWithTag("Player").transform.GetComponent<PlayerHealth>().isPlayerDead() && Time.timeScale == 1)
         {
-            if (time >= fireRate)
+            time += Time.deltaTime;
+            if (currentWeapon is Rifles)
             {
-                currentWeapon.fire(spawnpoints,transform, currentWeapon);
-                time = 0;
+                if (time >= fireRate)
+                {
+                    currentWeapon.fire(spawnpoints, transform, currentWeapon);
+                    time = 0;
+                }
             }
         }
         

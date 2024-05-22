@@ -26,7 +26,7 @@ public class PlayerHealth : MonoBehaviour
     {
         if (isPlayerDead())
         {
-            SceneManager.LoadScene(0);
+            GameObject.FindGameObjectWithTag("DeadMenu").transform.GetChild(0).gameObject.SetActive(true);
             GameObject.Destroy(gameObject);
         }
     }

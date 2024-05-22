@@ -15,6 +15,8 @@ public class BackgroundScript : MonoBehaviour
     }
     private void Update()
     {
+        if (GameObject.FindGameObjectWithTag("Player") != null && !GameObject.FindGameObjectWithTag("Player").transform.GetComponent<PlayerHealth>().isPlayerDead() && Time.timeScale == 1)
+        {
         Vector3 Position = MainCamera.transform.position;
         float Temp = Position.x * (1 - speedOfParallax);
         float Distance = Position.x * speedOfParallax;
@@ -23,14 +25,15 @@ public class BackgroundScript : MonoBehaviour
 
         transform.position = NewPosition;
 
-        // arka plan tekarari\\
-        if (Temp > _startingPos + (_lengthOfSprites / 2))
-        {
-            _startingPos += _lengthOfSprites;
-        }
-        else if (Temp < _startingPos - (_lengthOfSprites / 2))
-        {
-            _startingPos -= _lengthOfSprites;
+            // arka plan tekarari\\
+            if (Temp > _startingPos + (_lengthOfSprites / 2))
+            {
+                _startingPos += _lengthOfSprites;
+            }
+            else if (Temp < _startingPos - (_lengthOfSprites / 2))
+            {
+                _startingPos -= _lengthOfSprites;
+            }
         }
     }
 

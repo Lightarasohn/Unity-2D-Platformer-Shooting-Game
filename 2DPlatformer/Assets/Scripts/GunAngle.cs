@@ -28,29 +28,30 @@ public class GunAngle : MonoBehaviour
 
     private void rotateGun()
     {
-
-        Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        if(!GameObject.FindGameObjectWithTag("Player").transform.GetComponent<PlayerHealth>().isPlayerDead() && Time.timeScale == 1)
+        {Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector2 vector = (mousePos - (Vector2)(transform.parent.position));
         angle = Mathf.Atan2(vector.y, vector.x) * Mathf.Rad2Deg;
         Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.forward);
         transform.parent.rotation = rotation;
 
-        if (!pm.isFacingRight)
-        {
-            if (!sr.flipX)
+            if (!pm.isFacingRight)
             {
-                srParent.flipX = true;
-                srParent.flipY = true;
-                sr.flipX = true;
-                sr.flipY = true;
+                if (!sr.flipX)
+                {
+                    srParent.flipX = true;
+                    srParent.flipY = true;
+                    sr.flipX = true;
+                    sr.flipY = true;
+                }
             }
-        }
-        else
-        {
-            srParent.flipX = false;
-            srParent.flipY = false;
-            sr.flipY = false;
-            sr.flipX = false;
+            else
+            {
+                srParent.flipX = false;
+                srParent.flipY = false;
+                sr.flipY = false;
+                sr.flipX = false;
+            }
         }
         
         

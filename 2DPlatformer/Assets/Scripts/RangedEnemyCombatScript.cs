@@ -13,7 +13,7 @@ public class RangedEnemyCombatScript : MonoBehaviour
     private GameObject spawnPoints;
     private bool canShoot = false;
     private float semiTime;
-    
+    private bool canAngle = false;
     void Start()
     {
         angle = 0;
@@ -27,14 +27,16 @@ public class RangedEnemyCombatScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(spawnPoints == null) spawnPoints = parentEnemy.GetComponent<RangedEnemyScript>().spawnPoints;
+        if (GameObject.FindGameObjectWithTag("Player") != null && !GameObject.FindGameObjectWithTag("Player").transform.GetComponent<PlayerHealth>().isPlayerDead() && Time.timeScale == 1)
+        {
+            if(spawnPoints == null) spawnPoints = parentEnemy.GetComponent<RangedEnemyScript>().spawnPoints;
         if (enemy == null) enemy = parentEnemy.GetComponent<RangedEnemyScript>().enemy;
         if(enemyWeapon == null) enemyWeapon = parentEnemy.GetComponent<RangedEnemyScript>().enemyWeapon;
         if (isAgroed || enemy.isAgro(parentEnemy))
         {    
             if (enemy.getAgroDistance() >= enemy.distanceToPlayer(playerTransform))
             {
-                angle = enemy.rotateGun(transform);
+                canAngle = true;
                 canShoot = true;
                 if (enemy.isPlayerBehind(parentEnemy))
                 {
@@ -54,8 +56,13 @@ public class RangedEnemyCombatScript : MonoBehaviour
             
         }
         canShoot = false;
-        isAgroed = enemy.isAgro(parentEnemy);
+            isAgroed = enemy.isAgro(parentEnemy);
+        }
     }
 
-    
+    private void FixedUpdate()
+    {
+        if (GameObject.FindGameObjectWithTag("Player") != null && !GameObject.FindGameObjectWithTag("Player").transform.GetComponent<PlayerHealth>().isPlayerDead() && Time.timeScale == 1)
+            if (canAngle) { angle = enemy.rotateGun(transform); }
+    }
 }
