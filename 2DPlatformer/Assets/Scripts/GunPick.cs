@@ -22,10 +22,11 @@ public class GunPick : MonoBehaviour
     {
         if (isGunPicked)
         {
+            isGunPicked = false;
             currentWeapon.eraseOldBulletSpawnPoints();
             currentWeapon = pickedGun;
             spriteRenderer.sprite = currentWeapon.getSprite();
-            isGunPicked = false;
+            currentWeapon.instantiateBulletSpawnPoints(transform);
         }
     }
 }

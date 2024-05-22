@@ -70,12 +70,9 @@ public class EnemyClass
     {
         this.health -= damage;
     }
-    public void isDying(GameObject GO)
+    public bool isDying()
     {
-        if(health <= 0)
-        {
-            GameObject.Destroy(GO);
-        }
+        return this.health <= 0;
     }
     public float distanceToPlayer(Transform transform)
     {
@@ -122,13 +119,7 @@ public class EnemyClass
         localscale.x *= -1;
         transform.localScale = localscale;
     }
-    public void flipEnemyIFplayerIsBehind(Transform transform)
-    {
-        if (this.isPlayerBehind(transform))
-        {
-            this.flipEnemy(transform.parent.transform.parent.transform);
-        }
-    }
+
 }
 
 public class RangedEnemy : EnemyClass
@@ -136,6 +127,7 @@ public class RangedEnemy : EnemyClass
     
     public RangedEnemy()
     {
+        base.setHealth(100);
         base.setAgroDistance(10);
         base.setWeapon(pickRangedEnemyGun());
         base.setBodySprite(Resources.Load<Sprite>("Sprites/EnemySprites/SeperatedBodies/cyborgidle_0"));
@@ -212,8 +204,32 @@ public class RangedEnemy : EnemyClass
 
 public class MeleeEnemy : EnemyClass
 {
+    private float voltaMovespeed;
+    private float agroMovespeed;
+    private float voltaTime;
     public MeleeEnemy()
     {
+        this.voltaTime = 4f;
+        this.voltaMovespeed = 1.5f;
+        this.agroMovespeed = 3;
+        base.setHealth(100);
+        base.setAgroDistance(10);
+        base.setBodySprite(Resources.Load<Sprite>("Sprites/EnemySprites/SeperatedBodies/biker idle_0"));
+        base.setStaticArmSprite(Resources.Load<Sprite>("Sprites/EnemySprites/SeperatedArms/StaticArms/biker arm"));
+        base.setHandSprite(Resources.Load<Sprite>("Sprites/EnemySprites/SeperatedArms/Hands/biker hands"));
+    }
+    public float getAgroMovespeed()
+    {
+        return this.agroMovespeed;
+    }
+    public float getVoltaTime()
+    {
+        return this.voltaTime;
+    }
+    public void voltaAt(Transform transform, Rigidbody2D rb)
+    {
+        rb.velocity = new Vector2(this.voltaMovespeed * (transform.localScale.x * 10 / 7), rb.velocity.y);
         
     }
+   
 }

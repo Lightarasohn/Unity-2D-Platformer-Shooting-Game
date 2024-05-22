@@ -8,6 +8,8 @@ TagManager:
   - PlayerGunPoint
   - RangedEnemy
   - Bullet
+  - Enemy
+  - MeleeEnemy
   layers:
   - Default
   - TransparentFX

@@ -48,7 +48,7 @@ public class RangedEnemyCombatScript : MonoBehaviour
         {
             if (canShoot)
             {
-                enemyWeapon.fire(spawnPoints, transform);
+                enemyWeapon.fire(spawnPoints, transform, enemyWeapon);
                 semiTime = 0;
             }
             
