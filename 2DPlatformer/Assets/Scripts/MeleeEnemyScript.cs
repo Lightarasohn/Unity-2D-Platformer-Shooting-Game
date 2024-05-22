@@ -26,6 +26,10 @@ public class MeleeEnemyScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (enemy.isDying())
+        {
+            GameObject.Destroy(gameObject);
+        }
         
         if (isAgroed || enemy.isAgro(transform))
         {
