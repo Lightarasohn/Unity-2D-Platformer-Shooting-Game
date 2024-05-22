@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Menu.unity
     guid: 5e98444f8c039354aab44b0faa59566e
   - enabled: 1
+    path: Assets/Scenes/Bolum-1.unity
+    guid: b24a3ce2366b36b42a69fbe41eb5c701
+  - enabled: 0
     path: Assets/Scenes/SampleScene.unity
     guid: e9948bb47fe06ad419a2a690cdfd4ed4
   m_configObjects: {}
