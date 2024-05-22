@@ -10,7 +10,8 @@ public class MeleeEnemyScript : MonoBehaviour
     private float timer = 8f;
     private Rigidbody2D enemyRb;
     private bool isStart = true;
-
+    private BoxCollider2D boxCollider;
+    private float hitTimer;
     void Start()
     {
         enemyRb = transform.GetComponent<Rigidbody2D>();
@@ -19,6 +20,7 @@ public class MeleeEnemyScript : MonoBehaviour
         transform.GetChild(0).transform.GetComponent<SpriteRenderer>().sprite = enemy.getHandSprite();
         transform.GetChild(1).transform.GetComponent<SpriteRenderer>().sprite = enemy.getStaticArmSprite();
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+        boxCollider = transform.GetComponent<BoxCollider2D>();
     }
 
     // Update is called once per frame
@@ -31,6 +33,16 @@ public class MeleeEnemyScript : MonoBehaviour
             {
                 
                 enemyRb.velocity = new Vector2(enemy.getAgroMovespeed() * (transform.localScale.x * 10 / 7)  , enemyRb.velocity.y);
+                if(enemy.canHit(boxCollider, transform))
+                {
+                    hitTimer += Time.deltaTime;
+                    if(hitTimer >= 2)
+                    {
+                        hitTimer = 0;
+                        GameObject.FindGameObjectWithTag("Player").transform.GetComponent<PlayerHealth>().hurtPlayer(50);
+                    }
+                }
+                
                 if (enemy.isPlayerBehind(transform))
                 {
                     
@@ -60,4 +72,6 @@ public class MeleeEnemyScript : MonoBehaviour
         }
         isAgroed = enemy.isAgro(transform);
     }
+
+    
 }
