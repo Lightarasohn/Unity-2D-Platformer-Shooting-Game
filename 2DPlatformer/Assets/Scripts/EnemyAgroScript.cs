@@ -15,22 +15,16 @@ public class EnemyAgroScript : MonoBehaviour
     [SerializeField]
     float moveSpeed;
 
-    [SerializeField]
-    Transform pointA;
-
-    [SerializeField]
-    Transform pointB;
-
-    private Transform currentPoint;
     private Rigidbody2D rb;
+
     private bool isFacingLeft;
     private bool isAgro;
-
+    private float timer;
+    private bool moveRight = true;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        currentPoint = pointA;
     }
 
     // Update is called once per frame
@@ -40,7 +34,7 @@ public class EnemyAgroScript : MonoBehaviour
         {
             voltaAt();
         }
-        if(canSeePlayer(agroRange))
+        if (canSeePlayer(agroRange))
         {
             isAgro = true;
         }
@@ -51,40 +45,39 @@ public class EnemyAgroScript : MonoBehaviour
                 Invoke("takipEtmeyiBirak", 3);
             }
         }
-        if(isAgro)
+        if (isAgro)
         {
             takipEt();
         }
     }
-    
+
     void voltaAt()
     {
-        if(currentPoint == pointA)
+        if (timer > 4)
+        {
+            moveRight = !moveRight;
+            timer = 0;
+        }
+
+        if (moveRight)
         {
             rb.velocity = new Vector2(moveSpeed, 1);
+            transform.localScale = new Vector2(1, 1);
             isFacingLeft = false;
         }
         else
         {
-            rb.velocity = new Vector2 (-moveSpeed, 1);
+            rb.velocity = new Vector2(-moveSpeed, 1);
+            transform.localScale = new Vector2(-1, 1);
             isFacingLeft = true;
         }
 
-        if(Vector2.Distance(transform.position, currentPoint.position) < 0.5f && currentPoint == pointA)
-        {
-            flip();
-            currentPoint = pointB;
-        }
-        if (Vector2.Distance(transform.position, currentPoint.position) < 0.5f && currentPoint == pointB)
-        {
-            flip();
-            currentPoint = pointA;
-        }
+        timer += Time.deltaTime;
     }
 
     void takipEt()
     {
-        if(transform.position.x < player.position.x)
+        if (transform.position.x < player.position.x)
         {
             rb.velocity = new Vector2(moveSpeed * 1.5f, 0);
             transform.localScale = new Vector2(1, 1);
@@ -92,7 +85,7 @@ public class EnemyAgroScript : MonoBehaviour
         }
         else
         {
-            rb.velocity = new Vector2 (-moveSpeed * 1.5f, 0);
+            rb.velocity = new Vector2(-moveSpeed * 1.5f, 0);
             transform.localScale = new Vector2(-1, 1);
             isFacingLeft = true;
         }
@@ -101,7 +94,6 @@ public class EnemyAgroScript : MonoBehaviour
     void takipEtmeyiBirak()
     {
         isAgro = false;
-        rb.velocity = new Vector2(0, 0);
     }
 
     public bool canSeePlayer(float distance)
@@ -117,31 +109,17 @@ public class EnemyAgroScript : MonoBehaviour
         Vector2 endPosition = castPoint.position + Vector3.right * thempDistance;
         RaycastHit2D hit = Physics2D.Linecast(castPoint.position, endPosition, 1 << LayerMask.NameToLayer("Action"));
 
-        if(hit.collider != null)
+        if (hit.collider != null)
         {
             if (hit.collider.gameObject.CompareTag("Player"))
             {
                 themp = true;
-            } 
+            }
             else
             {
                 themp = false;
             }
         }
         return themp;
-    }
-
-    void flip()
-    {
-        Vector3 localScale = transform.localScale;
-        localScale.x *= -1;
-        transform.localScale = localScale;
-    }
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.DrawWireSphere(pointA.position, 0.5f);
-        Gizmos.DrawWireSphere(pointB.position, 0.5f);
-        Gizmos.DrawLine(pointA.position, pointB.position);
     }
 }

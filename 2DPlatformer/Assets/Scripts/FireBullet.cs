@@ -16,40 +16,31 @@ public class FireBullet : MonoBehaviour
     void Start()
     {
         
-        currentWeapon = transform.GetComponent<GunPick>().currentWeapon;
-        fireRate = transform.GetComponent<GunPick>().currentWeapon.getFireRate();
-        gun = transform.GetComponent<GunPick>().currentWeapon.getName();
-        oldGun = "";
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (currentWeapon == null) currentWeapon = transform.GetComponent<GunPick>().currentWeapon;
-        gun = transform.GetComponent<GunPick>().currentWeapon.getName();
-        if (gun != oldGun)
+        currentWeapon = transform.GetComponent<GunPick>().currentWeapon;
+        fireRate = currentWeapon.getFireRate();
+        if (spawnpoints == null)
         {
             spawnpoints = currentWeapon.instantiateBulletSpawnPoints(transform);
         }
+        
         semiTime += Time.deltaTime;
         if (currentWeapon is Shotguns || currentWeapon is SemiAutoRifles)
         {
-            if (semiTime >= currentWeapon.getFireRate());
+            if (semiTime >= fireRate)
             {
-                Debug.Log("Zaman");
-                currentWeapon.fire(spawnpoints, transform);
+                
                 if (Input.GetMouseButtonDown(0))
                 {
+                    currentWeapon.fire(spawnpoints, transform, currentWeapon);
                     semiTime = 0;
                 }
             }
         }
-
-
-        oldGun = gun;
-
-        
-
 
     }
     private void FixedUpdate()
@@ -61,12 +52,11 @@ public class FireBullet : MonoBehaviour
         {
             if (time >= fireRate)
             {
-                currentWeapon.fire(spawnpoints,transform);
+                currentWeapon.fire(spawnpoints,transform, currentWeapon);
                 time = 0;
             }
         }
         
-
     }
 
 }
