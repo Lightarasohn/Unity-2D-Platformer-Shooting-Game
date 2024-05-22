@@ -9,9 +9,9 @@ public class RangedEnemyScript : MonoBehaviour
     private Transform gunTransform;
     public GameObject spawnPoints;
     
-
     void Start()
     {
+        
         enemy = new RangedEnemy();
         enemyWeapon = enemy.GetWeapon();
         gunTransform = transform.GetChild(0).transform.GetChild(0).transform;
@@ -25,10 +25,6 @@ public class RangedEnemyScript : MonoBehaviour
     
     void Update()
     {
-        if (enemy.isDying())
-        {
-            enemyWeapon.spawnGunPrefab(enemyWeapon,transform.position,transform.rotation);
-            GameObject.Destroy(gameObject);
-        }
+        
     }
 }

@@ -70,9 +70,12 @@ public class EnemyClass
     {
         this.health -= damage;
     }
-    public bool isDying()
+    public void isDying(GameObject GO)
     {
-        return this.health <= 0;
+        if(health <= 0)
+        {
+            GameObject.Destroy(GO);
+        }
     }
     public float distanceToPlayer(Transform transform)
     {
@@ -119,7 +122,13 @@ public class EnemyClass
         localscale.x *= -1;
         transform.localScale = localscale;
     }
-
+    public void flipEnemyIFplayerIsBehind(Transform transform)
+    {
+        if (this.isPlayerBehind(transform))
+        {
+            this.flipEnemy(transform.parent.transform.parent.transform);
+        }
+    }
 }
 
 public class RangedEnemy : EnemyClass
@@ -127,12 +136,11 @@ public class RangedEnemy : EnemyClass
     
     public RangedEnemy()
     {
-        base.setHealth(100);
         base.setAgroDistance(10);
         base.setWeapon(pickRangedEnemyGun());
-        base.setBodySprite(Resources.Load<Sprite>("Sprites/EnemySprites/SeperatedBodies/cyborgidle_0"));
-        base.setStaticArmSprite(Resources.Load<Sprite>("Sprites/EnemySprites/SeperatedArms/StaticArms/cyborg static arm"));
-        base.setHandSprite(Resources.Load<Sprite>("Sprites/EnemySprites/SeperatedArms/Hands/cyborg hand"));
+        base.setBodySprite(Resources.Load<Sprite>("Sprites/EnemySprites/SeperatedBodies/Idle_0"));
+        base.setStaticArmSprite(Resources.Load<Sprite>("Sprites/EnemySprites/SeperatedArms/StaticArms/MainArms1"));
+        base.setHandSprite(Resources.Load<Sprite>("Sprites/EnemySprites/SeperatedArms/Hands/MainArms2.png"));
     
     }
     public float rotateGun(Transform transform) 
@@ -175,7 +183,7 @@ public class RangedEnemy : EnemyClass
     {
         Weapons wp;
         Random rnd = new Random();
-        switch (rnd.Next(0,5)) 
+        switch (rnd.Next(1,5)) 
         {
             case 1:
                 wp = new Weapon1();
@@ -204,67 +212,8 @@ public class RangedEnemy : EnemyClass
 
 public class MeleeEnemy : EnemyClass
 {
-    private float voltaMovespeed;
-    private float agroMovespeed;
-    private float voltaTime;
-    private float hitRange;
-    private float colliderDistance;
     public MeleeEnemy()
     {
-        this.colliderDistance = 0.7f;
-        this.hitRange = 2.5f;
-        this.voltaTime = 4f;
-        this.voltaMovespeed = 1.5f;
-        this.agroMovespeed = 3;
-        base.setHealth(100);
-        base.setAgroDistance(10);
-        base.setBodySprite(Resources.Load<Sprite>("Sprites/EnemySprites/SeperatedBodies/biker idle_0"));
-        base.setStaticArmSprite(Resources.Load<Sprite>("Sprites/EnemySprites/SeperatedArms/StaticArms/biker arm"));
-        base.setHandSprite(Resources.Load<Sprite>("Sprites/EnemySprites/SeperatedArms/Hands/biker hands"));
-    }
-    public float getAgroMovespeed()
-    {
-        return this.agroMovespeed;
-    }
-    public float getVoltaTime()
-    {
-        return this.voltaTime;
-    }
-    public float getHitRange()
-    {
-        return this.hitRange;
-    }
-    public float getColliderDistance()
-    {
-        return this.colliderDistance;
-    }
-    public void voltaAt(Transform transform, Rigidbody2D rb)
-    {
-        rb.velocity = new Vector2(this.voltaMovespeed * (transform.localScale.x * 10 / 7), rb.velocity.y);
         
     }
-
-    public bool canHit(BoxCollider2D boxCollider, Transform transform)
-    {
-        bool tmp = false;
-
-        RaycastHit2D hit = Physics2D.BoxCast(boxCollider.bounds.center + transform.right * getHitRange() * transform.localScale.x * getColliderDistance(),
-            new Vector3(boxCollider.bounds.size.x * getHitRange(), boxCollider.bounds.size.y, boxCollider.bounds.size.z),
-            0, Vector2.left, 0,
-            1 << LayerMask.NameToLayer("Action"));
-
-        if(hit.collider != null)
-        {
-            if (hit.collider.gameObject.CompareTag("Player"))
-            {
-                tmp = true;
-            }
-            else
-            {
-                tmp = false;
-            }
-        }
-        return tmp;
-    }
-   
 }
