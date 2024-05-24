@@ -97,6 +97,7 @@ GameObject:
   - component: {fileID: 5987455109887329128}
   - component: {fileID: 1772433414431133595}
   - component: {fileID: 6485137149588633716}
+  - component: {fileID: 1310178229643845695}
   m_Layer: 0
   m_Name: MeleeEnemy
   m_TagString: MeleeEnemy
@@ -258,6 +259,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f14f6102f743c7444b1438b26227a4b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemy: {fileID: 0}
+--- !u!95 &1310178229643845695
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5103834680341257340}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: b27e795cf45fadd40a59663ffc3ea5bf, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &5194383052060559607
 GameObject:
   m_ObjectHideFlags: 0

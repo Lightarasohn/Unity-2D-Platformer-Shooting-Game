@@ -65422,9 +65422,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 993249844360526440, guid: 30b22721c16ae274988bf2eb4b2aac42, type: 3}
+      propertyPath: m_SortingOrder
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 2296095622488029050, guid: 30b22721c16ae274988bf2eb4b2aac42, type: 3}
       propertyPath: m_Name
       value: Karakter
+      objectReference: {fileID: 0}
+    - target: {fileID: 3301829785556060109, guid: 30b22721c16ae274988bf2eb4b2aac42, type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4282573761290151717, guid: 30b22721c16ae274988bf2eb4b2aac42, type: 3}
+      propertyPath: m_SortingOrder
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6025154705222193845, guid: 30b22721c16ae274988bf2eb4b2aac42, type: 3}
       propertyPath: m_LocalPosition.x

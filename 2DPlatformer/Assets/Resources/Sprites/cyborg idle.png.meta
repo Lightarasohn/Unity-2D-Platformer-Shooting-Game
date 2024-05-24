@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: f397c22d080b3b24088caab130ae1406
+guid: 459e0b9d785533445bd17bfb721173c1
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -97,13 +97,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: cyborg jump_0
+      name: cyborg idle_0
       rect:
         serializedVersion: 2
-        x: 20
-        y: 24
-        width: 76
-        height: 116
+        x: 28
+        y: 0
+        width: 60
+        height: 140
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -111,20 +111,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c8ceffd9ef95b7b498bc3f41f735c6f5
-      internalID: 235579048
+      spriteID: 30b2d310d212bd74788796befcad394f
+      internalID: 902462606
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: cyborg jump_1
+      name: cyborg idle_1
       rect:
         serializedVersion: 2
-        x: 212
-        y: 32
-        width: 76
-        height: 116
+        x: 216
+        y: 0
+        width: 64
+        height: 140
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -132,20 +132,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4c452161f1bdf174f94d3d02bba9b191
-      internalID: -729510261
+      spriteID: a4acbdf82140969458c1f2037b37eb7e
+      internalID: -1428617946
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: cyborg jump_2
+      name: cyborg idle_2
       rect:
         serializedVersion: 2
-        x: 404
-        y: 20
-        width: 76
-        height: 124
+        x: 408
+        y: 0
+        width: 64
+        height: 140
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -153,20 +153,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9c0f499d0dbf41e41b2fe938250603c0
-      internalID: -2115097982
+      spriteID: 846f378d7db8c4645918f8c4e789f917
+      internalID: -945263280
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: cyborg jump_3
+      name: cyborg idle_3
       rect:
         serializedVersion: 2
-        x: 596
-        y: 4
-        width: 84
-        height: 132
+        x: 604
+        y: 0
+        width: 60
+        height: 140
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -174,8 +174,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3e2b1af2ed0ff5445af1d5a6e05a2743
-      internalID: 1014001582
+      spriteID: d5f287290f2cae94aaef95defcef3b3a
+      internalID: -2113794852
       vertices: []
       indices: 
       edges: []
@@ -191,10 +191,10 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      cyborg jump_0: 235579048
-      cyborg jump_1: -729510261
-      cyborg jump_2: -2115097982
-      cyborg jump_3: 1014001582
+      cyborg idle_0: 902462606
+      cyborg idle_1: -1428617946
+      cyborg idle_2: -945263280
+      cyborg idle_3: -2113794852
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

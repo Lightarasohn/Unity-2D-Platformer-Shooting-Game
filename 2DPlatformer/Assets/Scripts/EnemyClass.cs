@@ -1,7 +1,7 @@
 using UnityEngine;
 using Random = System.Random;
 
-public class EnemyClass
+public class EnemyClass : MonoBehaviour
 {
     protected float agroDistance;
     protected float health;
@@ -9,6 +9,8 @@ public class EnemyClass
     protected Sprite bodySprite;
     protected Sprite staticArmSprite;
     protected Sprite handSprite;
+    protected Animator animator;
+    protected Rigidbody2D rb;
 
     /*
     public float getHealth()
@@ -16,6 +18,17 @@ public class EnemyClass
         return this.health;
     }
     */
+    protected virtual void Awake()
+    {
+        animator = GetComponent<Animator>();
+        rb = GetComponent<Rigidbody2D>();
+    }
+    protected virtual void Update()
+    {
+        // Speed-based walk animation trigger
+        float speed = rb.velocity.magnitude;
+        animator.SetFloat("Speed", speed);
+    }
     public float getAgroDistance()
     {
         return this.agroDistance;
@@ -93,6 +106,20 @@ public class EnemyClass
 
 public class RangedEnemy : EnemyClass
 {
+    protected override void Awake()
+    {
+        base.Awake();
+        base.health = 100;
+        base.agroDistance = 10;
+        base.weapon = pickRangedEnemyGun();
+        base.bodySprite = Resources.Load<Sprite>("Sprites/EnemySprites/SeperatedBodies/cyborgidle_0");
+        base.staticArmSprite = Resources.Load<Sprite>("Sprites/EnemySprites/SeperatedArms/StaticArms/cyborg static arm");
+        base.handSprite = Resources.Load<Sprite>("Sprites/EnemySprites/SeperatedArms/Hands/cyborg hand");
+    }
+    private void Update()
+    {
+        base.Update();
+    }
     public RangedEnemy()
     {
         base.health = 100;
@@ -102,6 +129,7 @@ public class RangedEnemy : EnemyClass
         base.staticArmSprite = Resources.Load<Sprite>("Sprites/EnemySprites/SeperatedArms/StaticArms/cyborg static arm");
         base.handSprite = Resources.Load<Sprite>("Sprites/EnemySprites/SeperatedArms/Hands/cyborg hand");
     }
+   
     public float rotateGun(Transform transform) 
     {
         float angle;
@@ -174,6 +202,45 @@ public class MeleeEnemy : EnemyClass
     private float voltaTime;
     private float hitRange;
     private float colliderDistance;
+
+    protected override void Awake()
+    {
+        base.Awake();
+        this.colliderDistance = 0.7f;
+        this.hitRange = 2.5f;
+        this.voltaTime = 4f;
+        this.voltaMovespeed = 1.5f;
+        this.agroMovespeed = 3;
+        base.health = 100;
+        base.agroDistance = 10;
+        base.bodySprite = Resources.Load<Sprite>("Sprites/EnemySprites/SeperatedBodies/biker idle_0");
+        base.staticArmSprite = Resources.Load<Sprite>("Sprites/EnemySprites/SeperatedArms/StaticArms/biker arm");
+        base.handSprite = Resources.Load<Sprite>("Sprites/EnemySprites/SeperatedArms/Hands/biker hands");
+    }
+
+    private void Update()
+    {
+        base.Update();
+        if (isAgro(transform))
+        {
+            Vector2 direction = (GameObject.FindGameObjectWithTag("Player").transform.position - transform.position).normalized;
+            rb.velocity = new Vector2(direction.x * agroMovespeed, rb.velocity.y);
+
+            // Flip enemy to face the player
+            if (direction.x > 0 && !isFacingRight(transform))
+            {
+                flipEnemy(transform);
+            }
+            else if (direction.x < 0 && isFacingRight(transform))
+            {
+                flipEnemy(transform);
+            }
+        }
+        else
+        {
+            rb.velocity = new Vector2(0, rb.velocity.y);
+        }
+    }
     public MeleeEnemy()
     {
         this.colliderDistance = 0.7f;
@@ -186,7 +253,10 @@ public class MeleeEnemy : EnemyClass
         base.bodySprite = Resources.Load<Sprite>("Sprites/EnemySprites/SeperatedBodies/biker idle_0");
         base.staticArmSprite = Resources.Load<Sprite>("Sprites/EnemySprites/SeperatedArms/StaticArms/biker arm");
         base.handSprite = Resources.Load<Sprite>("Sprites/EnemySprites/SeperatedArms/Hands/biker hands");
+        
+
     }
+
     public float getAgroMovespeed()
     {
         return this.agroMovespeed;
