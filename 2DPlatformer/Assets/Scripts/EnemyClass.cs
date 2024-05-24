@@ -25,9 +25,22 @@ public class EnemyClass : MonoBehaviour
     }
     protected virtual void Update()
     {
-        // Speed-based walk animation trigger
+        Vector2 direction = rb.velocity.normalized;
+
+        // Set movement animation based on direction and speed
         float speed = rb.velocity.magnitude;
         animator.SetFloat("Speed", speed);
+        animator.SetFloat("MoveX", direction.x); // Added for directional movement
+
+        // Update enemy facing direction based on movement
+        if (direction.x > 0 && !isFacingRight(transform))
+        {
+            flipEnemy(transform);
+        }
+        else if (direction.x < 0 && isFacingRight(transform))
+        {
+            flipEnemy(transform);
+        }
     }
     public float getAgroDistance()
     {
@@ -41,7 +54,7 @@ public class EnemyClass : MonoBehaviour
     {
         return this.bodySprite;
     }
-    public Sprite getStaticArmSprite() 
+    public Sprite getStaticArmSprite()
     {
         return this.staticArmSprite;
     }
@@ -60,7 +73,7 @@ public class EnemyClass : MonoBehaviour
     public float distanceToPlayer(Transform transform)
     {
         Transform playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
-        return Mathf.Sqrt(Mathf.Pow(Mathf.Abs(transform.position.x - playerTransform.position.x),2) + Mathf.Pow(Mathf.Abs(transform.position.y - playerTransform.position.y),2));
+        return Mathf.Sqrt(Mathf.Pow(Mathf.Abs(transform.position.x - playerTransform.position.x), 2) + Mathf.Pow(Mathf.Abs(transform.position.y - playerTransform.position.y), 2));
     }
     public bool isPlayerBehind(Transform transform)
     {
@@ -69,7 +82,7 @@ public class EnemyClass : MonoBehaviour
         {
             return true;
         }
-        else if(!this.isFacingRight(transform) && (playerTransform.position.x >= transform.position.x))
+        else if (!this.isFacingRight(transform) && (playerTransform.position.x >= transform.position.x))
         {
             return true;
         }
@@ -129,8 +142,8 @@ public class RangedEnemy : EnemyClass
         base.staticArmSprite = Resources.Load<Sprite>("Sprites/EnemySprites/SeperatedArms/StaticArms/cyborg static arm");
         base.handSprite = Resources.Load<Sprite>("Sprites/EnemySprites/SeperatedArms/Hands/cyborg hand");
     }
-   
-    public float rotateGun(Transform transform) 
+
+    public float rotateGun(Transform transform)
     {
         float angle;
         Transform playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
@@ -151,7 +164,7 @@ public class RangedEnemy : EnemyClass
         {
             if (!sr.flipX)
             {
-                
+
                 srParent.flipX = true;
                 srParent.flipY = true;
                 sr.flipX = true;
@@ -170,7 +183,7 @@ public class RangedEnemy : EnemyClass
     {
         Weapons wp;
         Random rnd = new Random();
-        switch (rnd.Next(0,6)) 
+        switch (rnd.Next(0, 6))
         {
             case 1:
                 wp = new Weapon1();
@@ -206,40 +219,13 @@ public class MeleeEnemy : EnemyClass
     protected override void Awake()
     {
         base.Awake();
-        this.colliderDistance = 0.7f;
-        this.hitRange = 2.5f;
-        this.voltaTime = 4f;
-        this.voltaMovespeed = 1.5f;
-        this.agroMovespeed = 3;
-        base.health = 100;
-        base.agroDistance = 10;
-        base.bodySprite = Resources.Load<Sprite>("Sprites/EnemySprites/SeperatedBodies/biker idle_0");
-        base.staticArmSprite = Resources.Load<Sprite>("Sprites/EnemySprites/SeperatedArms/StaticArms/biker arm");
-        base.handSprite = Resources.Load<Sprite>("Sprites/EnemySprites/SeperatedArms/Hands/biker hands");
+       
     }
 
     private void Update()
     {
         base.Update();
-        if (isAgro(transform))
-        {
-            Vector2 direction = (GameObject.FindGameObjectWithTag("Player").transform.position - transform.position).normalized;
-            rb.velocity = new Vector2(direction.x * agroMovespeed, rb.velocity.y);
-
-            // Flip enemy to face the player
-            if (direction.x > 0 && !isFacingRight(transform))
-            {
-                flipEnemy(transform);
-            }
-            else if (direction.x < 0 && isFacingRight(transform))
-            {
-                flipEnemy(transform);
-            }
-        }
-        else
-        {
-            rb.velocity = new Vector2(0, rb.velocity.y);
-        }
+        
     }
     public MeleeEnemy()
     {
@@ -253,7 +239,7 @@ public class MeleeEnemy : EnemyClass
         base.bodySprite = Resources.Load<Sprite>("Sprites/EnemySprites/SeperatedBodies/biker idle_0");
         base.staticArmSprite = Resources.Load<Sprite>("Sprites/EnemySprites/SeperatedArms/StaticArms/biker arm");
         base.handSprite = Resources.Load<Sprite>("Sprites/EnemySprites/SeperatedArms/Hands/biker hands");
-        
+
 
     }
 
@@ -278,7 +264,7 @@ public class MeleeEnemy : EnemyClass
     public void voltaAt(Transform transform, Rigidbody2D rb)
     {
         rb.velocity = new Vector2(this.voltaMovespeed * (transform.localScale.x * 10 / 7), rb.velocity.y);
-        
+
     }
     public bool canHit(BoxCollider2D boxCollider, Transform transform)
     {
@@ -289,7 +275,7 @@ public class MeleeEnemy : EnemyClass
             0, Vector2.left, 0,
             1 << LayerMask.NameToLayer("Action"));
         Debug.Log(hit.collider);
-        if(hit.collider != null)
+        if (hit.collider != null)
         {
             if (hit.collider.gameObject.CompareTag("Player"))
             {
@@ -301,5 +287,5 @@ public class MeleeEnemy : EnemyClass
             }
         }
         return tmp;
-    } 
+    }
 }
