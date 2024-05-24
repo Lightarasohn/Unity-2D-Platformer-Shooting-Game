@@ -142,7 +142,7 @@ public class RangedEnemy : EnemyClass
     {
         Weapons wp;
         Random rnd = new Random();
-        switch (rnd.Next(0,5)) 
+        switch (rnd.Next(0,6)) 
         {
             case 1:
                 wp = new Weapon1();
