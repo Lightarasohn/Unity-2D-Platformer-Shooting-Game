@@ -54,34 +54,34 @@ public class Bullet1 : Bullet
 {
     public Bullet1()
     {
-        base.bulletDamage = 3f;
+        base.bulletDamage = 21f;
     }
 }
 public class Bullet2 : Bullet
 {
     public Bullet2()
     {
-        base.bulletDamage = 7f;
+        base.bulletDamage = 30f;
     }
 }
 public class Bullet3 : Bullet
 {
     public Bullet3()
     {
-        base.bulletDamage = 7f;
+        base.bulletDamage = 25f;
     }
 }
 public class Bullet4 : Bullet
 {
     public Bullet4()
     {
-        base.bulletDamage = 3f;
+        base.bulletDamage = 24f;
     }
 }
 public class Bullet5 : Bullet
 {
     public Bullet5()
     {
-        base.bulletDamage = 4f;
+        base.bulletDamage = 40f;
     }
 }
