@@ -1,31 +1,35 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.InteropServices;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    public bool isFacingRight = true;
+    public bool isDashing = false;
     private float horizontalMove;
     private int jumpCount = 0;
     private bool dash = false;
     private bool dashedInAir = false;
-    public bool isDashing = false;
-    public float dashPower = 2000f;
-    public float dashTime = 0.2f;
-    public float jumpingPower = 4f;
-    public float moveSpeed = 16f;
-    public bool isFacingRight = true;
-    public Animator animator;
+    private float dashPower = 40f;
+    private float dashTime = 0.2f;
+    private float jumpingPower = 15f;
+    private float moveSpeed = 500f;
+    private Animator animator;
 
 
 
-    [SerializeField] private Rigidbody2D rb;
-    [SerializeField] private Transform GroundCheck;
+    private Rigidbody2D rb;
+    private Transform GroundCheck;
     [SerializeField] private LayerMask GroundLayer;
-    [SerializeField] private TrailRenderer tr;
+    private TrailRenderer tr;
 
-
+    private void Start()
+    {
+        rb = transform.GetComponent<Rigidbody2D>();
+        GroundCheck = transform.GetChild(0);
+        tr = transform.GetComponent<TrailRenderer>();
+        animator = transform.GetComponent<Animator>();
+    }
 
     void Update()
     {

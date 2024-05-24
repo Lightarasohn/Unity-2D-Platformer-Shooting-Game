@@ -1,34 +1,24 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Unity.Mathematics;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UIElements;
 using Random = System.Random;
 
 public class EnemyClass
 {
-    private float agroDistance;
-    private float health;
-    private Weapons weapon = null;
-    private Sprite bodySprite;
-    private Sprite staticArmSprite;
-    private Sprite handSprite;
+    protected float agroDistance;
+    protected float health;
+    protected Weapons weapon = null;
+    protected Sprite bodySprite;
+    protected Sprite staticArmSprite;
+    protected Sprite handSprite;
 
+    /*
     public float getHealth()
     {
         return this.health;
     }
+    */
     public float getAgroDistance()
     {
         return this.agroDistance;
-    }
-    protected void setAgroDistance(float agro)
-    {
-        this.agroDistance = agro;
     }
     public Weapons GetWeapon()
     {
@@ -45,26 +35,6 @@ public class EnemyClass
     public Sprite getHandSprite()
     {
         return this.handSprite;
-    }
-    protected void setBodySprite(Sprite bd)
-    {
-        this.bodySprite = bd;
-    }
-    protected void setWeapon(Weapons weapon)
-    {
-        this.weapon = weapon;
-    }
-    protected void setHandSprite(Sprite handSprite)
-    {
-        this.handSprite = handSprite;
-    }
-    protected void setStaticArmSprite(Sprite staticArmSprite)
-    {
-        this.staticArmSprite = staticArmSprite;
-    }
-    protected void setHealth(float health)
-    {
-        this.health = health;
     }
     public void hurt(float damage)
     {
@@ -119,21 +89,18 @@ public class EnemyClass
         localscale.x *= -1;
         transform.localScale = localscale;
     }
-
 }
 
 public class RangedEnemy : EnemyClass
 {
-    
     public RangedEnemy()
     {
-        base.setHealth(100);
-        base.setAgroDistance(10);
-        base.setWeapon(pickRangedEnemyGun());
-        base.setBodySprite(Resources.Load<Sprite>("Sprites/EnemySprites/SeperatedBodies/cyborgidle_0"));
-        base.setStaticArmSprite(Resources.Load<Sprite>("Sprites/EnemySprites/SeperatedArms/StaticArms/cyborg static arm"));
-        base.setHandSprite(Resources.Load<Sprite>("Sprites/EnemySprites/SeperatedArms/Hands/cyborg hand"));
-    
+        base.health = 100;
+        base.agroDistance = 10;
+        base.weapon = pickRangedEnemyGun();
+        base.bodySprite = Resources.Load<Sprite>("Sprites/EnemySprites/SeperatedBodies/cyborgidle_0");
+        base.staticArmSprite = Resources.Load<Sprite>("Sprites/EnemySprites/SeperatedArms/StaticArms/cyborg static arm");
+        base.handSprite = Resources.Load<Sprite>("Sprites/EnemySprites/SeperatedArms/Hands/cyborg hand");
     }
     public float rotateGun(Transform transform) 
     {
@@ -198,8 +165,6 @@ public class RangedEnemy : EnemyClass
         }
         return wp;
     }
-
-    
 }
 
 public class MeleeEnemy : EnemyClass
@@ -216,11 +181,11 @@ public class MeleeEnemy : EnemyClass
         this.voltaTime = 4f;
         this.voltaMovespeed = 1.5f;
         this.agroMovespeed = 3;
-        base.setHealth(100);
-        base.setAgroDistance(10);
-        base.setBodySprite(Resources.Load<Sprite>("Sprites/EnemySprites/SeperatedBodies/biker idle_0"));
-        base.setStaticArmSprite(Resources.Load<Sprite>("Sprites/EnemySprites/SeperatedArms/StaticArms/biker arm"));
-        base.setHandSprite(Resources.Load<Sprite>("Sprites/EnemySprites/SeperatedArms/Hands/biker hands"));
+        base.health = 100;
+        base.agroDistance = 10;
+        base.bodySprite = Resources.Load<Sprite>("Sprites/EnemySprites/SeperatedBodies/biker idle_0");
+        base.staticArmSprite = Resources.Load<Sprite>("Sprites/EnemySprites/SeperatedArms/StaticArms/biker arm");
+        base.handSprite = Resources.Load<Sprite>("Sprites/EnemySprites/SeperatedArms/Hands/biker hands");
     }
     public float getAgroMovespeed()
     {
@@ -230,6 +195,7 @@ public class MeleeEnemy : EnemyClass
     {
         return this.voltaTime;
     }
+    /*
     public float getHitRange()
     {
         return this.hitRange;
@@ -238,21 +204,21 @@ public class MeleeEnemy : EnemyClass
     {
         return this.colliderDistance;
     }
+    */
     public void voltaAt(Transform transform, Rigidbody2D rb)
     {
         rb.velocity = new Vector2(this.voltaMovespeed * (transform.localScale.x * 10 / 7), rb.velocity.y);
         
     }
-
     public bool canHit(BoxCollider2D boxCollider, Transform transform)
     {
         bool tmp = false;
 
-        RaycastHit2D hit = Physics2D.BoxCast(boxCollider.bounds.center + transform.right * getHitRange() * transform.localScale.x * getColliderDistance(),
-            new Vector3(boxCollider.bounds.size.x * getHitRange(), boxCollider.bounds.size.y, boxCollider.bounds.size.z),
+        RaycastHit2D hit = Physics2D.BoxCast(boxCollider.bounds.center + transform.right * this.hitRange * transform.localScale.x * this.colliderDistance,
+            new Vector3(boxCollider.bounds.size.x * this.hitRange, boxCollider.bounds.size.y, boxCollider.bounds.size.z),
             0, Vector2.left, 0,
             1 << LayerMask.NameToLayer("Action"));
-
+        Debug.Log(hit.collider);
         if(hit.collider != null)
         {
             if (hit.collider.gameObject.CompareTag("Player"))
@@ -265,6 +231,5 @@ public class MeleeEnemy : EnemyClass
             }
         }
         return tmp;
-    }
-   
+    } 
 }

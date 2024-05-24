@@ -1,15 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class RangedEnemyCombatScript : MonoBehaviour
 {
+    public float angle;
     private Weapons enemyWeapon;
     private RangedEnemy enemy;
     private Transform parentEnemy;
     private Transform playerTransform;
     private bool isAgroed = false;
-    public float angle;
     private GameObject spawnPoints;
     private bool canShoot = false;
     private float semiTime;

@@ -1,15 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class DashControling : MonoBehaviour
 {
-    [SerializeField] private GameObject karakter;
+    private GameObject karakter;
     private bool dashControl;
     // Start is called before the first frame update
     void Start()
     {
-        
+        karakter = GameObject.FindGameObjectWithTag("Player");
     }
 
     // Update is called once per frame

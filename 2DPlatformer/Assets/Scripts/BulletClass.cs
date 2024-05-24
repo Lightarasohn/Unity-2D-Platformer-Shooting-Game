@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Bullet
@@ -52,7 +50,6 @@ public class Bullet
         this.bulletRotation = bulletRotation;
     }
 }
-
 public class Bullet1 : Bullet
 {
     public Bullet1()

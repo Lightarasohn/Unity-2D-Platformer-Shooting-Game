@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class MeleeEnemyScript : MonoBehaviour
@@ -41,6 +39,7 @@ public class MeleeEnemyScript : MonoBehaviour
                     enemyRb.velocity = new Vector2(enemy.getAgroMovespeed() * (transform.localScale.x * 10 / 7), enemyRb.velocity.y);
                     if (enemy.canHit(boxCollider, transform))
                     {
+                        Debug.Log("Hit");
                         hitTimer += Time.deltaTime;
                         if (hitTimer >= 2)
                         {

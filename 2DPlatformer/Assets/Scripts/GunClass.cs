@@ -1,28 +1,18 @@
-using System;
-using System.Collections;
-using System.Diagnostics.Tracing;
-using System.Reflection;
-using System.Runtime.CompilerServices;
-using Unity.Collections.LowLevel.Unsafe;
-using UnityEditor.UI;
 using UnityEngine;
-using UnityEngine.Rendering;
+
 
 
 
 public class Weapons
 {
-    private string gunName;
-    private int ammo;
-    private int staticAmmo;
-    private int mags;
-    private Sprite sprite;
-    private float fireRate;
-    private float damage;
-    private string bulletPoints;
-    private string weaponBullet;
-
-    
+    protected string gunName;
+    protected int ammo;
+    protected int staticAmmo;
+    protected int mags;
+    protected Sprite sprite;
+    protected float fireRate;
+    protected string bulletPoints;
+    protected string weaponBullet;
 
     public void spawnGunPrefab(Weapons gunType, Vector2 gunPosition, Quaternion gunRotation)
     {
@@ -32,7 +22,7 @@ public class Weapons
         instantiedGun = GameObject.Instantiate(gun, gunPosition, gunRotation);
         instantiedGun.transform.GetComponent<GunSpawnPrefabScript>().droppedWeapon = gunType;
     }
-
+    /*
     public void reload()
     {
         if(mags > 0)
@@ -42,17 +32,17 @@ public class Weapons
         }
         
     }
+    */
 
     public GameObject instantiateBulletSpawnPoints(Transform transform)
     {
         GameObject spawnpoints;
-        spawnpoints = Resources.Load<GameObject>("WeaponsBulletSpawnPoints/" + this.getBulletPoints());
+        spawnpoints = Resources.Load<GameObject>("WeaponsBulletSpawnPoints/" + this.bulletPoints);
         
         GameObject.Instantiate(spawnpoints, transform);
 
         return spawnpoints;
     }
-
     public void eraseOldBulletSpawnPoints()
     {
         var oldSpawnPoints = GameObject.FindGameObjectsWithTag("BulletSpawnPointTag");
@@ -61,10 +51,9 @@ public class Weapons
             GameObject.Destroy(spawnPoint);
         }
     }
-
     public void fire(GameObject spawnpoints, Transform transform, Weapons currentWeapon)
     {
-        GameObject bullet = Resources.Load<GameObject>("Prefabs/" + currentWeapon.getWeaponBullet());
+        GameObject bullet = Resources.Load<GameObject>("Prefabs/" + currentWeapon.weaponBullet);
         PlayerMovement pm;
         EnemyClass enemy;
         if (transform.tag == "PlayerGunPoint")
@@ -290,88 +279,47 @@ public class Weapons
         }
 
     }
-
-    public float getDamage()
-    {
-        return this.damage;
-    }
-    protected void setDamage(float dmg)
-    {
-        this.damage = dmg;
-    }
+    /* 
     public string getName()
     {
         return this.gunName;
-    }
-    public void setName(string isim)
-    {
-        this.gunName = isim;
     }
     public int getAmmo()
     {
         return this.ammo;
     }
-    public void setAmmo(int msayisi)
-    {
-        this.ammo = msayisi;
-    }
     public int getStaticAmmo()
     {
         return this.staticAmmo;
-    }
-    public void setStaticAmmo()
-    {
-        this.staticAmmo = ammo;
     }
     public int getMags()
     {
         return this.mags;
     }
-    public void setMags(int magsSayisi)
-    {
-        this.mags = magsSayisi;
-    }
-    public Sprite getSprite()
-    {
-        return this.sprite;
-    }
-    public void setSprite(Sprite sp)
-    {
-        this.sprite = sp;
-    }
-    public float getFireRate()
-    {
-        return this.fireRate;
-    }
-    public void setFireRate(float fr)
-    {
-        this.fireRate = fr;
-    }
     public string getBulletPoints()
     {
         return this.bulletPoints;
-    }
-    public void setBulletPoints(string bulletPointName)
-    {
-        this.bulletPoints = bulletPointName;
     }
     public string getWeaponBullet()
     {
         return this.weaponBullet;
     }
-    public void setWeaponBullet(string weaponBulletName)
+    */
+    public Sprite getSprite()
     {
-        this.weaponBullet = weaponBulletName;
+        return this.sprite;
     }
-
+    public float getFireRate()
+    {
+        return this.fireRate;
+    }
 }
 
 public class SemiAutoRifles : Weapons
 {
     public SemiAutoRifles()
     {
-        setFireRate(0.5f);
-        setDamage(7);
+        base.fireRate = 0.7f;
     }
 }
 
@@ -379,8 +327,7 @@ public class Rifles : Weapons
 {
     public Rifles()
     {
-        setFireRate(0.2f);
-        setDamage(3);
+        base.fireRate = 0.2f;
     }
 }
 
@@ -388,8 +335,7 @@ public class Shotguns : Weapons
 {
     public Shotguns()
     {
-        setFireRate(0.7f);
-        setDamage(4);
+        base.fireRate = 0.7f;
     }
 }
 
@@ -401,14 +347,13 @@ public class Weapon1 : Rifles
 {
     public Weapon1()
     {
-        setName("Weapon1");
-        setAmmo(30);
-        setStaticAmmo();
-        setMags(1);
-        setSprite(Resources.Load<Sprite>("Sprites/Weapon1"));
-        setBulletPoints("WEAPON1BULLETPOINTS");
-        setWeaponBullet("Weapon1Bullet");
-        
+        base.gunName = "Weapon1";
+        base.ammo = 30;
+        base.staticAmmo = ammo;
+        base.mags = 1;
+        base.sprite = Resources.Load<Sprite>("Sprites/Weapon1");
+        base.bulletPoints = "WEAPON1BULLETPOINTS";
+        base.weaponBullet = "Weapon1Bullet";
     }
 }
 
@@ -416,14 +361,13 @@ public class Weapon2 : SemiAutoRifles
 {
     public Weapon2()
     {
-        setName("Weapon2");
-        setAmmo(30);
-        setStaticAmmo();
-        setMags(1);
-        setSprite(Resources.Load<Sprite>("Sprites/Weapon2"));
-        setBulletPoints("WEAPON2BULLETPOINTS");
-        setWeaponBullet("Weapon2Bullet");
-        
+        base.gunName = "Weapon2";
+        base.ammo = 20;
+        base.staticAmmo = ammo;
+        base.mags = 1;
+        base.sprite = Resources.Load<Sprite>("Sprites/Weapon2");
+        base.bulletPoints = "WEAPON2BULLETPOINTS";
+        base.weaponBullet = "Weapon2Bullet";
     }
 }
 
@@ -431,13 +375,13 @@ public class Weapon3 : SemiAutoRifles
 {
     public Weapon3()
     {
-        setName("Weapon3");
-        setAmmo(30);
-        setStaticAmmo();
-        setMags(1);
-        setSprite(Resources.Load<Sprite>("Sprites/Weapon3"));
-        setBulletPoints("WEAPON3BULLETPOINTS");
-        setWeaponBullet("Weapon3Bullet");
+        base.gunName = "Weapon3";
+        base.ammo = 35;
+        base.staticAmmo = ammo;
+        base.mags = 1;
+        base.sprite = Resources.Load<Sprite>("Sprites/Weapon3");
+        base.bulletPoints = "WEAPON3BULLETPOINTS";
+        base.weaponBullet = "Weapon3Bullet";
     }
 }
 
@@ -445,14 +389,13 @@ public class Weapon4 : Rifles
 {
     public Weapon4()
     {
-        setName("Weapon4");
-        setAmmo(30);
-        setStaticAmmo();
-        setMags(1);
-        setSprite(Resources.Load<Sprite>("Sprites/Weapon4"));
-        setBulletPoints("WEAPON4BULLETPOINTS");
-        setWeaponBullet("Weapon4Bullet");
-        
+        base.gunName = "Weapon4";
+        base.ammo = 25;
+        base.staticAmmo = ammo;
+        base.mags = 1;
+        base.sprite = Resources.Load<Sprite>("Sprites/Weapon4");
+        base.bulletPoints = "WEAPON4BULLETPOINTS";
+        base.weaponBullet = "Weapon4Bullet";
     }
 }
 
@@ -460,13 +403,12 @@ public class Weapon5 : Shotguns
 {
     public Weapon5()
     {
-        setName("Weapon5");
-        setAmmo(30);
-        setStaticAmmo();
-        setMags(1);
-        setSprite(Resources.Load<Sprite>("Sprites/Weapon5"));
-        setBulletPoints("WEAPON5BULLETPOINTS");
-        setWeaponBullet("Weapon5Bullet");
-        
+        base.gunName = "Weapon5";
+        base.ammo = 12;
+        base.staticAmmo = ammo;
+        base.mags = 1;
+        base.sprite = Resources.Load<Sprite>("Sprites/Weapon5");
+        base.bulletPoints = "WEAPON5BULLETPOINTS";
+        base.weaponBullet = "Weapon5Bullet";
     }
 }

@@ -1,17 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class FireBullet : MonoBehaviour
 {
-    private string gun;
     private GameObject spawnpoints;
     private float time = 0.5f;
     private float semiTime = 10f;
     private float fireRate;
     private Weapons currentWeapon;
-    private string oldGun;
     // Start is called before the first frame update
     void Start()
     {
