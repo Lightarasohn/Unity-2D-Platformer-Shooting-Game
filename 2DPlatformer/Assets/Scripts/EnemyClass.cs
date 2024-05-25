@@ -1,8 +1,9 @@
+using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 using Random = System.Random;
 
-public class EnemyClass : MonoBehaviour
+public class EnemyClass
 {
     protected float agroDistance;
     protected float health;
@@ -21,25 +22,24 @@ public class EnemyClass : MonoBehaviour
         return this.health;
     }
     */
-    protected virtual void Awake()
+    public void setAnimation(Transform transform)
     {
-        animator = GetComponent<Animator>();
-        rb = GetComponent<Rigidbody2D>();
+        animator = transform.GetComponent<Animator>();
+        rb = transform.GetComponent<Rigidbody2D>();
     }
-    protected virtual void Update()
+    public void TriggerDeathAnimation()
     {
-        if (isDying() && !isDead)
+        if (this.animator != null)
         {
-            Die();
-        }
+            this.animator.SetTrigger("Death");
 
+        }
     }
-    protected virtual void Die()
+    public IEnumerator DestroyAfterAnimation(GameObject gameObject)
     {
-        animator.SetTrigger("Death");
-        rb.velocity = Vector2.zero;
-        isDead = true;
-        Destroy(gameObject, 0.5f); // Adjust delay as needed
+        // Wait for the length of the death animation before destroying the object
+        yield return new WaitForSeconds(0.5f);
+        GameObject.Destroy(gameObject);
     }
     public float getAgroDistance()
     {
@@ -123,22 +123,6 @@ public class EnemyClass : MonoBehaviour
 
 public class RangedEnemy : EnemyClass
 {
-    protected override void Awake()
-    {
-        base.Awake();
-        base.health = 100;
-        base.agroDistance = 10;
-        base.weapon = pickRangedEnemyGun();
-        base.bodySprite = Resources.Load<Sprite>("Sprites/EnemySprites/SeperatedBodies/cyborgidle_0");
-        base.staticArmSprite = Resources.Load<Sprite>("Sprites/EnemySprites/SeperatedArms/StaticArms/cyborg static arm");
-        base.handSprite = Resources.Load<Sprite>("Sprites/EnemySprites/SeperatedArms/Hands/cyborg hand");
-    }
-    protected override void Die()
-    {
-        base.Die();
-        // RangedEnemy'e özgü ölüm davranýþlarý ekleyin
-    }
-   
     public RangedEnemy()
     {
         base.health = 100;
@@ -222,25 +206,6 @@ public class MeleeEnemy : EnemyClass
     private float hitRange;
     private float colliderDistance;
     
-
-    protected override void Awake()
-    {
-        base.Awake();
-       
-    }
-
-    private void Update()
-    {
-        base.Update();
-     
-
-    }
-    protected override void Die()
-    {
-        base.Die();
-        // MeleeEnemy'e özgü ölüm davranýþlarý ekleyin
-    }
-
     public MeleeEnemy()
     {
         this.colliderDistance = 0.7f;
