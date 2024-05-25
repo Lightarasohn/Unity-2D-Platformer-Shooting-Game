@@ -10,6 +10,7 @@ public class MeleeEnemyScript : MonoBehaviour
     private bool isStart = true;
     private BoxCollider2D boxCollider;
     private float hitTimer;
+    private Animator an;
     void Start()
     {
         enemyRb = transform.GetComponent<Rigidbody2D>();
@@ -19,6 +20,9 @@ public class MeleeEnemyScript : MonoBehaviour
         transform.GetChild(1).transform.GetComponent<SpriteRenderer>().sprite = enemy.getStaticArmSprite();
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
         boxCollider = transform.GetComponent<BoxCollider2D>();
+
+        enemyRb = transform.GetComponent<Rigidbody2D>();
+        an = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -28,7 +32,8 @@ public class MeleeEnemyScript : MonoBehaviour
         {
             if (enemy.isDying())
             {
-                GameObject.Destroy(gameObject);
+                TriggerDeathAnimation();
+                GameObject.Destroy(gameObject, 0.22f);
             }
 
             if (isAgroed || enemy.isAgro(transform))
@@ -79,5 +84,13 @@ public class MeleeEnemyScript : MonoBehaviour
         }
     }
 
-    
+    void TriggerDeathAnimation()
+    {
+        if (an != null)
+        {
+            an.SetTrigger("Death");
+        }
+
+
+    }
 }
