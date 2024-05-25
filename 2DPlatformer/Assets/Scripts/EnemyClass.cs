@@ -11,6 +11,8 @@ public class EnemyClass : MonoBehaviour
     protected Sprite handSprite;
     protected Animator animator;
     protected Rigidbody2D rb;
+    protected bool isDead = false;
+
 
     /*
     public float getHealth()
@@ -25,22 +27,18 @@ public class EnemyClass : MonoBehaviour
     }
     protected virtual void Update()
     {
-        Vector2 direction = rb.velocity.normalized;
-
-        // Set movement animation based on direction and speed
-        float speed = rb.velocity.magnitude;
-        animator.SetFloat("Speed", speed);
-        animator.SetFloat("MoveX", direction.x); // Added for directional movement
-
-        // Update enemy facing direction based on movement
-        if (direction.x > 0 && !isFacingRight(transform))
+        if (isDying() && !isDead)
         {
-            flipEnemy(transform);
+            Die();
         }
-        else if (direction.x < 0 && isFacingRight(transform))
-        {
-            flipEnemy(transform);
-        }
+
+    }
+    protected virtual void Die()
+    {
+        animator.SetTrigger("Death");
+        rb.velocity = Vector2.zero;
+        isDead = true;
+        Destroy(gameObject, 0.5f); // Adjust delay as needed
     }
     public float getAgroDistance()
     {
@@ -68,8 +66,11 @@ public class EnemyClass : MonoBehaviour
     }
     public bool isDying()
     {
+       
         return this.health <= 0;
+        
     }
+  
     public float distanceToPlayer(Transform transform)
     {
         Transform playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
@@ -129,10 +130,12 @@ public class RangedEnemy : EnemyClass
         base.staticArmSprite = Resources.Load<Sprite>("Sprites/EnemySprites/SeperatedArms/StaticArms/cyborg static arm");
         base.handSprite = Resources.Load<Sprite>("Sprites/EnemySprites/SeperatedArms/Hands/cyborg hand");
     }
-    private void Update()
+    protected override void Die()
     {
-        base.Update();
+        base.Die();
+        // RangedEnemy'e özgü ölüm davranýþlarý ekleyin
     }
+   
     public RangedEnemy()
     {
         base.health = 100;
@@ -215,6 +218,7 @@ public class MeleeEnemy : EnemyClass
     private float voltaTime;
     private float hitRange;
     private float colliderDistance;
+    
 
     protected override void Awake()
     {
@@ -225,8 +229,15 @@ public class MeleeEnemy : EnemyClass
     private void Update()
     {
         base.Update();
-        
+     
+
     }
+    protected override void Die()
+    {
+        base.Die();
+        // MeleeEnemy'e özgü ölüm davranýþlarý ekleyin
+    }
+
     public MeleeEnemy()
     {
         this.colliderDistance = 0.7f;

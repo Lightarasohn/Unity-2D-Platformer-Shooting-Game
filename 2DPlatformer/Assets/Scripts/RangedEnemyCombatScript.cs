@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class RangedEnemyCombatScript : MonoBehaviour
@@ -12,6 +13,8 @@ public class RangedEnemyCombatScript : MonoBehaviour
     private bool canShoot = false;
     private float semiTime;
     private bool canAngle = false;
+    public bool isDead = false;
+    private Animator animator;
     void Start()
     {
         angle = 0;
@@ -20,6 +23,7 @@ public class RangedEnemyCombatScript : MonoBehaviour
         enemy = parentEnemy.GetComponent<RangedEnemyScript>().enemy;
         enemyWeapon = parentEnemy.GetComponent<RangedEnemyScript>().enemyWeapon;
         spawnPoints = parentEnemy.GetComponent<RangedEnemyScript>().spawnPoints;
+        animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -63,4 +67,5 @@ public class RangedEnemyCombatScript : MonoBehaviour
         if (GameObject.FindGameObjectWithTag("Player") != null && !GameObject.FindGameObjectWithTag("Player").transform.GetComponent<PlayerHealth>().isPlayerDead() && Time.timeScale == 1)
             if (canAngle) { angle = enemy.rotateGun(transform); }
     }
+   
 }

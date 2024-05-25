@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class RangedEnemyScript : MonoBehaviour
@@ -6,6 +7,7 @@ public class RangedEnemyScript : MonoBehaviour
     public Weapons enemyWeapon;
     private Transform gunTransform;
     public GameObject spawnPoints;
+    private Animator an;
     
 
     void Start()
@@ -18,6 +20,9 @@ public class RangedEnemyScript : MonoBehaviour
         transform.GetChild(1).transform.GetComponent<SpriteRenderer>().sprite = enemy.getStaticArmSprite();
         gunTransform.GetComponent<SpriteRenderer>().sprite = enemyWeapon.getSprite();
         spawnPoints = enemyWeapon.instantiateBulletSpawnPoints(gunTransform);
+
+        an = GetComponent<Animator>();
+
     }
 
     
@@ -25,8 +30,23 @@ public class RangedEnemyScript : MonoBehaviour
     {
         if (enemy.isDying())
         {
-            enemyWeapon.spawnGunPrefab(enemyWeapon,transform.position,transform.rotation);
-            GameObject.Destroy(gameObject);
+            TriggerDeathAnimation();
+            enemyWeapon.spawnGunPrefab(enemyWeapon, transform.position, transform.rotation);
+            StartCoroutine(DestroyAfterAnimation());
         }
+    }
+    void TriggerDeathAnimation()
+    {
+        if (an != null)
+        {
+            an.SetTrigger("Death");
+           
+        }
+    }
+    IEnumerator DestroyAfterAnimation()
+    {
+        // Wait for the length of the death animation before destroying the object
+        yield return new WaitForSeconds(0.5f);
+        Destroy(gameObject);
     }
 }

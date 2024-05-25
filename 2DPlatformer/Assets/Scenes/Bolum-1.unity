@@ -64926,6 +64926,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: RangedEnemy
       objectReference: {fileID: 0}
+    - target: {fileID: 4818550496282940197, guid: 0c9a5afe10fda394881475302937fbda, type: 3}
+      propertyPath: m_Size.x
+      value: 2.375
+      objectReference: {fileID: 0}
+    - target: {fileID: 4818550496282940197, guid: 0c9a5afe10fda394881475302937fbda, type: 3}
+      propertyPath: m_Size.y
+      value: 4.375
+      objectReference: {fileID: 0}
+    - target: {fileID: 4818550496282940197, guid: 0c9a5afe10fda394881475302937fbda, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -1275332644, guid: 7725417d0c6d96b4c9fbacc92d94cb07, type: 3}
+    - target: {fileID: 4818550496282940197, guid: 0c9a5afe10fda394881475302937fbda, type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
