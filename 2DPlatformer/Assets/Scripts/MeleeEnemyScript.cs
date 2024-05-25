@@ -24,7 +24,7 @@ public class MeleeEnemyScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (GameObject.FindGameObjectWithTag("Player") != null && !GameObject.FindGameObjectWithTag("Player").transform.GetComponent<PlayerHealth>().isPlayerDead() && Time.timeScale == 1)
+        if (GameObject.FindGameObjectWithTag("Player") != null && !GameObject.FindGameObjectWithTag("Player").transform.GetComponent<PlayerHealth>().isPlayerDead() && Time.timeScale > 0)
         {
             if (enemy.isDying())
             {
@@ -39,7 +39,6 @@ public class MeleeEnemyScript : MonoBehaviour
                     enemyRb.velocity = new Vector2(enemy.getAgroMovespeed() * (transform.localScale.x * 10 / 7), enemyRb.velocity.y);
                     if (enemy.canHit(boxCollider, transform))
                     {
-                        Debug.Log("Hit");
                         hitTimer += Time.deltaTime;
                         if (hitTimer >= 2)
                         {

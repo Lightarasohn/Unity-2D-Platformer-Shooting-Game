@@ -441,6 +441,7 @@ GameObject:
   - component: {fileID: 4579020356783474244}
   - component: {fileID: 3890861901896899429}
   - component: {fileID: 2042289805766975658}
+  - component: {fileID: 3906641026299326412}
   m_Layer: 7
   m_Name: Karakter
   m_TagString: Player
@@ -764,6 +765,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2827ea21a3edf224a9fda2518bf6d74a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &3906641026299326412
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2296095622488029050}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b062653c40690c54bbaf3805692c458c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2431457936378754492
 GameObject:
   m_ObjectHideFlags: 0
@@ -790,7 +803,7 @@ Transform:
   m_GameObject: {fileID: 2431457936378754492}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.808, y: 0, z: 0}
+  m_LocalPosition: {x: 0.813, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

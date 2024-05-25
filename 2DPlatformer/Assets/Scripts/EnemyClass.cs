@@ -218,7 +218,6 @@ public class MeleeEnemy : EnemyClass
             new Vector3(boxCollider.bounds.size.x * this.hitRange, boxCollider.bounds.size.y, boxCollider.bounds.size.z),
             0, Vector2.left, 0,
             1 << LayerMask.NameToLayer("Action"));
-        Debug.Log(hit.collider);
         if(hit.collider != null)
         {
             if (hit.collider.gameObject.CompareTag("Player"))

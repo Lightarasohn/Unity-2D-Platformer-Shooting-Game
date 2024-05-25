@@ -873,7 +873,7 @@ GameObject:
   - component: {fileID: 49281084}
   m_Layer: 0
   m_Name: buildings1
-  m_TagString: Untagged
+  m_TagString: BackGroundChild
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -54723,7 +54723,7 @@ GameObject:
   - component: {fileID: 517444900}
   m_Layer: 0
   m_Name: buildings3
-  m_TagString: Untagged
+  m_TagString: BackGroundChild
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -55225,7 +55225,7 @@ GameObject:
   - component: {fileID: 860545217}
   m_Layer: 0
   m_Name: Background
-  m_TagString: Untagged
+  m_TagString: BackGround
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -55382,7 +55382,7 @@ GameObject:
   - component: {fileID: 1002499330}
   m_Layer: 0
   m_Name: sky
-  m_TagString: Untagged
+  m_TagString: BackGroundChild
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -64422,7 +64422,7 @@ GameObject:
   - component: {fileID: 1506624118}
   m_Layer: 0
   m_Name: air
-  m_TagString: Untagged
+  m_TagString: BackGroundChild
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -65157,7 +65157,7 @@ GameObject:
   - component: {fileID: 2003386405}
   m_Layer: 0
   m_Name: buildings2
-  m_TagString: Untagged
+  m_TagString: BackGroundChild
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -65425,6 +65425,10 @@ PrefabInstance:
     - target: {fileID: 2296095622488029050, guid: 30b22721c16ae274988bf2eb4b2aac42, type: 3}
       propertyPath: m_Name
       value: Karakter
+      objectReference: {fileID: 0}
+    - target: {fileID: 5525673475266938880, guid: 30b22721c16ae274988bf2eb4b2aac42, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.813
       objectReference: {fileID: 0}
     - target: {fileID: 6025154705222193845, guid: 30b22721c16ae274988bf2eb4b2aac42, type: 3}
       propertyPath: m_LocalPosition.x
