@@ -1,7 +1,8 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using Random = System.Random;
 
-public class EnemyClass
+public class EnemyClass : MonoBehaviour
 {
     protected float agroDistance;
     protected float health;
@@ -9,6 +10,10 @@ public class EnemyClass
     protected Sprite bodySprite;
     protected Sprite staticArmSprite;
     protected Sprite handSprite;
+    protected Animator animator;
+    protected Rigidbody2D rb;
+    protected bool isDead = false;
+
 
     /*
     public float getHealth()
@@ -16,6 +21,26 @@ public class EnemyClass
         return this.health;
     }
     */
+    protected virtual void Awake()
+    {
+        animator = GetComponent<Animator>();
+        rb = GetComponent<Rigidbody2D>();
+    }
+    protected virtual void Update()
+    {
+        if (isDying() && !isDead)
+        {
+            Die();
+        }
+
+    }
+    protected virtual void Die()
+    {
+        animator.SetTrigger("Death");
+        rb.velocity = Vector2.zero;
+        isDead = true;
+        Destroy(gameObject, 0.5f); // Adjust delay as needed
+    }
     public float getAgroDistance()
     {
         return this.agroDistance;
@@ -28,7 +53,7 @@ public class EnemyClass
     {
         return this.bodySprite;
     }
-    public Sprite getStaticArmSprite() 
+    public Sprite getStaticArmSprite()
     {
         return this.staticArmSprite;
     }
@@ -42,12 +67,17 @@ public class EnemyClass
     }
     public bool isDying()
     {
+       
         return this.health <= 0;
+        
     }
+
+    
+  
     public float distanceToPlayer(Transform transform)
     {
         Transform playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
-        return Mathf.Sqrt(Mathf.Pow(Mathf.Abs(transform.position.x - playerTransform.position.x),2) + Mathf.Pow(Mathf.Abs(transform.position.y - playerTransform.position.y),2));
+        return Mathf.Sqrt(Mathf.Pow(Mathf.Abs(transform.position.x - playerTransform.position.x), 2) + Mathf.Pow(Mathf.Abs(transform.position.y - playerTransform.position.y), 2));
     }
     public bool isPlayerBehind(Transform transform)
     {
@@ -56,7 +86,7 @@ public class EnemyClass
         {
             return true;
         }
-        else if(!this.isFacingRight(transform) && (playerTransform.position.x >= transform.position.x))
+        else if (!this.isFacingRight(transform) && (playerTransform.position.x >= transform.position.x))
         {
             return true;
         }
@@ -93,6 +123,22 @@ public class EnemyClass
 
 public class RangedEnemy : EnemyClass
 {
+    protected override void Awake()
+    {
+        base.Awake();
+        base.health = 100;
+        base.agroDistance = 10;
+        base.weapon = pickRangedEnemyGun();
+        base.bodySprite = Resources.Load<Sprite>("Sprites/EnemySprites/SeperatedBodies/cyborgidle_0");
+        base.staticArmSprite = Resources.Load<Sprite>("Sprites/EnemySprites/SeperatedArms/StaticArms/cyborg static arm");
+        base.handSprite = Resources.Load<Sprite>("Sprites/EnemySprites/SeperatedArms/Hands/cyborg hand");
+    }
+    protected override void Die()
+    {
+        base.Die();
+        // RangedEnemy'e özgü ölüm davranýþlarý ekleyin
+    }
+   
     public RangedEnemy()
     {
         base.health = 100;
@@ -102,7 +148,8 @@ public class RangedEnemy : EnemyClass
         base.staticArmSprite = Resources.Load<Sprite>("Sprites/EnemySprites/SeperatedArms/StaticArms/cyborg static arm");
         base.handSprite = Resources.Load<Sprite>("Sprites/EnemySprites/SeperatedArms/Hands/cyborg hand");
     }
-    public float rotateGun(Transform transform) 
+
+    public float rotateGun(Transform transform)
     {
         float angle;
         Transform playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
@@ -123,7 +170,7 @@ public class RangedEnemy : EnemyClass
         {
             if (!sr.flipX)
             {
-                
+
                 srParent.flipX = true;
                 srParent.flipY = true;
                 sr.flipX = true;
@@ -142,7 +189,7 @@ public class RangedEnemy : EnemyClass
     {
         Weapons wp;
         Random rnd = new Random();
-        switch (rnd.Next(0,6)) 
+        switch (rnd.Next(0, 6))
         {
             case 1:
                 wp = new Weapon1();
@@ -174,6 +221,26 @@ public class MeleeEnemy : EnemyClass
     private float voltaTime;
     private float hitRange;
     private float colliderDistance;
+    
+
+    protected override void Awake()
+    {
+        base.Awake();
+       
+    }
+
+    private void Update()
+    {
+        base.Update();
+     
+
+    }
+    protected override void Die()
+    {
+        base.Die();
+        // MeleeEnemy'e özgü ölüm davranýþlarý ekleyin
+    }
+
     public MeleeEnemy()
     {
         this.colliderDistance = 0.7f;
@@ -186,7 +253,10 @@ public class MeleeEnemy : EnemyClass
         base.bodySprite = Resources.Load<Sprite>("Sprites/EnemySprites/SeperatedBodies/biker idle_0");
         base.staticArmSprite = Resources.Load<Sprite>("Sprites/EnemySprites/SeperatedArms/StaticArms/biker arm");
         base.handSprite = Resources.Load<Sprite>("Sprites/EnemySprites/SeperatedArms/Hands/biker hands");
+
+
     }
+
     public float getAgroMovespeed()
     {
         return this.agroMovespeed;
@@ -208,7 +278,7 @@ public class MeleeEnemy : EnemyClass
     public void voltaAt(Transform transform, Rigidbody2D rb)
     {
         rb.velocity = new Vector2(this.voltaMovespeed * (transform.localScale.x * 10 / 7), rb.velocity.y);
-        
+
     }
     public bool canHit(BoxCollider2D boxCollider, Transform transform)
     {
@@ -218,7 +288,8 @@ public class MeleeEnemy : EnemyClass
             new Vector3(boxCollider.bounds.size.x * this.hitRange, boxCollider.bounds.size.y, boxCollider.bounds.size.z),
             0, Vector2.left, 0,
             1 << LayerMask.NameToLayer("Action"));
-        if(hit.collider != null)
+        Debug.Log(hit.collider);
+        if (hit.collider != null)
         {
             if (hit.collider.gameObject.CompareTag("Player"))
             {
@@ -230,5 +301,5 @@ public class MeleeEnemy : EnemyClass
             }
         }
         return tmp;
-    } 
+    }
 }
