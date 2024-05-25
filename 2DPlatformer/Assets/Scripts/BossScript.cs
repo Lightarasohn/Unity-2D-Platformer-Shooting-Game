@@ -24,6 +24,7 @@ public class BossScript : MonoBehaviour
         transform.GetChild(1).transform.GetComponent<SpriteRenderer>().sprite = enemy.getStaticArmSprite();
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
         boxCollider = transform.GetComponent<BoxCollider2D>();
+        enemy.setAnimation(transform);
     }
 
     void Update()
@@ -32,7 +33,9 @@ public class BossScript : MonoBehaviour
         {
             if (enemy.isDying())
             {
-                GameObject.Destroy(gameObject);
+                enemy.TriggerDeathAnimation();
+                StartCoroutine(enemy.DestroyAfterAnimation(gameObject));
+                
             }
 
             if (isAgroed || enemy.isAgro(transform))
