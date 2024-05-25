@@ -267,4 +267,20 @@ public class MeleeEnemy : EnemyClass
         }
         return tmp;
     }
+    public class BossEnemy : MeleeEnemy
+    {
+        public BossEnemy()
+        {
+            base.colliderDistance = 0.5f;
+            base.hitRange = 2.5f;
+            base.voltaTime = 4f;
+            base.voltaMovespeed = 1.5f;
+            base.agroMovespeed = 3;
+            base.health = 500;
+            base.agroDistance = 15;
+            base.bodySprite = Resources.Load<Sprite>("Sprites/EnemySprites/SeperatedBodies/biker idle_0");
+            base.staticArmSprite = Resources.Load<Sprite>("Sprites/EnemySprites/SeperatedArms/StaticArms/biker arm");
+            base.handSprite = Resources.Load<Sprite>("Sprites/EnemySprites/SeperatedArms/Hands/biker hands");
+        }
+    }
 }
