@@ -176,7 +176,7 @@ public class MeleeEnemy : EnemyClass
     private float colliderDistance;
     public MeleeEnemy()
     {
-        this.colliderDistance = 0.7f;
+        this.colliderDistance = 0.5f;
         this.hitRange = 2.5f;
         this.voltaTime = 4f;
         this.voltaMovespeed = 1.5f;
@@ -195,16 +195,6 @@ public class MeleeEnemy : EnemyClass
     {
         return this.voltaTime;
     }
-    /*
-    public float getHitRange()
-    {
-        return this.hitRange;
-    }
-    public float getColliderDistance()
-    {
-        return this.colliderDistance;
-    }
-    */
     public void voltaAt(Transform transform, Rigidbody2D rb)
     {
         rb.velocity = new Vector2(this.voltaMovespeed * (transform.localScale.x * 10 / 7), rb.velocity.y);
@@ -218,7 +208,6 @@ public class MeleeEnemy : EnemyClass
             new Vector3(boxCollider.bounds.size.x * this.hitRange, boxCollider.bounds.size.y, boxCollider.bounds.size.z),
             0, Vector2.left, 0,
             1 << LayerMask.NameToLayer("Action"));
-        Debug.Log(hit.collider);
         if(hit.collider != null)
         {
             if (hit.collider.gameObject.CompareTag("Player"))
@@ -231,5 +220,63 @@ public class MeleeEnemy : EnemyClass
             }
         }
         return tmp;
-    } 
+    }
+}
+
+public class BossEnemy : EnemyClass
+{
+    private float voltaMovespeed;
+    private float agroMovespeed;
+    private float voltaTime;
+    private float hitRange;
+    private float colliderDistance;
+
+    public BossEnemy()
+    {
+        this.colliderDistance = 0.5f;
+        this.hitRange = 2.5f;
+        this.voltaTime = 4f;
+        this.voltaMovespeed = 1.5f;
+        this.agroMovespeed = 3;
+        base.health = 200;
+        base.agroDistance = 15;
+        base.bodySprite = Resources.Load<Sprite>("Sprites/EnemySprites/SeperatedBodies/biker idle_0");
+        base.staticArmSprite = Resources.Load<Sprite>("Sprites/EnemySprites/SeperatedArms/StaticArms/biker arm");
+        base.handSprite = Resources.Load<Sprite>("Sprites/EnemySprites/SeperatedArms/Hands/biker hands");
+    }
+
+    public float getAgroMovespeed()
+    {
+        return this.agroMovespeed;
+    }
+    public float getVoltaTime()
+    {
+        return this.voltaTime;
+    }
+    public void voltaAt(Transform transform, Rigidbody2D rb)
+    {
+        rb.velocity = new Vector2(this.voltaMovespeed * (transform.localScale.x * 10 / 7), rb.velocity.y);
+
+    }
+    public bool canHit(BoxCollider2D boxCollider, Transform transform)
+    {
+        bool tmp = false;
+
+        RaycastHit2D hit = Physics2D.BoxCast(boxCollider.bounds.center + transform.right * this.hitRange * transform.localScale.x * this.colliderDistance,
+            new Vector3(boxCollider.bounds.size.x * this.hitRange, boxCollider.bounds.size.y, boxCollider.bounds.size.z),
+            0, Vector2.left, 0,
+            1 << LayerMask.NameToLayer("Action"));
+        if (hit.collider != null)
+        {
+            if (hit.collider.gameObject.CompareTag("Player"))
+            {
+                tmp = true;
+            }
+            else
+            {
+                tmp = false;
+            }
+        }
+        return tmp;
+    }
 }

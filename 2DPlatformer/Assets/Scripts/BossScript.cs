@@ -1,8 +1,10 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class MeleeEnemyScript : MonoBehaviour
+public class BossScript : MonoBehaviour
 {
-    public MeleeEnemy enemy;
+    public BossEnemy enemy;
     private Transform playerTransform;
     private bool isAgroed = false;
     private float timer = 8f;
@@ -10,10 +12,13 @@ public class MeleeEnemyScript : MonoBehaviour
     private bool isStart = true;
     private BoxCollider2D boxCollider;
     private float hitTimer;
+    private float inCreaseSpeedTimer;
+    private float deCreaseSpeedTimer;
+
     void Start()
     {
         enemyRb = transform.GetComponent<Rigidbody2D>();
-        enemy = new MeleeEnemy();
+        enemy = new BossEnemy();
         transform.GetComponent<SpriteRenderer>().sprite = enemy.getBodySprite();
         transform.GetChild(0).transform.GetComponent<SpriteRenderer>().sprite = enemy.getHandSprite();
         transform.GetChild(1).transform.GetComponent<SpriteRenderer>().sprite = enemy.getStaticArmSprite();
@@ -21,7 +26,6 @@ public class MeleeEnemyScript : MonoBehaviour
         boxCollider = transform.GetComponent<BoxCollider2D>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (GameObject.FindGameObjectWithTag("Player") != null && !GameObject.FindGameObjectWithTag("Player").transform.GetComponent<PlayerHealth>().isPlayerDead() && Time.timeScale == 1)
@@ -35,15 +39,30 @@ public class MeleeEnemyScript : MonoBehaviour
             {
                 if (enemy.getAgroDistance() >= enemy.distanceToPlayer(playerTransform))
                 {
+                    inCreaseSpeedTimer += Time.deltaTime;
+                    if(inCreaseSpeedTimer >= 4)
+                    {
+                        enemyRb.velocity = new Vector2((2f) * enemy.getAgroMovespeed() * (transform.localScale.x * 10 / 7), enemyRb.velocity.y);
+                        deCreaseSpeedTimer += Time.deltaTime;
+                        if(deCreaseSpeedTimer >= 4)
+                        {
+                            inCreaseSpeedTimer = 0;
+                        }
+                    }
+                    else
+                    {
+                        deCreaseSpeedTimer = 0;
+                        enemyRb.velocity = new Vector2(enemy.getAgroMovespeed() * (transform.localScale.x * 10 / 7), enemyRb.velocity.y);
+                    }
 
-                    enemyRb.velocity = new Vector2(enemy.getAgroMovespeed() * (transform.localScale.x * 10 / 7), enemyRb.velocity.y);
                     if (enemy.canHit(boxCollider, transform))
                     {
                         hitTimer += Time.deltaTime;
                         if (hitTimer >= 2)
                         {
                             hitTimer = 0;
-                            GameObject.FindGameObjectWithTag("Player").transform.GetComponent<PlayerHealth>().hurtPlayer(50);
+                            Debug.Log("Hit !!!");
+                            GameObject.FindGameObjectWithTag("Player").transform.GetComponent<PlayerHealth>().hurtPlayer(100f);
                         }
                     }
 
@@ -78,6 +97,4 @@ public class MeleeEnemyScript : MonoBehaviour
             isAgroed = enemy.isAgro(transform);
         }
     }
-
-    
 }

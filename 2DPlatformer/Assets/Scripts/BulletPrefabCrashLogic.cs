@@ -4,6 +4,7 @@ public class BulletCrashLogic : MonoBehaviour
 {
     private RangedEnemy rEnemy;
     private MeleeEnemy mEnemy;
+    private BossEnemy bossEnemy;
     private float Damage;
     
     void Start()
@@ -29,6 +30,12 @@ public class BulletCrashLogic : MonoBehaviour
             mEnemy = collision.transform.GetComponent<MeleeEnemyScript>().enemy;
             mEnemy.hurt(Damage);
             Destroy(gameObject);
+        }
+        else if (collision.tag == "BossEnemy")
+        {
+            bossEnemy = collision.transform.GetComponent<BossScript>().enemy;
+            bossEnemy.hurt(Damage);
+            Destroy (gameObject);
         }
         else if(collision.tag == "Player")
         {
