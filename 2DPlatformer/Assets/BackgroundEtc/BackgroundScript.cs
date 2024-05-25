@@ -12,6 +12,7 @@ public class BackgroundScript : MonoBehaviour
     {
         _startingPos = transform.position.x; // sprite'in baslangic x pozisyonu aliniyor
         _lengthOfSprites = GetComponent<SpriteRenderer>().bounds.size.x;    // sprite'larin uzunlugu aliniyor
+        MainCamera = GameObject.FindGameObjectWithTag("MainCamera").transform.GetComponent<Camera>();
     }
     private void Update()
     {

@@ -4,7 +4,7 @@ public class BulletCrashLogic : MonoBehaviour
 {
     private RangedEnemy rEnemy;
     private MeleeEnemy mEnemy;
-    private BossEnemy bossEnemy;
+    private MeleeEnemy.BossEnemy bossEnemy;
     private float Damage;
     
     void Start()

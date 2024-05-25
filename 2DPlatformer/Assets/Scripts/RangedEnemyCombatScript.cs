@@ -51,7 +51,7 @@ public class RangedEnemyCombatScript : MonoBehaviour
         
         if (semiTime >= enemyWeapon.getFireRate())
         {
-            if (canShoot)
+            if (canShoot && !enemy.isDying())
             {
                 enemyWeapon.fire(spawnPoints, transform, enemyWeapon);
                 semiTime = 0;
@@ -65,7 +65,7 @@ public class RangedEnemyCombatScript : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (GameObject.FindGameObjectWithTag("Player") != null && !GameObject.FindGameObjectWithTag("Player").transform.GetComponent<PlayerHealth>().isPlayerDead() && Time.timeScale > 0 && !enemy.isDying())
+        if (GameObject.FindGameObjectWithTag("Player") != null && !GameObject.FindGameObjectWithTag("Player").transform.GetComponent<PlayerHealth>().isPlayerDead() && Time.timeScale > 0 && enemy != null && !enemy.isDying())
             if (canAngle) { angle = enemy.rotateGun(transform); }
     }
    

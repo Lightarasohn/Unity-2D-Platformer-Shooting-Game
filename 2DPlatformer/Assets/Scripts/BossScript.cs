@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BossScript : MonoBehaviour
 {
-    public BossEnemy enemy;
+    public MeleeEnemy.BossEnemy enemy;
     private Transform playerTransform;
     private bool isAgroed = false;
     private float timer = 8f;
@@ -18,7 +18,7 @@ public class BossScript : MonoBehaviour
     void Start()
     {
         enemyRb = transform.GetComponent<Rigidbody2D>();
-        enemy = new BossEnemy();
+        enemy = new MeleeEnemy.BossEnemy();
         transform.GetComponent<SpriteRenderer>().sprite = enemy.getBodySprite();
         transform.GetChild(0).transform.GetComponent<SpriteRenderer>().sprite = enemy.getHandSprite();
         transform.GetChild(1).transform.GetComponent<SpriteRenderer>().sprite = enemy.getStaticArmSprite();
