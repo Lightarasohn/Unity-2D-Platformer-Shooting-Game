@@ -67,13 +67,8 @@ public class EnemyClass
     }
     public bool isDying()
     {
-
         return this.health <= 0;
-
     }
-
-
-
     public float distanceToPlayer(Transform transform)
     {
         Transform playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
@@ -205,7 +200,7 @@ public class MeleeEnemy : EnemyClass
     private float voltaTime;
     private float hitRange;
     private float colliderDistance;
-
+    
     public MeleeEnemy()
     {
         this.colliderDistance = 0.7f;
