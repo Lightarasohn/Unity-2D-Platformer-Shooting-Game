@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: f397c22d080b3b24088caab130ae1406
+guid: 7725417d0c6d96b4c9fbacc92d94cb07
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -97,13 +97,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: cyborg jump_0
+      name: cyborg hurt_0
       rect:
         serializedVersion: 2
-        x: 20
-        y: 24
+        x: 12
+        y: 0
         width: 76
-        height: 116
+        height: 140
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -111,62 +111,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c8ceffd9ef95b7b498bc3f41f735c6f5
-      internalID: 235579048
+      spriteID: fda09368ef63b97429f4a6df3cd609e9
+      internalID: -1275332644
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: cyborg jump_1
+      name: cyborg hurt_1
       rect:
         serializedVersion: 2
-        x: 212
-        y: 32
-        width: 76
-        height: 116
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 4c452161f1bdf174f94d3d02bba9b191
-      internalID: -729510261
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: cyborg jump_2
-      rect:
-        serializedVersion: 2
-        x: 404
-        y: 20
-        width: 76
-        height: 124
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 9c0f499d0dbf41e41b2fe938250603c0
-      internalID: -2115097982
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: cyborg jump_3
-      rect:
-        serializedVersion: 2
-        x: 596
-        y: 4
+        x: 196
+        y: 0
         width: 84
-        height: 132
+        height: 140
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -174,8 +132,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3e2b1af2ed0ff5445af1d5a6e05a2743
-      internalID: 1014001582
+      spriteID: 9dcc7ee7fe253764ebee9d03518dc3f1
+      internalID: 1608560953
       vertices: []
       indices: 
       edges: []
@@ -191,10 +149,8 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      cyborg jump_0: 235579048
-      cyborg jump_1: -729510261
-      cyborg jump_2: -2115097982
-      cyborg jump_3: 1014001582
+      cyborg hurt_0: -1275332644
+      cyborg hurt_1: 1608560953
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

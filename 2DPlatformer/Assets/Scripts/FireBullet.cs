@@ -16,7 +16,7 @@ public class FireBullet : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!GameObject.FindGameObjectWithTag("Player").transform.GetComponent<PlayerHealth>().isPlayerDead() && Time.timeScale == 1)
+        if (!GameObject.FindGameObjectWithTag("Player").transform.GetComponent<PlayerHealth>().isPlayerDead() && Time.timeScale > 0)
         {
             currentWeapon = transform.GetComponent<GunPick>().currentWeapon;
         fireRate = currentWeapon.getFireRate();
@@ -44,7 +44,7 @@ public class FireBullet : MonoBehaviour
     private void FixedUpdate()
     {
 
-        if (!GameObject.FindGameObjectWithTag("Player").transform.GetComponent<PlayerHealth>().isPlayerDead() && Time.timeScale == 1)
+        if (!GameObject.FindGameObjectWithTag("Player").transform.GetComponent<PlayerHealth>().isPlayerDead() && Time.timeScale > 0)
         {
             time += Time.deltaTime;
             if (currentWeapon is Rifles)

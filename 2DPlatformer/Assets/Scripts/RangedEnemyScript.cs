@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class RangedEnemyScript : MonoBehaviour
@@ -18,15 +19,19 @@ public class RangedEnemyScript : MonoBehaviour
         transform.GetChild(1).transform.GetComponent<SpriteRenderer>().sprite = enemy.getStaticArmSprite();
         gunTransform.GetComponent<SpriteRenderer>().sprite = enemyWeapon.getSprite();
         spawnPoints = enemyWeapon.instantiateBulletSpawnPoints(gunTransform);
+        enemy.setAnimation(transform);
+
     }
+
 
     
     void Update()
     {
         if (enemy.isDying())
         {
-            enemyWeapon.spawnGunPrefab(enemyWeapon,transform.position,transform.rotation);
-            GameObject.Destroy(gameObject);
+            enemy.TriggerDeathAnimation();
+            enemyWeapon.spawnGunPrefab(enemyWeapon, transform.position, transform.rotation);
+            StartCoroutine(enemy.DestroyAfterAnimation(gameObject));
         }
     }
 }

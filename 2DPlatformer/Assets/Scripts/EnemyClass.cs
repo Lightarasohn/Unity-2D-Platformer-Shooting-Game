@@ -67,13 +67,8 @@ public class EnemyClass
     }
     public bool isDying()
     {
-       
         return this.health <= 0;
-        
     }
-
-    
-  
     public float distanceToPlayer(Transform transform)
     {
         Transform playerTransform = GameObject.FindGameObjectWithTag("Player").transform;

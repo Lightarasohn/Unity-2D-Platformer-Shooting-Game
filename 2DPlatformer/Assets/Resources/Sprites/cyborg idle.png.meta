@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: ab86a2d7b34eb0e45845c0a273eff4d1
+guid: 459e0b9d785533445bd17bfb721173c1
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -97,76 +97,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: biker jump_0
+      name: cyborg idle_0
       rect:
         serializedVersion: 2
-        x: 20
-        y: 4
-        width: 88
-        height: 128
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: b68773d27909c8f44acc524950047f8c
-      internalID: 1836508809
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: biker jump_1
-      rect:
-        serializedVersion: 2
-        x: 240
-        y: 16
-        width: 60
-        height: 128
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: c25975871994cb74cb1889a720de0419
-      internalID: 341134835
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: biker jump_2
-      rect:
-        serializedVersion: 2
-        x: 424
-        y: 8
-        width: 76
-        height: 124
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 3e9e70dec6c62294fa1b106af8e254fa
-      internalID: -1419973425
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: biker jump_3
-      rect:
-        serializedVersion: 2
-        x: 616
+        x: 28
         y: 0
-        width: 68
-        height: 128
+        width: 60
+        height: 140
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -174,8 +111,71 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: db4f46494e9bbda47a2d84f0de58878e
-      internalID: 1269116427
+      spriteID: 30b2d310d212bd74788796befcad394f
+      internalID: 902462606
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cyborg idle_1
+      rect:
+        serializedVersion: 2
+        x: 216
+        y: 0
+        width: 64
+        height: 140
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a4acbdf82140969458c1f2037b37eb7e
+      internalID: -1428617946
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cyborg idle_2
+      rect:
+        serializedVersion: 2
+        x: 408
+        y: 0
+        width: 64
+        height: 140
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 846f378d7db8c4645918f8c4e789f917
+      internalID: -945263280
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cyborg idle_3
+      rect:
+        serializedVersion: 2
+        x: 604
+        y: 0
+        width: 60
+        height: 140
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d5f287290f2cae94aaef95defcef3b3a
+      internalID: -2113794852
       vertices: []
       indices: 
       edges: []
@@ -191,10 +191,10 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      biker jump_0: 1836508809
-      biker jump_1: 341134835
-      biker jump_2: -1419973425
-      biker jump_3: 1269116427
+      cyborg idle_0: 902462606
+      cyborg idle_1: -1428617946
+      cyborg idle_2: -945263280
+      cyborg idle_3: -2113794852
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -14,6 +14,39 @@ public class Weapons
     protected string bulletPoints;
     protected string weaponBullet;
 
+   public string getName()
+   {
+       return this.gunName;
+   }
+   public int getAmmo()
+   {
+       return this.ammo;
+   }
+   public int getStaticAmmo()
+   {
+       return this.staticAmmo;
+   }
+   public int getMags()
+   {
+       return this.mags;
+   }
+   public string getBulletPoints()
+   {
+       return this.bulletPoints;
+   }
+   public string getWeaponBullet()
+   {
+       return this.weaponBullet;
+   }
+   public Sprite getSprite()
+    {
+        return this.sprite;
+    }
+   public float getFireRate()
+    {
+        return this.fireRate;
+    }
+
     public void spawnGunPrefab(Weapons gunType, Vector2 gunPosition, Quaternion gunRotation)
     {
         GameObject gun, instantiedGun;
@@ -279,40 +312,7 @@ public class Weapons
         }
 
     }
-    /* 
-    public string getName()
-    {
-        return this.gunName;
-    }
-    public int getAmmo()
-    {
-        return this.ammo;
-    }
-    public int getStaticAmmo()
-    {
-        return this.staticAmmo;
-    }
-    public int getMags()
-    {
-        return this.mags;
-    }
-    public string getBulletPoints()
-    {
-        return this.bulletPoints;
-    }
-    public string getWeaponBullet()
-    {
-        return this.weaponBullet;
-    }
-    */
-    public Sprite getSprite()
-    {
-        return this.sprite;
-    }
-    public float getFireRate()
-    {
-        return this.fireRate;
-    }
+   
 }
 
 public class SemiAutoRifles : Weapons

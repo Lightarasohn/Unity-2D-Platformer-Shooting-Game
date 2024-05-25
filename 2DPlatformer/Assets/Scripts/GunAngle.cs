@@ -25,7 +25,7 @@ public class GunAngle : MonoBehaviour
 
     private void rotateGun()
     {
-        if(!GameObject.FindGameObjectWithTag("Player").transform.GetComponent<PlayerHealth>().isPlayerDead() && Time.timeScale == 1)
+        if(!GameObject.FindGameObjectWithTag("Player").transform.GetComponent<PlayerHealth>().isPlayerDead())
         {Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector2 vector = (mousePos - (Vector2)(transform.parent.position));
         angle = Mathf.Atan2(vector.y, vector.x) * Mathf.Rad2Deg;

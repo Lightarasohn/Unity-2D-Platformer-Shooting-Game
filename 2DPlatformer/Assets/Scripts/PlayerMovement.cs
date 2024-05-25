@@ -16,8 +16,6 @@ public class PlayerMovement : MonoBehaviour
     private float moveSpeed = 500f;
     private Animator animator;
 
-
-
     private Rigidbody2D rb;
     private Transform GroundCheck;
     [SerializeField] private LayerMask GroundLayer;
@@ -33,11 +31,11 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        animator.SetFloat("Speed", Mathf.Abs(horizontalMove));
-
         if (isDashing) return;
 
         horizontalMove = Input.GetAxisRaw("Horizontal");
+        animator.SetFloat("Speed", Mathf.Abs(horizontalMove));
+
         if ((Input.GetButtonDown("Jump") && isGrounded()))
         {
             jumpCount++;
@@ -55,15 +53,22 @@ public class PlayerMovement : MonoBehaviour
         }
 
         // Zýplama animasyonunu sýfýrla
-        if (animator.GetBool("isJumping") && Mathf.Approximately(rb.velocity.y, 0) && isGrounded())
+        if (Math.Round(rb.velocity.y) == 0 && isGrounded())
         {
             animator.SetBool("isJumping", false);
+            if (Mathf.Abs(horizontalMove) > 0)
+            {
+                animator.SetFloat("Speed", Mathf.Abs(horizontalMove));
+            }
         }
 
         if (canDash())
         {
             dash = true;
         }
+
+        // Silahýn pozisyonu güncelleniyor
+        UpdateWeaponPosition();
     }
 
     private void FixedUpdate()
@@ -79,7 +84,9 @@ public class PlayerMovement : MonoBehaviour
             dash = false;
         }
         else
+        {
             rb.velocity = new Vector2(horizontalMove * moveSpeed * Time.fixedDeltaTime, rb.velocity.y);
+        }
     }
 
     private bool isGrounded()
@@ -113,6 +120,22 @@ public class PlayerMovement : MonoBehaviour
             Vector3 localscale = transform.localScale;
             localscale.x *= -1;
             transform.localScale = localscale;
+        }
+    }
+
+    private void UpdateWeaponPosition()
+    {
+        if (isGrounded() && Math.Round(rb.velocity.x) != 0)
+        {
+            transform.GetChild(2).transform.localPosition = new Vector3(1.2f, transform.GetChild(2).transform.localPosition.y, transform.GetChild(2).transform.localPosition.z);
+        }
+        else if (!isGrounded())
+        {
+            transform.GetChild(2).transform.localPosition = new Vector3(1.25f, 0.25f, transform.GetChild(2).transform.localPosition.z);
+        }
+        else
+        {
+            transform.GetChild(2).transform.localPosition = new Vector3(0.8f, 0, 0);
         }
     }
 

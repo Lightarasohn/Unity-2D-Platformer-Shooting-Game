@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class MeleeEnemyScript : MonoBehaviour
@@ -19,16 +20,18 @@ public class MeleeEnemyScript : MonoBehaviour
         transform.GetChild(1).transform.GetComponent<SpriteRenderer>().sprite = enemy.getStaticArmSprite();
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
         boxCollider = transform.GetComponent<BoxCollider2D>();
+        enemy.setAnimation(transform);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (GameObject.FindGameObjectWithTag("Player") != null && !GameObject.FindGameObjectWithTag("Player").transform.GetComponent<PlayerHealth>().isPlayerDead() && Time.timeScale == 1)
+        if (GameObject.FindGameObjectWithTag("Player") != null && !GameObject.FindGameObjectWithTag("Player").transform.GetComponent<PlayerHealth>().isPlayerDead() && Time.timeScale > 0)
         {
             if (enemy.isDying())
             {
-                GameObject.Destroy(gameObject);
+                enemy.TriggerDeathAnimation();
+                StartCoroutine(enemy.DestroyAfterAnimation(gameObject));
             }
 
             if (isAgroed || enemy.isAgro(transform))
@@ -78,6 +81,4 @@ public class MeleeEnemyScript : MonoBehaviour
             isAgroed = enemy.isAgro(transform);
         }
     }
-
-    
 }
