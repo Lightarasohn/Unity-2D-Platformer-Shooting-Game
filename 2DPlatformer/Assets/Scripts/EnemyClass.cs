@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using Random = System.Random;
 
@@ -70,6 +71,8 @@ public class EnemyClass : MonoBehaviour
         return this.health <= 0;
         
     }
+
+    
   
     public float distanceToPlayer(Transform transform)
     {
