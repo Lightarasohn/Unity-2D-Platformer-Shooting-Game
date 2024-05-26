@@ -14,8 +14,9 @@ TagManager:
   - GameEnd
   - PauseMenu
   - DeadMenu
-  - MerdivenUstuTag
-  - MerdivenAltiTag
+  - BackGround
+  - BackGroundChild
+  - BossEnemy
   layers:
   - Default
   - TransparentFX
