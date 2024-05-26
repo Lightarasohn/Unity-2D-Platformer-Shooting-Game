@@ -12,7 +12,7 @@ public class PlayerMovement : MonoBehaviour
     private bool dashedInAir = false;
     private float dashPower = 40f;
     private float dashTime = 0.2f;
-    private float jumpingPower = 15f;
+    public float jumpingPower = 15f;
     private float moveSpeed = 500f;
     private Animator animator;
 
