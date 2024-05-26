@@ -12,7 +12,7 @@ public class PlayerMovement : MonoBehaviour
     private bool dashedInAir = false;
     private float dashPower = 40f;
     private float dashTime = 0.2f;
-    private float jumpingPower = 15f;
+    public float jumpingPower = 15f;
     private float moveSpeed = 500f;
     private Animator animator;
 
@@ -82,7 +82,7 @@ public class PlayerMovement : MonoBehaviour
             rb.velocity = new Vector2(horizontalMove * moveSpeed * Time.fixedDeltaTime, rb.velocity.y);
     }
 
-    private bool isGrounded()
+    public bool isGrounded()
     {
         return Physics2D.OverlapCircle(GroundCheck.position, 0.2f, GroundLayer);
     }

@@ -8,6 +8,10 @@ public class MainMenu : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         Time.timeScale = 1f; //oyun tekrar baslatildiginda hareket etmesi icin//
     }
+    public void PlayGameEnd()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 3);
+    }
 
     public void QuitGame()
     {
