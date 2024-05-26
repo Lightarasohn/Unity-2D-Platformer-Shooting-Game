@@ -28,8 +28,8 @@ public class PlayerHealth : MonoBehaviour
             {
                 an.SetTrigger("Death"); // Trigger the Death animation
             }
-            GameObject.FindGameObjectWithTag("DeadMenu").transform.GetChild(0).gameObject.SetActive(true);
             GameObject.Destroy(gameObject);
+            GameObject.FindGameObjectWithTag("DeadMenu").transform.GetChild(0).gameObject.SetActive(true);
         }
     }
 }

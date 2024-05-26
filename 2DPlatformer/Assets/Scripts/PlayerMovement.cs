@@ -20,13 +20,14 @@ public class PlayerMovement : MonoBehaviour
     private Transform GroundCheck;
     [SerializeField] private LayerMask GroundLayer;
     private TrailRenderer tr;
-
+    private PlayerSoundEffects playerSoundEffects;
     private void Start()
     {
         rb = transform.GetComponent<Rigidbody2D>();
         GroundCheck = transform.GetChild(0);
         tr = transform.GetComponent<TrailRenderer>();
         animator = transform.GetComponent<Animator>();
+        playerSoundEffects = transform.GetComponent<PlayerSoundEffects>();
     }
 
     void Update()
@@ -41,11 +42,13 @@ public class PlayerMovement : MonoBehaviour
             jumpCount++;
             rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
             animator.SetBool("isJumping", true);
+            playerSoundEffects.playJumpSoundEffect();
         }
         else if (canDoubleJump())
         {
             jumpCount = 0;
             rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
+            playerSoundEffects.playJumpSoundEffect();
         }
         else if (Input.GetButtonUp("Jump") && rb.velocity.y > 0f)
         {
@@ -89,7 +92,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private bool isGrounded()
+    public bool isGrounded()
     {
         return Physics2D.OverlapCircle(GroundCheck.position, 0.2f, GroundLayer);
     }
@@ -142,6 +145,7 @@ public class PlayerMovement : MonoBehaviour
     private IEnumerator DASH()
     {
         isDashing = true;
+        playerSoundEffects.playDashSoundEffect();
         float originalGravity = rb.gravityScale;
         rb.gravityScale = 0f;
         rb.velocity = new Vector2(dashPower * horizontalMove, 0f);

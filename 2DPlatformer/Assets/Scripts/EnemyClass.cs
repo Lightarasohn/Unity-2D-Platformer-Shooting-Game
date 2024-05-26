@@ -27,6 +27,10 @@ public class EnemyClass
         animator = transform.GetComponent<Animator>();
         rb = transform.GetComponent<Rigidbody2D>();
     }
+    public Animator getAnimator()
+    {
+        return this.animator;
+    }
     public void TriggerDeathAnimation()
     {
         if (this.animator != null)
@@ -200,6 +204,9 @@ public class MeleeEnemy : EnemyClass
     private float voltaTime;
     private float hitRange;
     private float colliderDistance;
+    private AudioSource audioSource;
+    private AudioClip walkingSound;
+    private AudioClip hitSound;
     
     public MeleeEnemy()
     {
@@ -216,7 +223,34 @@ public class MeleeEnemy : EnemyClass
 
 
     }
-
+    public void setAudioSource(Transform transform)
+    {
+        this.audioSource = transform.GetComponents<AudioSource>()[0];
+    }
+    public void setWalkingSound(int index)
+    {
+        this.walkingSound = Resources.Load<AudioClip>("SoundEffects/EnemySoundEffects/EnemyWalking/EnemyWalking" + index);
+    }
+    public void setHitSound(int index)
+    {
+        this.hitSound = Resources.Load<AudioClip>("SoundEffects/EnemySoundEffects/Punch/Punch" + index);
+    }
+    public void PlayHitSound()
+    {
+        if (this.audioSource != null && this.hitSound != null)
+        {
+            this.audioSource.clip = this.hitSound;
+            this.audioSource.Play();
+        }
+    }
+    public void PlayWalkingSound()
+    {
+        if (this.audioSource != null && this.walkingSound != null && !this.audioSource.isPlaying)
+        {
+            this.audioSource.clip = this.walkingSound;
+            this.audioSource.Play();
+        }
+    }
     public float getAgroMovespeed()
     {
         return this.agroMovespeed;
@@ -248,7 +282,6 @@ public class MeleeEnemy : EnemyClass
             new Vector3(boxCollider.bounds.size.x * this.hitRange, boxCollider.bounds.size.y, boxCollider.bounds.size.z),
             0, Vector2.left, 0,
             1 << LayerMask.NameToLayer("Action"));
-        Debug.Log(hit.collider);
         if (hit.collider != null)
         {
             if (hit.collider.gameObject.CompareTag("Player"))
@@ -264,8 +297,11 @@ public class MeleeEnemy : EnemyClass
     }
     public class BossEnemy : MeleeEnemy
     {
+        private AudioSource audioSourceBossMusic;
+        private AudioClip bossMusic;
         public BossEnemy()
         {
+            this.bossMusic = Resources.Load<AudioClip>("SoundEffects/GameAndMenuSounds/BossMusic");
             base.colliderDistance = 0.5f;
             base.hitRange = 2.5f;
             base.voltaTime = 4f;
@@ -276,6 +312,18 @@ public class MeleeEnemy : EnemyClass
             base.bodySprite = Resources.Load<Sprite>("Sprites/EnemySprites/SeperatedBodies/biker idle_0");
             base.staticArmSprite = Resources.Load<Sprite>("Sprites/EnemySprites/SeperatedArms/StaticArms/biker arm");
             base.handSprite = Resources.Load<Sprite>("Sprites/EnemySprites/SeperatedArms/Hands/biker hands");
+        }
+        public void setAudioBossMusic(Transform transform)
+        {
+            this.audioSourceBossMusic = transform.GetComponents<AudioSource>()[1];
+        }
+        public void playBossMusic()
+        {
+            this.audioSourceBossMusic.clip = bossMusic;
+            if (!this.audioSourceBossMusic.isPlaying)
+            {
+                audioSourceBossMusic.Play();
+            }
         }
     }
 }

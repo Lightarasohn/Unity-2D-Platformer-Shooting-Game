@@ -51,7 +51,7 @@ public class Weapons
     {
         GameObject gun, instantiedGun;
         gunPosition.Set(gunPosition.x, gunPosition.y - 0.7f);
-        gun = Resources.Load<GameObject>("Prefabs/GunSpawnPrefab");
+        gun = Resources.Load<GameObject>("Prefabs/RuntimePrefabs/GunSpawnPrefab");
         instantiedGun = GameObject.Instantiate(gun, gunPosition, gunRotation);
         instantiedGun.transform.GetComponent<GunSpawnPrefabScript>().droppedWeapon = gunType;
     }
@@ -86,7 +86,7 @@ public class Weapons
     }
     public void fire(GameObject spawnpoints, Transform transform, Weapons currentWeapon)
     {
-        GameObject bullet = Resources.Load<GameObject>("Prefabs/" + currentWeapon.weaponBullet);
+        GameObject bullet = Resources.Load<GameObject>("Prefabs/RuntimePrefabs/" + currentWeapon.weaponBullet);
         PlayerMovement pm;
         EnemyClass enemy;
         if (transform.tag == "PlayerGunPoint")
@@ -310,7 +310,7 @@ public class Weapons
                 }
             }
         }
-
+        //silah sesi
     }
    
 }

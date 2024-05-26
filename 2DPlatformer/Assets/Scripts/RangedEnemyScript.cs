@@ -7,6 +7,7 @@ public class RangedEnemyScript : MonoBehaviour
     public Weapons enemyWeapon;
     private Transform gunTransform;
     public GameObject spawnPoints;
+    private bool isWeaponDropped = false;
     
 
     void Start()
@@ -29,8 +30,12 @@ public class RangedEnemyScript : MonoBehaviour
     {
         if (enemy.isDying())
         {
+            if (!isWeaponDropped) 
+            {
+                enemyWeapon.spawnGunPrefab(enemyWeapon, transform.position, transform.rotation);
+                isWeaponDropped = true;
+            }
             enemy.TriggerDeathAnimation();
-            enemyWeapon.spawnGunPrefab(enemyWeapon, transform.position, transform.rotation);
             StartCoroutine(enemy.DestroyAfterAnimation(gameObject));
         }
     }

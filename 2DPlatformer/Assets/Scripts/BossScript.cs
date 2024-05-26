@@ -14,6 +14,7 @@ public class BossScript : MonoBehaviour
     private float hitTimer;
     private float inCreaseSpeedTimer;
     private float deCreaseSpeedTimer;
+    private System.Random indexGenerator;
 
     void Start()
     {
@@ -24,6 +25,11 @@ public class BossScript : MonoBehaviour
         transform.GetChild(1).transform.GetComponent<SpriteRenderer>().sprite = enemy.getStaticArmSprite();
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
         boxCollider = transform.GetComponent<BoxCollider2D>();
+        
+        enemy.setAudioSource(transform);
+        enemy.setAudioBossMusic(transform);
+
+        indexGenerator = new System.Random();
     }
 
     void Update()
@@ -32,8 +38,14 @@ public class BossScript : MonoBehaviour
         {
             if (enemy.isDying())
             {
-                GameObject.Destroy(gameObject);
+                enemy.TriggerDeathAnimation();
+                StartCoroutine(enemy.DestroyAfterAnimation(gameObject));
             }
+            
+            enemy.setAnimation(transform);
+            enemy.setWalkingSound(indexGenerator.Next(1, 3));
+            enemy.setHitSound(indexGenerator.Next(1, 3));
+            enemy.playBossMusic();
 
             if (isAgroed || enemy.isAgro(transform))
             {
@@ -44,7 +56,8 @@ public class BossScript : MonoBehaviour
                     {
                         enemyRb.velocity = new Vector2((2f) * enemy.getAgroMovespeed() * (transform.localScale.x * 10 / 7), enemyRb.velocity.y);
                         deCreaseSpeedTimer += Time.deltaTime;
-                        if(deCreaseSpeedTimer >= 4)
+                        enemy.getAnimator().speed = 1f;
+                        if (deCreaseSpeedTimer >= 4)
                         {
                             inCreaseSpeedTimer = 0;
                         }
@@ -61,7 +74,7 @@ public class BossScript : MonoBehaviour
                         if (hitTimer >= 2)
                         {
                             hitTimer = 0;
-                            Debug.Log("Hit !!!");
+                            enemy.PlayHitSound();
                             GameObject.FindGameObjectWithTag("Player").transform.GetComponent<PlayerHealth>().hurtPlayer(100f);
                         }
                     }
@@ -85,16 +98,33 @@ public class BossScript : MonoBehaviour
                     if (!isStart) enemy.flipEnemy(transform);
                     else { isStart = false; }
                     enemy.voltaAt(transform, enemyRb);
+                    enemy.getAnimator().speed = 1f;
                     timer = 0f;
 
                 }
                 else if (timer >= enemy.getVoltaTime())
                 {
                     enemyRb.velocity = new Vector2(0, 0);
+                    enemy.getAnimator().speed = 0;
                 }
                 timer += Time.deltaTime;
             }
             isAgroed = enemy.isAgro(transform);
+            if (enemyRb.velocity.x != 0)
+            {
+                if (enemy.canHit(boxCollider, transform))
+                {
+                    if (hitTimer < 2)
+                    {
+                        enemy.PlayWalkingSound();
+                    }
+                }
+                else
+                {
+                    enemy.PlayWalkingSound();
+                }
+
+            }
         }
     }
 }

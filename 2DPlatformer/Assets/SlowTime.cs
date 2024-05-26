@@ -5,11 +5,9 @@ using UnityEngine;
 
 public class SlowTime : MonoBehaviour
 {
-    private GameObject[] backgroundChilds;
     // Start is called before the first frame update
     void Start()
     {
-        backgroundChilds = GameObject.FindGameObjectsWithTag("BackGroundChild");
     }
 
     // Update is called once per frame
@@ -19,20 +17,12 @@ public class SlowTime : MonoBehaviour
         {
             if (Input.GetKey(KeyCode.LeftShift))
             {
-                foreach (GameObject child in backgroundChilds)
-                {
-                    child.transform.GetComponent<BackgroundScript>().speedOfParallax /= 2;
-                }
                 Time.timeScale = 0.5f;
             }
             else
             {
                 if (Input.GetKeyUp(KeyCode.LeftShift))
                 {
-                    foreach (GameObject child in backgroundChilds)
-                    {
-                        child.transform.GetComponent<BackgroundScript>().speedOfParallax *= 2;
-                    }
                     Time.timeScale = 1f;
                 }
             }
