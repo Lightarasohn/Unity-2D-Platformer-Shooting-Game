@@ -13,6 +13,7 @@ public class Weapons
     protected float fireRate;
     protected string bulletPoints;
     protected string weaponBullet;
+    protected AudioClip weaponSound;
 
    public string getName()
    {
