@@ -17,6 +17,8 @@ TagManager:
   - BackGround
   - BackGroundChild
   - BossEnemy
+  - MerdivenUstuTag
+  - MerdivenAltiTag
   layers:
   - Default
   - TransparentFX
