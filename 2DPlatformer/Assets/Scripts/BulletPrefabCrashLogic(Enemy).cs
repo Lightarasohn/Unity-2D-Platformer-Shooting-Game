@@ -19,7 +19,10 @@ public class BulletCrashLogicEnemy : MonoBehaviour
             collision.transform.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
         if (collision.transform.tag == "Player")
         {
-            GameObject.FindGameObjectWithTag("Player").transform.GetComponent<PlayerHealth>().hurtPlayer(Damage);
+            if (!collision.transform.GetComponent<PlayerMovement>().isDashing)
+            {
+                GameObject.FindGameObjectWithTag("Player").transform.GetComponent<PlayerHealth>().hurtPlayer(Damage);
+            }
             Destroy(gameObject);
         }
         else if (collision.transform.tag != "Bullet(Enemy)")

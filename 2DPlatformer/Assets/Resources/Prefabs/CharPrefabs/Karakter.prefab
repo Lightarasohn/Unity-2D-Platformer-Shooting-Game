@@ -736,6 +736,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isFacingRight: 1
   isDashing: 0
+  jumpingPower: 15
   GroundLayer:
     serializedVersion: 2
     m_Bits: 64

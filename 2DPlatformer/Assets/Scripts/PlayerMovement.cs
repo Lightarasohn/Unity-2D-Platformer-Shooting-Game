@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Threading;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -12,6 +13,8 @@ public class PlayerMovement : MonoBehaviour
     private bool dashedInAir = false;
     private float dashPower = 40f;
     private float dashTime = 0.2f;
+    private float dashCooldown = 1f;
+    private float dashTimer = 2f;
     public float jumpingPower = 15f;
     private float moveSpeed = 500f;
     private Animator animator;
@@ -33,6 +36,7 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         if (isDashing) return;
+        dashTimer += Time.deltaTime;
 
         horizontalMove = Input.GetAxisRaw("Horizontal");
         animator.SetFloat("Speed", Mathf.Abs(horizontalMove));
@@ -68,6 +72,7 @@ public class PlayerMovement : MonoBehaviour
         if (canDash())
         {
             dash = true;
+            dashTimer = 0;
         }
 
         // Silahýn pozisyonu güncelleniyor
@@ -110,7 +115,7 @@ public class PlayerMovement : MonoBehaviour
     private bool canDash()
     {
         if (isGrounded()) dashedInAir = false;
-        return Input.GetButtonDown("Crouch") && horizontalMove != 0 && !dashedInAir;
+        return Input.GetButtonDown("Crouch") && horizontalMove != 0 && !dashedInAir && dashTimer >= dashCooldown;
     }
 
     private void flip()
