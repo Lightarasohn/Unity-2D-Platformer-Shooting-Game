@@ -4,11 +4,11 @@ using UnityEngine;
 public class RangedEnemyCombatScript : MonoBehaviour
 {
     public float angle;
+    public bool isAgroed = false;
     private Weapons enemyWeapon;
     private RangedEnemy enemy;
     private Transform parentEnemy;
     private Transform playerTransform;
-    private bool isAgroed = false;
     private GameObject spawnPoints;
     private bool canShoot = false;
     private float semiTime;
@@ -34,7 +34,7 @@ public class RangedEnemyCombatScript : MonoBehaviour
         if (enemyWeapon == null) enemyWeapon = parentEnemy.GetComponent<RangedEnemyScript>().enemyWeapon;
         if (GameObject.FindGameObjectWithTag("Player") != null && !GameObject.FindGameObjectWithTag("Player").transform.GetComponent<PlayerHealth>().isPlayerDead() && Time.timeScale > 0 && !enemy.isDying())
         {
-        
+
         if (isAgroed || enemy.isAgro(parentEnemy))
         {    
             if (enemy.getAgroDistance() >= enemy.distanceToPlayer(playerTransform))
@@ -46,6 +46,10 @@ public class RangedEnemyCombatScript : MonoBehaviour
                     enemy.flipEnemy(parentEnemy);
                 }
             }
+        }
+        else
+        {
+            enemy.setAgroDistance(enemy.getStaticAgroDistance());
         }
         semiTime += Time.deltaTime;
         

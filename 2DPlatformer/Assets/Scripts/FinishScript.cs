@@ -4,9 +4,13 @@ public class FinishScript : MonoBehaviour
 {
     private GameObject[] rangedEnemies;
     private GameObject[] meleeEnemies;
+    private AudioClip levelEndAudio;
+    private AudioSource audioSource;
     void Start()
     {
-
+        levelEndAudio = Resources.Load<AudioClip>("SoundEffects/GameAndMenuSounds/LevelEnd");
+        audioSource = transform.GetComponent<AudioSource>();
+        audioSource.clip = levelEndAudio;
     }
 
     void Update()
@@ -26,6 +30,7 @@ public class FinishScript : MonoBehaviour
         if (collision.tag == "Player")
         {
             Time.timeScale = 0f;
+            audioSource.Play();
             GameObject.FindGameObjectWithTag("PauseMenu").transform.GetChild(1).gameObject.SetActive(true);
         }
     }

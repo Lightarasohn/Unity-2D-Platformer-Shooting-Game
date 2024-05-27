@@ -5,8 +5,8 @@ using UnityEngine;
 public class BossScript : MonoBehaviour
 {
     public MeleeEnemy.BossEnemy enemy;
+    public bool isAgroed = false;
     private Transform playerTransform;
-    private bool isAgroed = false;
     private float timer = 8f;
     private Rigidbody2D enemyRb;
     private bool isStart = true;
@@ -93,6 +93,7 @@ public class BossScript : MonoBehaviour
             }
             else
             {
+                enemy.setAgroDistance(enemy.getStaticAgroDistance());
                 if (timer >= enemy.getVoltaTime() + 1.5f)
                 {
                     if (!isStart) enemy.flipEnemy(transform);

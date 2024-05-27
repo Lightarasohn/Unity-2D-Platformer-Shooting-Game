@@ -6,6 +6,7 @@ using Random = System.Random;
 public class EnemyClass
 {
     protected float agroDistance;
+    protected float staticAgroDistance;
     protected float health;
     protected Weapons weapon = null;
     protected Sprite bodySprite;
@@ -16,12 +17,12 @@ public class EnemyClass
     protected bool isDead = false;
 
 
-    /*
+    
     public float getHealth()
     {
         return this.health;
     }
-    */
+    
     public void setAnimation(Transform transform)
     {
         animator = transform.GetComponent<Animator>();
@@ -45,9 +46,17 @@ public class EnemyClass
         yield return new WaitForSeconds(0.5f);
         GameObject.Destroy(gameObject);
     }
+    public float getStaticAgroDistance()
+    {
+        return this.staticAgroDistance;
+    }
     public float getAgroDistance()
     {
         return this.agroDistance;
+    }
+    public void setAgroDistance(float distance)
+    {
+        this.agroDistance = distance;
     }
     public Weapons GetWeapon()
     {
@@ -126,6 +135,7 @@ public class RangedEnemy : EnemyClass
     {
         base.health = 100;
         base.agroDistance = 10;
+        base.staticAgroDistance = this.agroDistance;
         base.weapon = pickRangedEnemyGun();
         base.bodySprite = Resources.Load<Sprite>("Sprites/EnemySprites/SeperatedBodies/cyborgidle_0");
         base.staticArmSprite = Resources.Load<Sprite>("Sprites/EnemySprites/SeperatedArms/StaticArms/cyborg static arm");
@@ -175,22 +185,22 @@ public class RangedEnemy : EnemyClass
         switch (rnd.Next(0, 6))
         {
             case 1:
-                wp = new Weapon1();
+                wp = new Weapon1(true);
                 break;
             case 2:
-                wp = new Weapon2();
+                wp = new Weapon2(true);
                 break;
             case 3:
-                wp = new Weapon3();
+                wp = new Weapon3(true);
                 break;
             case 4:
-                wp = new Weapon4();
+                wp = new Weapon4(true);
                 break;
             case 5:
-                wp = new Weapon5();
+                wp = new Weapon5(true);
                 break;
             default:
-                wp = new Weapon1();
+                wp = new Weapon1(true);
                 break;
         }
         return wp;
@@ -214,9 +224,10 @@ public class MeleeEnemy : EnemyClass
         this.hitRange = 2.5f;
         this.voltaTime = 4f;
         this.voltaMovespeed = 1.5f;
-        this.agroMovespeed = 3;
+        this.agroMovespeed = 7;
         base.health = 100;
-        base.agroDistance = 10;
+        base.agroDistance = 5;
+        base.staticAgroDistance = this.agroDistance;
         base.bodySprite = Resources.Load<Sprite>("Sprites/EnemySprites/SeperatedBodies/biker idle_0");
         base.staticArmSprite = Resources.Load<Sprite>("Sprites/EnemySprites/SeperatedArms/StaticArms/biker arm");
         base.handSprite = Resources.Load<Sprite>("Sprites/EnemySprites/SeperatedArms/Hands/biker hands");
@@ -306,9 +317,10 @@ public class MeleeEnemy : EnemyClass
             base.hitRange = 2.5f;
             base.voltaTime = 4f;
             base.voltaMovespeed = 1.5f;
-            base.agroMovespeed = 3;
+            base.agroMovespeed = 5;
             base.health = 500;
             base.agroDistance = 15;
+            base.staticAgroDistance = this.agroDistance;
             base.bodySprite = Resources.Load<Sprite>("Sprites/EnemySprites/SeperatedBodies/biker idle_0");
             base.staticArmSprite = Resources.Load<Sprite>("Sprites/EnemySprites/SeperatedArms/StaticArms/biker arm");
             base.handSprite = Resources.Load<Sprite>("Sprites/EnemySprites/SeperatedArms/Hands/biker hands");

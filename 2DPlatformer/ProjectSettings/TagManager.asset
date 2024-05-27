@@ -19,6 +19,8 @@ TagManager:
   - BossEnemy
   - MerdivenUstuTag
   - MerdivenAltiTag
+  - Bullet(Enemy)
+  - Canvas
   layers:
   - Default
   - TransparentFX
