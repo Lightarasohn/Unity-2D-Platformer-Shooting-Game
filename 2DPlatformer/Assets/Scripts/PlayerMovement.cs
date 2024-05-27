@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Threading;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -12,7 +13,9 @@ public class PlayerMovement : MonoBehaviour
     private bool dashedInAir = false;
     private float dashPower = 40f;
     private float dashTime = 0.2f;
-    private float jumpingPower = 15f;
+    private float dashCooldown = 1f;
+    private float dashTimer = 2f;
+    public float jumpingPower = 15f;
     private float moveSpeed = 500f;
     private Animator animator;
 
@@ -20,18 +23,20 @@ public class PlayerMovement : MonoBehaviour
     private Transform GroundCheck;
     [SerializeField] private LayerMask GroundLayer;
     private TrailRenderer tr;
-
+    private PlayerSoundEffects playerSoundEffects;
     private void Start()
     {
         rb = transform.GetComponent<Rigidbody2D>();
         GroundCheck = transform.GetChild(0);
         tr = transform.GetComponent<TrailRenderer>();
         animator = transform.GetComponent<Animator>();
+        playerSoundEffects = transform.GetComponent<PlayerSoundEffects>();
     }
 
     void Update()
     {
         if (isDashing) return;
+        dashTimer += Time.deltaTime;
 
         horizontalMove = Input.GetAxisRaw("Horizontal");
         animator.SetFloat("Speed", Mathf.Abs(horizontalMove));
@@ -41,11 +46,13 @@ public class PlayerMovement : MonoBehaviour
             jumpCount++;
             rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
             animator.SetBool("isJumping", true);
+            playerSoundEffects.playJumpSoundEffect();
         }
         else if (canDoubleJump())
         {
             jumpCount = 0;
             rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
+            playerSoundEffects.playJumpSoundEffect();
         }
         else if (Input.GetButtonUp("Jump") && rb.velocity.y > 0f)
         {
@@ -65,6 +72,7 @@ public class PlayerMovement : MonoBehaviour
         if (canDash())
         {
             dash = true;
+            dashTimer = 0;
         }
 
         // Silahýn pozisyonu güncelleniyor
@@ -89,7 +97,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private bool isGrounded()
+    public bool isGrounded()
     {
         return Physics2D.OverlapCircle(GroundCheck.position, 0.2f, GroundLayer);
     }
@@ -107,7 +115,7 @@ public class PlayerMovement : MonoBehaviour
     private bool canDash()
     {
         if (isGrounded()) dashedInAir = false;
-        return Input.GetButtonDown("Crouch") && horizontalMove != 0 && !dashedInAir;
+        return Input.GetButtonDown("Crouch") && horizontalMove != 0 && !dashedInAir && dashTimer >= dashCooldown;
     }
 
     private void flip()
@@ -142,6 +150,7 @@ public class PlayerMovement : MonoBehaviour
     private IEnumerator DASH()
     {
         isDashing = true;
+        playerSoundEffects.playDashSoundEffect();
         float originalGravity = rb.gravityScale;
         rb.gravityScale = 0f;
         rb.velocity = new Vector2(dashPower * horizontalMove, 0f);

@@ -16,7 +16,7 @@ public class BackgroundScript : MonoBehaviour
     }
     private void Update()
     {
-        if (GameObject.FindGameObjectWithTag("Player") != null && !GameObject.FindGameObjectWithTag("Player").transform.GetComponent<PlayerHealth>().isPlayerDead() && Time.timeScale == 1)
+        if (GameObject.FindGameObjectWithTag("Player") != null && !GameObject.FindGameObjectWithTag("Player").transform.GetComponent<PlayerHealth>().isPlayerDead() && Time.timeScale > 0)
         {
         Vector3 Position = MainCamera.transform.position;
         float Temp = Position.x * (1 - speedOfParallax);

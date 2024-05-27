@@ -6,6 +6,7 @@ using Random = System.Random;
 public class EnemyClass
 {
     protected float agroDistance;
+    protected float staticAgroDistance;
     protected float health;
     protected Weapons weapon = null;
     protected Sprite bodySprite;
@@ -16,16 +17,20 @@ public class EnemyClass
     protected bool isDead = false;
 
 
-    /*
+    
     public float getHealth()
     {
         return this.health;
     }
-    */
+    
     public void setAnimation(Transform transform)
     {
         animator = transform.GetComponent<Animator>();
         rb = transform.GetComponent<Rigidbody2D>();
+    }
+    public Animator getAnimator()
+    {
+        return this.animator;
     }
     public void TriggerDeathAnimation()
     {
@@ -41,9 +46,17 @@ public class EnemyClass
         yield return new WaitForSeconds(0.5f);
         GameObject.Destroy(gameObject);
     }
+    public float getStaticAgroDistance()
+    {
+        return this.staticAgroDistance;
+    }
     public float getAgroDistance()
     {
         return this.agroDistance;
+    }
+    public void setAgroDistance(float distance)
+    {
+        this.agroDistance = distance;
     }
     public Weapons GetWeapon()
     {
@@ -122,6 +135,7 @@ public class RangedEnemy : EnemyClass
     {
         base.health = 100;
         base.agroDistance = 10;
+        base.staticAgroDistance = this.agroDistance;
         base.weapon = pickRangedEnemyGun();
         base.bodySprite = Resources.Load<Sprite>("Sprites/EnemySprites/SeperatedBodies/cyborgidle_0");
         base.staticArmSprite = Resources.Load<Sprite>("Sprites/EnemySprites/SeperatedArms/StaticArms/cyborg static arm");
@@ -171,22 +185,22 @@ public class RangedEnemy : EnemyClass
         switch (rnd.Next(0, 6))
         {
             case 1:
-                wp = new Weapon1();
+                wp = new Weapon1(true);
                 break;
             case 2:
-                wp = new Weapon2();
+                wp = new Weapon2(true);
                 break;
             case 3:
-                wp = new Weapon3();
+                wp = new Weapon3(true);
                 break;
             case 4:
-                wp = new Weapon4();
+                wp = new Weapon4(true);
                 break;
             case 5:
-                wp = new Weapon5();
+                wp = new Weapon5(true);
                 break;
             default:
-                wp = new Weapon1();
+                wp = new Weapon1(true);
                 break;
         }
         return wp;
@@ -200,6 +214,9 @@ public class MeleeEnemy : EnemyClass
     private float voltaTime;
     private float hitRange;
     private float colliderDistance;
+    private AudioSource audioSource;
+    private AudioClip walkingSound;
+    private AudioClip hitSound;
     
     public MeleeEnemy()
     {
@@ -207,16 +224,44 @@ public class MeleeEnemy : EnemyClass
         this.hitRange = 2.5f;
         this.voltaTime = 4f;
         this.voltaMovespeed = 1.5f;
-        this.agroMovespeed = 3;
+        this.agroMovespeed = 7;
         base.health = 100;
-        base.agroDistance = 10;
+        base.agroDistance = 5;
+        base.staticAgroDistance = this.agroDistance;
         base.bodySprite = Resources.Load<Sprite>("Sprites/EnemySprites/SeperatedBodies/biker idle_0");
         base.staticArmSprite = Resources.Load<Sprite>("Sprites/EnemySprites/SeperatedArms/StaticArms/biker arm");
         base.handSprite = Resources.Load<Sprite>("Sprites/EnemySprites/SeperatedArms/Hands/biker hands");
 
 
     }
-
+    public void setAudioSource(Transform transform)
+    {
+        this.audioSource = transform.GetComponents<AudioSource>()[0];
+    }
+    public void setWalkingSound(int index)
+    {
+        this.walkingSound = Resources.Load<AudioClip>("SoundEffects/EnemySoundEffects/EnemyWalking/EnemyWalking" + index);
+    }
+    public void setHitSound(int index)
+    {
+        this.hitSound = Resources.Load<AudioClip>("SoundEffects/EnemySoundEffects/Punch/Punch" + index);
+    }
+    public void PlayHitSound()
+    {
+        if (this.audioSource != null && this.hitSound != null)
+        {
+            this.audioSource.clip = this.hitSound;
+            this.audioSource.Play();
+        }
+    }
+    public void PlayWalkingSound()
+    {
+        if (this.audioSource != null && this.walkingSound != null && !this.audioSource.isPlaying)
+        {
+            this.audioSource.clip = this.walkingSound;
+            this.audioSource.Play();
+        }
+    }
     public float getAgroMovespeed()
     {
         return this.agroMovespeed;
@@ -248,7 +293,6 @@ public class MeleeEnemy : EnemyClass
             new Vector3(boxCollider.bounds.size.x * this.hitRange, boxCollider.bounds.size.y, boxCollider.bounds.size.z),
             0, Vector2.left, 0,
             1 << LayerMask.NameToLayer("Action"));
-        Debug.Log(hit.collider);
         if (hit.collider != null)
         {
             if (hit.collider.gameObject.CompareTag("Player"))
@@ -264,18 +308,34 @@ public class MeleeEnemy : EnemyClass
     }
     public class BossEnemy : MeleeEnemy
     {
+        private AudioSource audioSourceBossMusic;
+        private AudioClip bossMusic;
         public BossEnemy()
         {
+            this.bossMusic = Resources.Load<AudioClip>("SoundEffects/GameAndMenuSounds/BossMusic");
             base.colliderDistance = 0.5f;
             base.hitRange = 2.5f;
             base.voltaTime = 4f;
             base.voltaMovespeed = 1.5f;
-            base.agroMovespeed = 3;
+            base.agroMovespeed = 5;
             base.health = 500;
             base.agroDistance = 15;
+            base.staticAgroDistance = this.agroDistance;
             base.bodySprite = Resources.Load<Sprite>("Sprites/EnemySprites/SeperatedBodies/biker idle_0");
             base.staticArmSprite = Resources.Load<Sprite>("Sprites/EnemySprites/SeperatedArms/StaticArms/biker arm");
             base.handSprite = Resources.Load<Sprite>("Sprites/EnemySprites/SeperatedArms/Hands/biker hands");
+        }
+        public void setAudioBossMusic(Transform transform)
+        {
+            this.audioSourceBossMusic = transform.GetComponents<AudioSource>()[1];
+        }
+        public void playBossMusic()
+        {
+            this.audioSourceBossMusic.clip = bossMusic;
+            if (!this.audioSourceBossMusic.isPlaying)
+            {
+                audioSourceBossMusic.Play();
+            }
         }
     }
 }

@@ -10,7 +10,7 @@ public class GunPick : MonoBehaviour
     void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
-        currentWeapon = new Weapon5();
+        currentWeapon = new Weapon2(false);
         spriteRenderer.sprite = currentWeapon.getSprite();
 
     }
@@ -23,6 +23,7 @@ public class GunPick : MonoBehaviour
             isGunPicked = false;
             currentWeapon.eraseOldBulletSpawnPoints();
             currentWeapon = pickedGun;
+            currentWeapon.reArrangeBulletType();
             spriteRenderer.sprite = currentWeapon.getSprite();
             currentWeapon.instantiateBulletSpawnPoints(transform);
         }

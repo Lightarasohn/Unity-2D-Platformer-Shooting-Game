@@ -16,58 +16,44 @@ public class BulletCrashLogic : MonoBehaviour
     {
         if(transform.GetComponent<BulletPrefabMovement>().bullet != null) Damage = transform.GetComponent<BulletPrefabMovement>().bullet.getBulletDamage();
     }
-
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.tag == "RangedEnemy")
+        if (collision.transform.GetComponent<Rigidbody2D>() != null)
+            collision.transform.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
+        if (collision.transform.tag == "RangedEnemy")
         {
             rEnemy = collision.transform.GetComponent<RangedEnemyScript>().enemy;
             rEnemy.hurt(Damage);
+            rEnemy.setAgroDistance(rEnemy.distanceToPlayer(collision.transform));
+            collision.transform.GetChild(0).transform.GetChild(0).transform.GetComponent<RangedEnemyCombatScript>().isAgroed = true;
             Destroy(gameObject);
         }
-        else if (collision.tag == "MeleeEnemy")
+        else if (collision.transform.tag == "MeleeEnemy")
         {
             mEnemy = collision.transform.GetComponent<MeleeEnemyScript>().enemy;
             mEnemy.hurt(Damage);
+            mEnemy.setAgroDistance(mEnemy.distanceToPlayer(collision.transform));
+            collision.transform.GetComponent<MeleeEnemyScript>().isAgroed = true;
             Destroy(gameObject);
         }
-        else if (collision.tag == "BossEnemy")
+        else if (collision.transform.tag == "BossEnemy")
         {
             bossEnemy = collision.transform.GetComponent<BossScript>().enemy;
             bossEnemy.hurt(Damage);
-            Destroy (gameObject);
-        }
-        else if(collision.tag == "Player")
-        {
-            collision.transform.GetComponent<PlayerHealth>().hurtPlayer(Damage);
+            bossEnemy.setAgroDistance(bossEnemy.distanceToPlayer(collision.transform));
+            collision.transform.GetComponent<BossScript>().isAgroed = true;
             Destroy(gameObject);
         }
-        else if (collision.tag != "Bullet")
+        else if (collision.transform.tag != "Bullet")
         {
-             Destroy(gameObject);
+            Destroy(gameObject);
         }
     }
-
-    private void OnTriggerStay2D(Collider2D collision)
+    private void OnCollisionStay2D(Collision2D collision)
     {
-        if (collision.tag == "RangedEnemy")
-        {
-            rEnemy = collision.transform.GetComponent<RangedEnemyScript>().enemy;
-            rEnemy.hurt(Damage);
-            Destroy(gameObject);
-        }
-        else if (collision.tag == "MeleeEnemy")
-        {
-            mEnemy = collision.transform.GetComponent<MeleeEnemyScript>().enemy;
-            mEnemy.hurt(Damage);
-            Destroy(gameObject);
-        }
-        else if (collision.tag == "Player")
-        {
-            collision.transform.GetComponent<PlayerHealth>().hurtPlayer(Damage);
-            Destroy(gameObject);
-        }
-        else if (collision.tag != "Bullet")
+        if (collision.transform.GetComponent<Rigidbody2D>() != null)
+            collision.transform.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
+        if (collision.transform.tag != "Bullet")
         {
             Destroy(gameObject);
         }
