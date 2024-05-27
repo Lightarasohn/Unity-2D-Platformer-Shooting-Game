@@ -4,6 +4,7 @@ public class FinishScript : MonoBehaviour
 {
     private GameObject[] rangedEnemies;
     private GameObject[] meleeEnemies;
+    private GameObject[] bossEnemies;
     private AudioClip levelEndAudio;
     private AudioSource audioSource;
     void Start()
@@ -15,10 +16,11 @@ public class FinishScript : MonoBehaviour
 
     void Update()
     {
+        bossEnemies = GameObject.FindGameObjectsWithTag("BossEnemy");
         rangedEnemies = GameObject.FindGameObjectsWithTag("RangedEnemy");
         meleeEnemies = GameObject.FindGameObjectsWithTag("MeleeEnemy");
         
-        if(rangedEnemies.Length + meleeEnemies.Length == 0)
+        if(rangedEnemies.Length + meleeEnemies.Length + bossEnemies.Length == 0)
         {
             transform.GetComponent<BoxCollider2D>().enabled = true;
             transform.GetComponent<SpriteRenderer>().enabled = true;
