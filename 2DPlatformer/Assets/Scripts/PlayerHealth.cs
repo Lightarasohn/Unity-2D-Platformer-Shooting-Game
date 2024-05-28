@@ -2,20 +2,25 @@ using UnityEngine;
 
 public class PlayerHealth : MonoBehaviour
 {
-    private float health = 200f;
+    public float maxHealth = 200f;
+    public float currentHealth;
+    public HealthBarScript healthBar;
     private Animator an;
-
+   
     public void hurtPlayer(float damage)
     {
-        health -= damage;
+        currentHealth -= damage;
+        healthBar.setHealth(currentHealth);
     }
     public bool isPlayerDead()
     {
-        return health <= 0;
+        return currentHealth <= 0;
     }
     // Start is called before the first frame update
     void Start()
     {
+        currentHealth = maxHealth;
+        healthBar.setMaxHealth(maxHealth);
         an = GetComponent<Animator>();
     }
 
